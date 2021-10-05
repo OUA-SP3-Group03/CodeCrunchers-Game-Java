@@ -12,6 +12,7 @@ public class Display {
     //Creates private JFrame object.
     //Object is made private as classes shouldn't need to access it.
     private JFrame frame;
+    //ff
 
     private Canvas canvas;
 
