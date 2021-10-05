@@ -1,3 +1,0 @@
-module ASCII_Map {
-	
-}
