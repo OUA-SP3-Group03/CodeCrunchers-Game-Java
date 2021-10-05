@@ -1,8 +1,8 @@
 package io.codecrunchers.core;
 
 import io.codecrunchers.gfx.Display;
-import io.codecrunchers.input.MouseManager;
-import io.codecrunchers.input.KeyboardManager;
+import io.codecrunchers.input.MouseInputManager;
+import io.codecrunchers.input.KeyboardInputManager;
 
 import java.awt.*;
 
@@ -21,22 +21,24 @@ public class Game implements Runnable{
     private Boolean running = false;
 
     //main mouse and key listener
-    private MouseManager mouseManager;
-    private KeyboardManager keyManager;
+    private MouseInputManager mouseManager;
+    private KeyboardInputManager keyManager;
 
     //main display class
     private Display display;
 
     //main game constructor
-    public Game(int width, int height, String title){
+    public Game(String title, int width, int height){
         //set the class variables passed from the launcher
         this.width = width;
         this.height = height;
         this.title = title;
+        
+        //Creates a Display object so user can see window
+        display = new Display(title, width, height);
     }
 
     //initialization method, is private and is called before the start method
-
     private void initialization(){
 
     }
