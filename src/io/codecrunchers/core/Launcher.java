@@ -5,7 +5,7 @@ public class Launcher {
 
     public static void main(String[] args)
     {
-        //create new instance of game object.
+        //Create new instance of game object.
         new Game("Code Crunchers Development Build", 640, 480);
     }
 }

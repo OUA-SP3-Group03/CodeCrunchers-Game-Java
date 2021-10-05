@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyboardInputManager implements KeyListener {
 	
+	//Keyboard input constructor
 	public KeyboardInputManager() {
 		
 	}

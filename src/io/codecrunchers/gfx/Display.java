@@ -13,7 +13,7 @@ public class Display {
     //Object is made private as classes shouldn't need to access it.
     private JFrame frame;
 
-    //Creates canvas to render stuff to the frame
+    //Creates canvas to render stuff to the frame.
     private Canvas canvas;
 
     //Creates title with String value.
@@ -34,7 +34,6 @@ public class Display {
 
         //Calls createDisplay method to initializes JFrame.
         createDisplay();
-
     }
 
     //Method createDisplay initializes JFrames.
@@ -44,7 +43,7 @@ public class Display {
         frame = new JFrame(title);
         //Sets size of said JFrame.
         frame.setSize(width, height);
-        //Closes Window Correctly (Stops it from running in the background).
+        //Closes window correctly (stops it from running in the background).
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Prevent user from resizing window.
         frame.setResizable(false);
