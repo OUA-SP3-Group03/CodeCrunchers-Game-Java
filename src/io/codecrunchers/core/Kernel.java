@@ -69,10 +69,6 @@ public class Kernel {
         return this.providers.get(provider);
     }
 
-    public HashMap<String, Provider> getAllServiceProviders(){
-        return this.providers;
-    }
-
     public void render(Graphics g){
         for(Provider provider: this.providers.values()){
             if(provider.performRender()){
