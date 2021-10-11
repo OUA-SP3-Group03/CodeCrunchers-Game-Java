@@ -46,7 +46,7 @@ public class Application {
            g.drawRect(50,50,100,100);
 
            //render providers
-            this.app.render(g);
+           this.app.render(g);
 
 
        //__ END RENDER
