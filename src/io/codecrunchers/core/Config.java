@@ -1,5 +1,9 @@
 package io.codecrunchers.core;
 
 public class Config {
-    //TODO add config loader and accessors
+    public String title = "Code Crunchers";
+    public int interfaceWidth = 1280;
+    public int interfaceHeight = 720;
+    public int targetFPS = 60;
+    public boolean showFPS = false;
 }
