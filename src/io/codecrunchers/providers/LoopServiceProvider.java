@@ -13,8 +13,9 @@ public class LoopServiceProvider extends Provider {
     private Application application;
     private LoopService loopService;
 
+
     @Override
-    public void boot() {
+    public void boot(App app) {
         this.running = false;
         this.loopService = new LoopService(this);
     }
