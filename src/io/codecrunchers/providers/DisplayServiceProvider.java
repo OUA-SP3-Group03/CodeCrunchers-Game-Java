@@ -1,6 +1,7 @@
 package io.codecrunchers.providers;
 
 import io.codecrunchers.core.Provider;
+import io.codecrunchers.facades.App;
 import io.codecrunchers.service.DisplayService;
 
 import java.awt.*;
@@ -8,13 +9,16 @@ import java.awt.*;
 public class DisplayServiceProvider extends Provider {
 
     private Canvas displayCanvas;
+    private int targetFPS;
 
     @Override
-    public void boot() {
+    public void boot(App app) {
        //create a new instance of the display service
-       DisplayService display = new DisplayService("test", 400, 400);
+       DisplayService display = new DisplayService(app.interfaceTitle(), app.interfaceWidth(), app.interfaceHeight());
        //set the canvas from the new display service
        this.displayCanvas = display.createDisplay();
+       //set the target FPS and TPS
+        this.targetFPS = app.getTargetFPS();
 
     }
 
@@ -41,5 +45,4 @@ public class DisplayServiceProvider extends Provider {
     public Canvas getCanvas(){
         return this.displayCanvas;
     }
-
 }
