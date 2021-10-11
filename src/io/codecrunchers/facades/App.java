@@ -50,12 +50,8 @@ public class App {
     }
 
     //**** GET TARGET FPS & TPS ****\\
-    public int getTargetFPS(){
+    public int targetFPS(){
         return this.kernel.getConfig().targetFPS;
     }
-
-
-
-
 
 }
