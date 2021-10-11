@@ -14,8 +14,15 @@ public class Kernel {
 
     private final HashMap<String, Provider> providers;
     private final Application application;
+    private final App app;
+    private final Config config;
 
     public Kernel() {
+        //create the config
+        this.config = new Config();
+
+        //create the app facade
+        this.app = new App(this);
 
         //create providers hashmap and set it to a new hashmap
         this.providers = new HashMap<String, Provider>();
@@ -29,11 +36,8 @@ public class Kernel {
         //boot all service providers
         this.bootProviders();
 
-        //create the app facade
-        App app = new App(this);
-
         //create our application singleton instance
-        this.application = new Application(app);
+        this.application = new Application(this.app);
 
         //parse the application in via the callback
         ((LoopServiceProvider) this.providers.get("loop") ).setApplicationCallback(application);
@@ -49,12 +53,12 @@ public class Kernel {
             //display what provider is being booted in console
             System.out.println("Booting : "+provider);
             //boot provider
-            provider.boot();
+            provider.boot(this.app);
         }
     }
 
-    public void loadConfig(){
-        //TODO load config
+    public Config getConfig(){
+        return this.config;
     }
 
     public Application getApplication(){
@@ -84,5 +88,7 @@ public class Kernel {
             }
         }
     }
+
+
 
 }
