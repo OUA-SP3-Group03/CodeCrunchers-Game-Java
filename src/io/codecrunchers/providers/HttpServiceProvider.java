@@ -1,12 +1,14 @@
 package io.codecrunchers.providers;
 
 import io.codecrunchers.core.Provider;
+import io.codecrunchers.facades.App;
 
 import java.awt.*;
 
 public class HttpServiceProvider extends Provider {
+
     @Override
-    public void boot() {
+    public void boot(App app) {
         //TODO add service provider code
     }
 
