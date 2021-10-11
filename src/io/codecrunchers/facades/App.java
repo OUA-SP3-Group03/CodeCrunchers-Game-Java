@@ -21,8 +21,7 @@ public class App {
 
     //**** GET INSTANCE OF THE CANVAS ****\\
     public Canvas canvas(){
-        DisplayServiceProvider display = (DisplayServiceProvider) this.kernel.getServiceProvider("display");
-        return display.getCanvas();
+        return ((DisplayServiceProvider) this.kernel.getServiceProvider("display")).getCanvas();
     }
 
     //**** RENDER PROVIDERS FACADE ****\\
