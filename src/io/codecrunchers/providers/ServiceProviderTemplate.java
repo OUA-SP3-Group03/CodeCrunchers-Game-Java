@@ -1,6 +1,8 @@
 package io.codecrunchers.providers;
 
+
 import io.codecrunchers.core.Provider;
+import io.codecrunchers.facades.App;
 
 import java.awt.*;
 
@@ -13,7 +15,7 @@ public class ServiceProviderTemplate extends Provider {
 
     //**** BOOT METHOD ****\\
     @Override
-    public void boot() {
+    public void boot(App app) {
         //this method is called by the Kernel when the program loads for the first time, you can think of this like your constructor class
         //place any code that you need to run at the start of the program once in here
     }
