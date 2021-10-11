@@ -34,5 +34,28 @@ public class App {
         this.kernel.tick();
     }
 
+    //*** GET INTERFACE WIDTH ****\\
+    public int interfaceWidth(){
+        return this.kernel.getConfig().interfaceWidth;
+    }
+
+    //*** GET INTERFACE HEIGHT ****\\
+    public int interfaceHeight(){
+        return this.kernel.getConfig().interfaceHeight;
+    }
+
+    //*** GET INTERFACE TITLE ****\\
+    public String interfaceTitle(){
+        return this.kernel.getConfig().title;
+    }
+
+    //**** GET TARGET FPS & TPS ****\\
+    public int getTargetFPS(){
+        return this.kernel.getConfig().targetFPS;
+    }
+
+
+
+
 
 }
