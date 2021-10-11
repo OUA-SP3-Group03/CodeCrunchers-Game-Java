@@ -10,16 +10,9 @@ public class Application {
     private final App app;
 
     public Application(App app){
+
         //set this app equal to the app facade
         this.app = app;
-        //Console log application creation
-        System.out.println("Application Created!");
-
-        //render and tick testing
-        while(true) {
-            this.render();
-            this.tick();
-        }
     }
 
     public void tick(){
