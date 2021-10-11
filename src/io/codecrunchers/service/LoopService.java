@@ -73,13 +73,4 @@ public class LoopService implements Runnable{
         }
     }
 
-
-    //TEMP
-    private void render(){
-       // System.out.println("render fired");
-    }
-
-    private void tick(){
-        //System.out.println("tick fired");
-    }
 }
