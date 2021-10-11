@@ -1,4 +1,4 @@
-package io.codecrunchers.entity;
+package io.codecrunchers.z_old_stuff.entity;
 
 import java.awt.*;
 import java.util.LinkedList;
