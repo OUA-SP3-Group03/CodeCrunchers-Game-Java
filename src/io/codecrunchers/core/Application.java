@@ -29,11 +29,11 @@ public class Application {
 
        //create the graphics object to draw to that buffered strategy
        Graphics g = bs.getDrawGraphics();
+       g.clearRect(0,0,this.app.interfaceWidth(),this.app.interfaceHeight());
 
        //__ START RENDER
 
            //PLACEHOLDER TESTING
-           g.clearRect(0,0,this.app.interfaceWidth(),this.app.interfaceHeight());
            g.drawString("Hello World!",20,20);
            g.setColor(Color.red);
            g.drawRect(50,50,100,100);
