@@ -26,6 +26,7 @@ public class Kernel {
         this.providers.put("http", new HttpServiceProvider());
         this.providers.put("interface", new InterfaceServiceProvider());
 
+        //boot all service providers
         this.bootProviders();
 
         //create the app facade
@@ -33,6 +34,14 @@ public class Kernel {
 
         //create our application singleton instance
         this.application = new Application(app);
+
+        //get loop service provider from list of providers
+        LoopServiceProvider loop = (LoopServiceProvider) this.providers.get("loop");
+        //parse the application in via the callback
+        loop.setApplicationCallback(application);
+        //start the main loop
+        loop.startLoop();
+
     }
 
     public void bootProviders(){
