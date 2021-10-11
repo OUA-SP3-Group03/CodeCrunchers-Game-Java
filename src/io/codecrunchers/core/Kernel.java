@@ -35,12 +35,10 @@ public class Kernel {
         //create our application singleton instance
         this.application = new Application(app);
 
-        //get loop service provider from list of providers
-        LoopServiceProvider loop = (LoopServiceProvider) this.providers.get("loop");
         //parse the application in via the callback
-        loop.setApplicationCallback(application);
+        ((LoopServiceProvider) this.providers.get("loop") ).setApplicationCallback(application);
         //start the main loop
-        loop.startLoop();
+        ((LoopServiceProvider) this.providers.get("loop") ).startLoop();
 
     }
 
