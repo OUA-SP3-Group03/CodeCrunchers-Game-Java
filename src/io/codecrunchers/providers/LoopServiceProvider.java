@@ -1,13 +1,22 @@
 package io.codecrunchers.providers;
 
+import io.codecrunchers.core.Application;
 import io.codecrunchers.core.Provider;
+import io.codecrunchers.facades.App;
+import io.codecrunchers.service.LoopService;
 
 import java.awt.*;
 
 public class LoopServiceProvider extends Provider {
+
+    private boolean running;
+    private Application application;
+    private LoopService loopService;
+
     @Override
     public void boot() {
-        //TODO add service provider code
+        this.running = false;
+        this.loopService = new LoopService(this);
     }
 
     @Override
@@ -29,4 +38,25 @@ public class LoopServiceProvider extends Provider {
     public void tick() {
 
     }
+
+    public boolean getRunningStatus(){
+        return this.running;
+    }
+
+    public void setRunningStatus(boolean status){
+        this.running = status;
+    }
+
+    public void setApplicationCallback(Application application){
+        this.application = application;
+    }
+
+    public Application getApplication(){
+        return this.application;
+    }
+
+    public void startLoop(){
+        this.loopService.start();
+    }
+
 }
