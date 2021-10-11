@@ -18,7 +18,7 @@ public class DisplayServiceProvider extends Provider {
        //set the canvas from the new display service
        this.displayCanvas = display.createDisplay();
        //set the target FPS and TPS
-        this.targetFPS = app.getTargetFPS();
+        this.targetFPS = app.targetFPS();
 
     }
 
