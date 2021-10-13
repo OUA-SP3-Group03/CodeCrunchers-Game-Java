@@ -1,14 +1,8 @@
-package io.codecrunchers.providers;
+package io.codecrunchers.service;
 
-
-import io.codecrunchers.core.Provider;
-import io.codecrunchers.facades.App;
-
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class AnimationServiceProvider extends Provider {
-
+public class AnimationService {
     //Cycle speed of the animation
     private float animationSpeed;
 
@@ -22,14 +16,10 @@ public class AnimationServiceProvider extends Provider {
     private BufferedImage[] animationImages;
 
     //Constructor
-    public AnimationServiceProvider(BufferedImage[] animationImages, float animationSpeed) {
+    public AnimationService(BufferedImage[] animationImages, float animationSpeed) {
         this.animationSpeed = animationSpeed;
         this.animationImages = animationImages;
-    }
 
-    //**** BOOT METHOD ****\\
-    @Override
-    public void boot(App app) {
         //Start at first animation frame
         currentImage = 0;
 
@@ -40,24 +30,8 @@ public class AnimationServiceProvider extends Provider {
         elapsedTime = System.currentTimeMillis();
     }
 
-    //**** PERFORM TICK METHOD ****\\
-    @Override
-    public boolean performTick() {
-        return true;
-    }
-
-    //**** PERFORM RENDER METHOD ****\\
-    @Override
-    public boolean performRender() {
-        return false;
-    }
-
-    //**** RENDER METHOD ****\\
-    @Override
-    public void render(Graphics g) {}
-
-    //**** TICK METHOD ****\\
-    @Override
+    //Cycle through each frame
+    //The amount of cycles to pass from one image to the next depends on 'animationSpeed'
     public void tick() {
         //Set 'animationTimer' to time of last cycle
         animationTimer += System.currentTimeMillis() - elapsedTime;
@@ -84,5 +58,4 @@ public class AnimationServiceProvider extends Provider {
     public BufferedImage getCurrentImage() {
         return animationImages[currentImage];
     }
-
 }
