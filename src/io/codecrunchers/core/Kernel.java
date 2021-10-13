@@ -33,6 +33,12 @@ public class Kernel {
         this.providers.put("http", new HttpServiceProvider());
         this.providers.put("interface", new InterfaceServiceProvider());
 
+        //_________ REGISTER YOUR NEW PROVIDER HERE ___________\\
+
+        //this.provider.put("provider", new YourServiceProvider());
+
+        //______________________________________________________\\
+
         //boot all service providers
         this.bootProviders();
 
