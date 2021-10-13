@@ -1,10 +1,7 @@
 package io.codecrunchers.core;
 
 import io.codecrunchers.facades.App;
-import io.codecrunchers.providers.DisplayServiceProvider;
-import io.codecrunchers.providers.HttpServiceProvider;
-import io.codecrunchers.providers.InterfaceServiceProvider;
-import io.codecrunchers.providers.LoopServiceProvider;
+import io.codecrunchers.providers.*;
 
 
 import java.awt.*;
@@ -33,6 +30,7 @@ public class Kernel {
         this.providers.put("loop", new LoopServiceProvider());
         this.providers.put("http", new HttpServiceProvider());
         this.providers.put("interface", new InterfaceServiceProvider());
+        this.providers.put("levelgenerator",new LevelGeneratorServiceProvider());
 
         //_________ REGISTER YOUR NEW PROVIDER HERE ___________\\
 
