@@ -44,7 +44,14 @@ public class Kernel {
         this.bootProviders();
 
         //create our application singleton instance
-        this.application = new Application(this.app);
+        this.application = new Application();
+
+        //run the after boot application method
+        if(this.booted){
+            this.application.onBootCompletion(this.app);
+        }else{
+            System.out.println("Application failed to boot");
+        }
 
     }
 
@@ -59,6 +66,7 @@ public class Kernel {
         }
 
         this.booted = true;
+
     }
 
     public Config getConfig(){

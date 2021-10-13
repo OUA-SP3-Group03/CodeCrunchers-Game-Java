@@ -7,18 +7,13 @@ import java.awt.image.BufferStrategy;
 
 public class Application {
 
-    private final App app;
+    private App app;
 
-    public Application(App app){
-
+    public void onBootCompletion(App app){
         //set this app equal to the app facade
         this.app = app;
 
-        if(this.app.booted()){
-            this.app.startLoop();
-        }else{
-            System.out.println("Application failed to boot");
-        }
+        this.app.startLoop();
     }
 
     public void tick(){

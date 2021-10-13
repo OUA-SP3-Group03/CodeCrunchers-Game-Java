@@ -3,6 +3,7 @@ package io.codecrunchers.facades;
 import io.codecrunchers.core.Application;
 import io.codecrunchers.core.Kernel;
 import io.codecrunchers.providers.DisplayServiceProvider;
+import io.codecrunchers.providers.HttpServiceProvider;
 import io.codecrunchers.providers.LoopServiceProvider;
 
 import java.awt.*;
@@ -50,4 +51,23 @@ public class App {
     public void startLoop(){
         ((LoopServiceProvider)this.kernel.getServiceProvider("loop")).startLoop();
     }
+
+    //**** LOGIN HTTP CALL ****\\
+    public String authLogin(String email, String password){
+        return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).login(email, password);
+    }
+
+    //**** CHECK LOGIN HTTP CALL ****\\
+    public String authCheck(String token){
+        return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).check(token);
+    }
+
+    //**** LOGOUT HTTP CALL ****\\
+    public String authLogout(String token){
+        return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).logout(token);
+    }
+
+
+
+
 }
