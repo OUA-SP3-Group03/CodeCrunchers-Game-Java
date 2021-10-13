@@ -54,4 +54,14 @@ public class App {
         return this.kernel.getConfig().targetFPS;
     }
 
+    //**** GET SHOW FPS ****\\
+    public boolean showFPS(){
+        return this.kernel.getConfig().showFPS;
+    }
+
+    //**** GET API URL ****\\
+    public String apiUrl(){
+        return this.kernel.getConfig().apiUrl;
+    }
+
 }
