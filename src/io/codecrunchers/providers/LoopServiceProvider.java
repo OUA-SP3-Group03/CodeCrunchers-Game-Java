@@ -10,15 +10,16 @@ import java.awt.*;
 public class LoopServiceProvider extends Provider {
 
     private boolean running;
-    private Application application;
+    private App app;
     private LoopService loopService;
 
 
     @Override
     public void boot(App app) {
+        this.app = app;
         this.running = false;
         this.loopService = new LoopService(this);
-        this.loopService.setShowFPS(app.showFPS());
+        this.loopService.setShowFPS(app.config().showFPS());
     }
 
     @Override
@@ -49,12 +50,8 @@ public class LoopServiceProvider extends Provider {
         this.running = status;
     }
 
-    public void setApplicationCallback(Application application){
-        this.application = application;
-    }
-
     public Application getApplication(){
-        return this.application;
+        return this.app.self();
     }
 
     public void startLoop(){
