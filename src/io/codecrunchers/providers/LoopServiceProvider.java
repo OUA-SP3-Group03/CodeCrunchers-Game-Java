@@ -18,6 +18,7 @@ public class LoopServiceProvider extends Provider {
     public void boot(App app) {
         this.running = false;
         this.loopService = new LoopService(this);
+        this.loopService.setShowFPS(app.showFPS());
     }
 
     @Override
