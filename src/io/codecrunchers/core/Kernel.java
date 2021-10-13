@@ -16,6 +16,7 @@ public class Kernel {
     private final Application application;
     private final App app;
     private final Config config;
+    private boolean booted = false;
 
     public Kernel() {
         //create the config
@@ -45,11 +46,6 @@ public class Kernel {
         //create our application singleton instance
         this.application = new Application(this.app);
 
-        //parse the application in via the callback
-        ((LoopServiceProvider) this.providers.get("loop") ).setApplicationCallback(application);
-        //start the main loop
-        ((LoopServiceProvider) this.providers.get("loop") ).startLoop();
-
     }
 
     public void bootProviders(){
@@ -61,10 +57,16 @@ public class Kernel {
             //boot provider
             provider.boot(this.app);
         }
+
+        this.booted = true;
     }
 
     public Config getConfig(){
         return this.config;
+    }
+
+    public boolean getBootedStatus(){
+        return this.booted;
     }
 
     public Application getApplication(){
