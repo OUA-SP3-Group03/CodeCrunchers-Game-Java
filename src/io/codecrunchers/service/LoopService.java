@@ -15,7 +15,7 @@ public class LoopService implements Runnable{
     @Override
     public void run() {
 
-        //TEMP local vars
+        //local vars
         int fps = 60;
         double timePerTick = 1000000000 /fps;
         double delta = 0;
