@@ -14,16 +14,11 @@ public class HttpServiceProvider extends Provider {
 
     @Override
     public void boot(App app) {
-
         //create the app variable
         this.app = app;
 
         //create new HttpService
         this.httpService = new HttpService();
-
-        //DEBUG!
-        System.out.println(this.check("b78923382d597d6e921c050a602808825f2b8df4068b4d1fbb02fe3ae23232ca90277a1f7466863d8e31bc55905d6674b74f"));
-
     }
 
     @Override
@@ -52,7 +47,7 @@ public class HttpServiceProvider extends Provider {
         String response;
 
         try {
-            response = this.httpService.postRequest(this.app.apiUrl() + "/auth/login", data);
+            response = this.httpService.postRequest(this.app.config().apiUrl() + "/auth/login", data);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             response = "no response from http request";
@@ -68,13 +63,27 @@ public class HttpServiceProvider extends Provider {
         String response;
 
         try {
-            response = this.httpService.postRequest(this.app.apiUrl() + "/auth/check", data);
+            response = this.httpService.postRequest(this.app.config().apiUrl() + "/auth/check", data);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             response = "no response from http request";
         }
 
         return response;
+    }
 
+    public String logout(String token){
+
+        String data = "type=game&token="+token;
+        String response;
+
+        try {
+            response = this.httpService.postRequest(this.app.config().apiUrl()+"/auth/logout", data);
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            response = "no response from http request";
+        }
+        return response;
     }
 }
