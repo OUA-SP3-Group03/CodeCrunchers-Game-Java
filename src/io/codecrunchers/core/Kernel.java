@@ -32,6 +32,7 @@ public class Kernel {
         this.providers.put("interface", new InterfaceServiceProvider());
         this.providers.put("levelgenerator",new LevelGeneratorServiceProvider());
         this.providers.put("keyboard", new KeyboardServiceProvider());
+        this.providers.put("mouse", new MouseServiceProvider());
 
         //_________ REGISTER YOUR NEW PROVIDER HERE ___________\\
 
