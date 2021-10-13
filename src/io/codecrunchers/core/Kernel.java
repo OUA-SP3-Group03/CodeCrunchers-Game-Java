@@ -31,6 +31,7 @@ public class Kernel {
         this.providers.put("http", new HttpServiceProvider());
         this.providers.put("interface", new InterfaceServiceProvider());
         this.providers.put("levelgenerator",new LevelGeneratorServiceProvider());
+        this.providers.put("keyboard", new KeyboardServiceProvider());
 
         //_________ REGISTER YOUR NEW PROVIDER HERE ___________\\
 
