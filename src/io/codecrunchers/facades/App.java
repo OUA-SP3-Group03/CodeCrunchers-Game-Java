@@ -3,20 +3,32 @@ package io.codecrunchers.facades;
 import io.codecrunchers.core.Application;
 import io.codecrunchers.core.Kernel;
 import io.codecrunchers.providers.DisplayServiceProvider;
+import io.codecrunchers.providers.LoopServiceProvider;
 
 import java.awt.*;
 
 public class App {
 
     private final Kernel kernel;
+    private final Config config;
 
     public App(Kernel kernel){
         this.kernel = kernel;
+        this.config = new Config(this.kernel);
     }
 
     //**** GET INSTANCE OF THE APPLICATION ****\\
     public Application self(){
         return this.kernel.getApplication();
+    }
+
+    //**** GET CONFIG ****\\
+    public Config config(){
+        return this.config;
+    }
+
+    public boolean booted(){
+        return this.kernel.getBootedStatus();
     }
 
     //**** GET INSTANCE OF THE CANVAS ****\\
@@ -29,29 +41,13 @@ public class App {
        this.kernel.render(g);
     }
 
-    //*** TICK PROVIDERS FACADE ****\\
+    //**** TICK PROVIDERS FACADE ****\\
     public void tick(){
         this.kernel.tick();
     }
 
-    //*** GET INTERFACE WIDTH ****\\
-    public int interfaceWidth(){
-        return this.kernel.getConfig().interfaceWidth;
+    //**** START LOOP CALL ****\\
+    public void startLoop(){
+        ((LoopServiceProvider)this.kernel.getServiceProvider("loop")).startLoop();
     }
-
-    //*** GET INTERFACE HEIGHT ****\\
-    public int interfaceHeight(){
-        return this.kernel.getConfig().interfaceHeight;
-    }
-
-    //*** GET INTERFACE TITLE ****\\
-    public String interfaceTitle(){
-        return this.kernel.getConfig().title;
-    }
-
-    //**** GET TARGET FPS & TPS ****\\
-    public int targetFPS(){
-        return this.kernel.getConfig().targetFPS;
-    }
-
 }

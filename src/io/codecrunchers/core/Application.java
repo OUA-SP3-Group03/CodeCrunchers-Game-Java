@@ -13,6 +13,12 @@ public class Application {
 
         //set this app equal to the app facade
         this.app = app;
+
+        if(this.app.booted()){
+            this.app.startLoop();
+        }else{
+            System.out.println("Application failed to boot");
+        }
     }
 
     public void tick(){
@@ -29,7 +35,7 @@ public class Application {
 
        //create the graphics object to draw to that buffered strategy
        Graphics g = bs.getDrawGraphics();
-       g.clearRect(0,0,this.app.interfaceWidth(),this.app.interfaceHeight());
+       g.clearRect(0,0,this.app.config().interfaceWidth(),this.app.config().interfaceHeight());
 
        //__ START RENDER
 

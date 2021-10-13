@@ -6,6 +6,7 @@ public class LoopService implements Runnable{
 
     private final LoopServiceProvider loopServiceProvider;
     private Thread thread;
+    private boolean showFPS = false;
 
     public LoopService(LoopServiceProvider loopServiceProvider){
         this.loopServiceProvider = loopServiceProvider;
@@ -14,7 +15,7 @@ public class LoopService implements Runnable{
     @Override
     public void run() {
 
-        //TEMP local vars
+        //local vars
         int fps = 60;
         double timePerTick = 1000000000 /fps;
         double delta = 0;
@@ -40,7 +41,9 @@ public class LoopService implements Runnable{
             }
 
             if(timer >= 1000000000){
-                System.out.println("fps: "+ticks);
+                if(this.showFPS) {
+                    System.out.println("fps: " + ticks);
+                }
                 ticks = 0;
                 timer = 0;
             }
@@ -52,7 +55,6 @@ public class LoopService implements Runnable{
         if(this.loopServiceProvider.getRunningStatus()){
             return;
         }else{
-            System.out.println("starting loop");
             this.loopServiceProvider.setRunningStatus(true);
             this.thread = new Thread(this);
             this.thread.start();
@@ -65,12 +67,15 @@ public class LoopService implements Runnable{
         }
         else{
             try{
-                System.out.println("stopping loop");
                 this.thread.join();
             }catch (InterruptedException e){
                 e.printStackTrace();
             }
         }
+    }
+
+    public void setShowFPS(boolean value){
+        this.showFPS = value;
     }
 
 }

@@ -5,5 +5,6 @@ public class Config {
     public int interfaceWidth = 1280;
     public int interfaceHeight = 720;
     public int targetFPS = 60;
-    public boolean showFPS = false;
+    public boolean showFPS = true;
+    public String apiUrl = "http://localhost/api";
 }
