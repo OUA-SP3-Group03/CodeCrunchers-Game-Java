@@ -8,9 +8,11 @@ import java.awt.*;
 public abstract class InterfaceObject {
 
     //Interface Object references variables targeting other objects
-    protected App app = null;
+    //NEW APP NEEDED TO PREVENT FIST CALL FAILURE
+    protected App app = new App(null);
     protected State state = null;
     protected ClickEvent clickListener = null;
+    protected boolean isPressed = false;
 
     //Interface object size and bounds
     protected Rectangle bounds;
@@ -22,6 +24,8 @@ public abstract class InterfaceObject {
 
     //Interface object hovering status
     protected Boolean hovering = false;
+    protected Boolean showOnHover = true;
+    protected Color hoverColor = new Color(0,0,0,0.5F );
 
     //Interface Object text and alignment variables
     protected String text = "New Button";
@@ -68,6 +72,16 @@ public abstract class InterfaceObject {
 
         //set booted to true so this method is not called again
         this.booted = true;
+    }
+
+    //check hovering
+    public void checkHover(){
+        this.hovering = this.bounds.contains(this.app.mouseX(), this.app.mouseY());
+    }
+
+    public void drawOnHover(Graphics g){
+        g.setColor(this.hoverColor);
+        g.fillRect(this.x, this.y, this.width, this.height);
     }
 
 
@@ -140,8 +154,13 @@ public abstract class InterfaceObject {
         return this;
     }
 
-    public InterfaceObject showOutline(Boolean value){
-        this.showOutline = value;
+    public InterfaceObject setShowOnHover(boolean value){
+        this.showOnHover = value;
+        return this;
+    }
+
+    public InterfaceObject setHoverColor(Color value){
+        this.hoverColor = value;
         return this;
     }
 
@@ -149,5 +168,13 @@ public abstract class InterfaceObject {
 
     public State getAssignedState() {
         return this.state;
+    }
+
+    public boolean getHovering(){
+        return this.hovering;
+    }
+
+    public boolean getShowOnHover(){
+        return this.showOnHover;
     }
 }
