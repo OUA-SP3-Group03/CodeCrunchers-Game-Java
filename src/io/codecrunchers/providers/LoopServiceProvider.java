@@ -19,7 +19,6 @@ public class LoopServiceProvider extends Provider {
         this.app = app;
         this.running = false;
         this.loopService = new LoopService(this);
-        this.loopService.setShowFPS(app.config().showFPS());
     }
 
     @Override
@@ -60,6 +59,10 @@ public class LoopServiceProvider extends Provider {
 
     public int getTPSTarget(){
         return this.app.config().targetTPS();
+    }
+
+    public Boolean showFPS(){
+        return this.app.config().showFPS();
     }
 
     public void startLoop(){
