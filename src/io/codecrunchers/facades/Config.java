@@ -25,9 +25,14 @@ public class Config {
         return this.kernel.getConfig().title;
     }
 
-    //**** GET TARGET FPS & TPS ****\\
+    //**** GET TARGET FPS  ****\\
     public int targetFPS(){
         return this.kernel.getConfig().targetFPS;
+    }
+
+    //**** GET TARGET TPS ****\\
+    public int targetTPS(){
+        return this.kernel.getConfig().targetTPS;
     }
 
     //**** GET SHOW FPS ****\\
