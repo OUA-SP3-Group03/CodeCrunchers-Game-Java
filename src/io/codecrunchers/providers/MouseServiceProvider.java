@@ -19,7 +19,13 @@ public class MouseServiceProvider extends Provider implements MouseListener, Mou
 
     //**** BOOT METHOD ****\\
     @Override
-    public void boot(App app) {}
+    public void boot(App app) {
+        app.callback().setMouseListener(this);
+        app.canvas().addMouseListener(this);
+        app.canvas().addMouseMotionListener(this);
+
+        this.booted = true;
+    }
 
     //**** PERFORM TICK METHOD ****\\
     @Override
