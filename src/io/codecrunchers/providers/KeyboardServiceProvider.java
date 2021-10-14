@@ -7,38 +7,26 @@ import io.codecrunchers.facades.App;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
 
 public class KeyboardServiceProvider extends Provider implements KeyListener {
 
-
-    //Create an array which can store the ascii code of a key that is pressed
-    private boolean[] keyCodes;
-
-    //Public booleans so other classes can check their values
-    //No need to create a getter for every single one
-    //Jump
-    public boolean up, w;
-    //Move left
-    public boolean left, a;
-    //Move right
-    public boolean right, d;
-    //Attack
-    public boolean space;
-    //Switch attack modes
-    //public boolean ...
-    //Menu
-    public boolean escape, enter;
+    public HashMap <Integer, Boolean> keyCodes;
 
     //**** BOOT METHOD ****\\
     @Override
     public void boot(App app) {
-        keyCodes = new boolean[91];
+        app.callback().setKeyListener(this);
+
+        keyCodes = new HashMap<Integer, Boolean>();
+
+        this.booted = true;
     }
 
     //**** PERFORM TICK METHOD ****\\
     @Override
     public boolean performTick() {
-        return true;
+        return false;
     }
 
     //**** PERFORM RENDER METHOD ****\\
@@ -53,36 +41,18 @@ public class KeyboardServiceProvider extends Provider implements KeyListener {
 
     //**** TICK METHOD ****\\
     @Override
-    public void tick() {
-        //Set boolean variables if key is pressed/released
-        //Jump
-        up = keyCodes[KeyEvent.VK_UP];
-        w = keyCodes[KeyEvent.VK_W];
-        //Move left
-        left = keyCodes[KeyEvent.VK_LEFT];
-        a = keyCodes[KeyEvent.VK_A];
-        //Move right
-        right = keyCodes[KeyEvent.VK_RIGHT];
-        d = keyCodes[KeyEvent.VK_D];
-        //Attack
-        space = keyCodes[KeyEvent.VK_SPACE];
-        //Menu
-        escape = keyCodes[KeyEvent.VK_ESCAPE];
-        enter = keyCodes[KeyEvent.VK_ENTER];
-    }
+    public void tick() {}
 
     @Override
     public void keyPressed(KeyEvent e) {
-        keyCodes[e.getKeyCode()] = true;
+        keyCodes.put(e.getKeyCode(), true);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        keyCodes[e.getKeyCode()] = false;
+        keyCodes.remove(e.getKeyCode());
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
+    public void keyTyped(KeyEvent e) {}
 }
