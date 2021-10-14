@@ -2,9 +2,7 @@ package io.codecrunchers.facades;
 
 import io.codecrunchers.core.Application;
 import io.codecrunchers.core.Kernel;
-import io.codecrunchers.providers.DisplayServiceProvider;
-import io.codecrunchers.providers.HttpServiceProvider;
-import io.codecrunchers.providers.LoopServiceProvider;
+import io.codecrunchers.providers.*;
 
 import java.awt.*;
 
@@ -12,10 +10,12 @@ public class App {
 
     private final Kernel kernel;
     private final Config config;
+    private final Callback callback;
 
     public App(Kernel kernel){
         this.kernel = kernel;
         this.config = new Config(this.kernel);
+        this.callback = new Callback(this.kernel);
     }
 
     //**** GET INSTANCE OF THE APPLICATION ****\\
@@ -26,6 +26,10 @@ public class App {
     //**** GET CONFIG ****\\
     public Config config(){
         return this.config;
+    }
+
+    public Callback callback() {
+        return this.callback;
     }
 
     public boolean booted(){
@@ -67,7 +71,21 @@ public class App {
         return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).logout(token);
     }
 
+    //**** INPUTS ****\\
+    public Boolean keyPressed(char key) {
+        return ((KeyboardServiceProvider) this.kernel.getServiceProvider("keyboard")).keyCodes.containsKey((int) key);
+    }
 
+    public Boolean mousePressed() {
+        return ((MouseServiceProvider) this.kernel.getServiceProvider("mouse")).isMousePressed();
+    }
 
+    public int mouseX() {
+        return ((MouseServiceProvider) this.kernel.getServiceProvider("mouse")).getMouseX();
+    }
+
+    public int mouseY() {
+        return ((MouseServiceProvider) this.kernel.getServiceProvider("mouse")).getMouseY();
+    }
 
 }

@@ -9,6 +9,8 @@ public class DisplayService {
     private final int width;
     private final int height;
 
+    public JFrame frame;
+
     public DisplayService(String title, int width, int height){
         this.title = title;
         this.width = width;
@@ -17,7 +19,7 @@ public class DisplayService {
 
     public Canvas createDisplay(){
         //Sets title of JFrame as it is created.
-        JFrame frame = new JFrame(title);
+        this.frame = new JFrame(title);
         //Sets size of said JFrame.
         frame.setSize(width, height);
         //Closes window correctly (stops it from running in the background).
