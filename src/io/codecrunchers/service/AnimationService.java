@@ -30,7 +30,7 @@ public class AnimationService {
         elapsedTime = System.currentTimeMillis();
     }
 
-    //Cycle through each frame
+    //Cycle through each image
     //The amount of cycles to pass from one image to the next depends on 'animationSpeed'
     public void tick() {
         //Set 'animationTimer' to time of last cycle
