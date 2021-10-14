@@ -19,6 +19,8 @@ public class HttpServiceProvider extends Provider {
 
         //create new HttpService
         this.httpService = new HttpService();
+
+        this.booted = true;
     }
 
     @Override

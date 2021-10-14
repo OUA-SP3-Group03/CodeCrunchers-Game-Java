@@ -19,6 +19,9 @@ public class LoopServiceProvider extends Provider {
         this.app = app;
         this.running = false;
         this.loopService = new LoopService(this);
+
+        this.booted = true;
+
     }
 
     @Override
