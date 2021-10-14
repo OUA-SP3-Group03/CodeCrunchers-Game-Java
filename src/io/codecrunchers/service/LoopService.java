@@ -6,7 +6,6 @@ public class LoopService implements Runnable{
 
     private final LoopServiceProvider loopServiceProvider;
     private Thread thread;
-    private boolean showFPS = false;
 
     public LoopService(LoopServiceProvider loopServiceProvider){
         this.loopServiceProvider = loopServiceProvider;
@@ -15,40 +14,62 @@ public class LoopService implements Runnable{
     @Override
     public void run() {
 
-        //local vars
-        int fps = 60;
-        double timePerTick = 1000000000 /fps;
-        double delta = 0;
+        //set FPS and TPS target
+        int fpsTarget = this.loopServiceProvider.getFPSTarget();
+        int tpsTarget = this.loopServiceProvider.getTPSTarget();
+
+        //calculate the required time per tick and time per render
+        double timePerRender = 1000000000 /fpsTarget;
+        double timePerTick = 1000000000 /tpsTarget;
+
+        //time calculation variables
         long now;
         long lastTime = System.nanoTime();
         long timer = 0;
-        int ticks = 0;
+
+        //real FPS and TPS
+        int fpsReal = 0;
+        int tpsReal = 0;
+
+        //double delta time for render and ticks
+        double renderDelta = 0;
+        double ticksDelta = 0;
 
         while(this.loopServiceProvider.getRunningStatus()){
+
             now = System.nanoTime();
-            delta+=(now-lastTime) / timePerTick;
+
+            ticksDelta+=(now-lastTime) / timePerTick;
+            renderDelta+=(now-lastTime) / timePerRender;
+
             timer += now - lastTime;
+
             lastTime = now;
 
-
-            if(delta >= 1){
-
-                this.loopServiceProvider.getApplication().render();
+            //process the ticks
+            if(ticksDelta >= 1){
                 this.loopServiceProvider.getApplication().tick();
+                tpsReal++;
+                ticksDelta--;
+            }
 
-                ticks++;
-                delta--;
+            //process the render
+            if(renderDelta >= 1){
+                this.loopServiceProvider.getApplication().render();
+                fpsReal++;
+                renderDelta--;
             }
 
             if(timer >= 1000000000){
-                if(this.showFPS) {
-                    System.out.println("fps: " + ticks);
+                if(this.loopServiceProvider.showFPS()) {
+                    System.out.println("fps: " + fpsReal + " tps: "+tpsReal);
                 }
-                ticks = 0;
+                fpsReal = 0;
+                tpsReal = 0;
                 timer = 0;
             }
         }
-    this.stop();
+        this.stop();
     }
 
     public synchronized void start(){
@@ -72,10 +93,6 @@ public class LoopService implements Runnable{
                 e.printStackTrace();
             }
         }
-    }
-
-    public void setShowFPS(boolean value){
-        this.showFPS = value;
     }
 
 }

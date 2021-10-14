@@ -1,5 +1,7 @@
 package io.codecrunchers.core;
 
+import io.codecrunchers.classes.gui.InterfaceButton;
+import io.codecrunchers.classes.states.State;
 import io.codecrunchers.facades.App;
 
 import java.awt.*;
@@ -9,11 +11,47 @@ public class Application {
 
     private App app;
 
-    public void onBootCompletion(App app){
+    public void onBootCompletion(App app) {
         //set this app equal to the app facade
         this.app = app;
-
+        //start the main loop
         this.app.startLoop();
+
+        //DEBUGGING INTERFACE OBJECT
+
+        //button one
+        this.app.addInterfaceObject(new InterfaceButton()
+                .setX(this.app.config().interfaceWidth()/2-200/2)
+                .setY(this.app.config().interfaceHeight()/2-50/2)
+                .setWidth(200)
+                .setHeight(50)
+                .setText("Play")
+                .setState(new State())
+                .setTextColor(Color.black)
+                .showOutline(true));
+
+        //button two
+        this.app.addInterfaceObject(new InterfaceButton()
+                .setX(this.app.config().interfaceWidth()/2-200/2)
+                .setY(this.app.config().interfaceHeight()/2-50/2+75)
+                .setWidth(200)
+                .setText("Setting")
+                .setHeight(50)
+                .setState(new State())
+                .setTextColor(Color.blue)
+                .showOutline(true));
+
+        //button three
+        this.app.addInterfaceObject(new InterfaceButton()
+                .setX(this.app.config().interfaceWidth()/2-200/2)
+                .setY(this.app.config().interfaceHeight()/2-50/2+150)
+                .setWidth(200)
+                .setHeight(50)
+                .setText("Quite")
+                .setState(new State())
+                .setTextColor(Color.red)
+                .showOutline(true)
+        );
     }
 
     public void tick(){
@@ -33,11 +71,6 @@ public class Application {
        g.clearRect(0,0,this.app.config().interfaceWidth(),this.app.config().interfaceHeight());
 
        //__ START RENDER
-
-           //PLACEHOLDER TESTING
-           g.drawString("Hello World!",20,20);
-           g.setColor(Color.red);
-           g.drawRect(50,50,100,100);
 
            //render providers
            this.app.render(g);
