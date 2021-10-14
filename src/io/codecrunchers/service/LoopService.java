@@ -6,7 +6,6 @@ public class LoopService implements Runnable{
 
     private final LoopServiceProvider loopServiceProvider;
     private Thread thread;
-    private boolean showFPS = false;
 
     public LoopService(LoopServiceProvider loopServiceProvider){
         this.loopServiceProvider = loopServiceProvider;
@@ -62,7 +61,7 @@ public class LoopService implements Runnable{
             }
 
             if(timer >= 1000000000){
-                if(this.showFPS) {
+                if(this.loopServiceProvider.showFPS()) {
                     System.out.println("fps: " + fpsReal + " tps: "+tpsReal);
                 }
                 fpsReal = 0;
@@ -70,7 +69,7 @@ public class LoopService implements Runnable{
                 timer = 0;
             }
         }
-    this.stop();
+        this.stop();
     }
 
     public synchronized void start(){
@@ -94,10 +93,6 @@ public class LoopService implements Runnable{
                 e.printStackTrace();
             }
         }
-    }
-
-    public void setShowFPS(boolean value){
-        this.showFPS = value;
     }
 
 }
