@@ -1,9 +1,12 @@
 package io.codecrunchers.facades;
 
+import io.codecrunchers.classes.gui.InterfaceObject;
+import io.codecrunchers.classes.states.State;
 import io.codecrunchers.core.Application;
 import io.codecrunchers.core.Kernel;
 import io.codecrunchers.providers.DisplayServiceProvider;
 import io.codecrunchers.providers.HttpServiceProvider;
+import io.codecrunchers.providers.InterfaceServiceProvider;
 import io.codecrunchers.providers.LoopServiceProvider;
 
 import java.awt.*;
@@ -66,6 +69,22 @@ public class App {
     public String authLogout(String token){
         return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).logout(token);
     }
+
+    //**** CURRENT STATE ****\\
+    public State state(){
+        //returns the current state
+        return new State();
+    }
+
+    //**** ADD GUI OBJECT ****\\
+    public void addInterfaceObject(InterfaceObject newObject){
+        ((InterfaceServiceProvider) this.kernel.getServiceProvider("interface")).addInterfaceObject(newObject);
+    }
+
+
+
+
+
 
 
 
