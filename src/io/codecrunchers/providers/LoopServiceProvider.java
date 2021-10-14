@@ -54,6 +54,14 @@ public class LoopServiceProvider extends Provider {
         return this.app.self();
     }
 
+    public int getFPSTarget(){
+        return this.app.config().targetFPS();
+    }
+
+    public int getTPSTarget(){
+        return this.app.config().targetTPS();
+    }
+
     public void startLoop(){
         this.loopService.start();
     }
