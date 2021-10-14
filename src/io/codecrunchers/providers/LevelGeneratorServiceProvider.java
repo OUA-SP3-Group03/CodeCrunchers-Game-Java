@@ -9,7 +9,7 @@ public class LevelGeneratorServiceProvider extends Provider {
 
     @Override
     public void boot(App app) {
-
+        this.booted = true;
     }
 
     @Override
