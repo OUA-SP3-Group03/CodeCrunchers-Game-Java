@@ -87,9 +87,9 @@ public class App {
     //**** INPUTS ****\\
     public Boolean keyPressed(char key) {
         return ((KeyboardServiceProvider) this.kernel.getServiceProvider("keyboard")).keyCodes.containsKey((int) key);
+    }
 
-
-    public Boolean mousePressed() {
+    public Boolean mousePressed(){
         return ((MouseServiceProvider) this.kernel.getServiceProvider("mouse")).isMousePressed();
     }
 
