@@ -29,9 +29,10 @@ public abstract class InterfaceObject {
     protected int textWidth = 0;
     protected int textHeight = 0;
     protected int drawTextX = 0;
+
     protected int drawTextY = 0;
     protected int textPadding = 10;
-    protected Color textColor = Color.white;
+    protected Color textColor = Color.black;
 
     //Interface Object system variables
     protected Boolean booted= false;
