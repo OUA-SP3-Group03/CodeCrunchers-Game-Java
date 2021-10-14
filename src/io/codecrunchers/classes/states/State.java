@@ -1,4 +1,4 @@
 package io.codecrunchers.classes.states;
 
-public abstract class State {
+public class State {
 }
