@@ -6,4 +6,9 @@ public class Config {
     public int interfaceHeight = 720;
     public int targetFPS = 60;
     public boolean showFPS = false;
+    public String texturePath = "res/testsheet.png";
+    public int textureWidth = 16;
+    public int textureHeight = 16;
+    public int textureMapWidth = 64;
+    public int textureMapHeight = 64;
 }
