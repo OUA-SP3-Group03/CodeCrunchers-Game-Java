@@ -14,7 +14,7 @@ public class AssetServiceProvider extends Provider {
 
     //**** BOOT METHOD ****\\
     private BufferedImage test;
-    private BufferedImage image;
+    private BufferedImage textureMap;
     private BufferedImage enemy;
     private BufferedImage[] images;
 
@@ -23,7 +23,8 @@ public class AssetServiceProvider extends Provider {
     //this method is called by the Kernel when the program loads for the first time, you can think of this like your constructor class
     //place any code that you need to run at the start of the program once in here
     public void boot(App app) {
-        image = imageLoader(app.texturePath());
+        //
+        textureMap = imageLoader(app.texturePath());
         int i = 0;
         int rows = 0;
         while (i < app.textureMapWidth()){
@@ -42,6 +43,24 @@ public class AssetServiceProvider extends Provider {
         }
         System.out.println(columns);
         this.images = new BufferedImage[rows * columns];
+
+        //
+        int x = 0;
+        int y = 0;
+        int currentImage = 0;
+
+        while (x < rows){
+            while (y < columns){
+                System.out.println("position ; x="+x+" y="+y);
+                this.images[currentImage] = textureMap.getSubimage(x*app.textureWidth(),y*app.textureHeight(),app.textureWidth(),app.textureHeight());
+                currentImage++;
+                System.out.println(currentImage);
+                y++;
+            }
+            y=0;
+            x++;
+        }
+
 
     }
 
@@ -82,9 +101,9 @@ public class AssetServiceProvider extends Provider {
         }
         return null;
     }
-//Testing Method
-    public BufferedImage getTest(){
-        return test;
+
+    public BufferedImage[] getImages(){
+        return this.images;
     }
 
 }
