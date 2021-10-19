@@ -4,9 +4,11 @@ import io.codecrunchers.classes.gui.InterfaceObject;
 import io.codecrunchers.classes.states.State;
 import io.codecrunchers.core.Application;
 import io.codecrunchers.core.Kernel;
+
 import io.codecrunchers.providers.*;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class App {
 
@@ -14,11 +16,21 @@ public class App {
     private final Config config;
     private final Callback callback;
 
+    private Texture texture;
+
     public App(Kernel kernel){
         this.kernel = kernel;
         this.config = new Config(this.kernel);
         this.callback = new Callback(this.kernel);
     }
+
+    public void textureCallback(Texture texture){
+        this.texture = texture;
+    }
+    public Texture texture (){
+        return this.texture;
+    }
+
 
     //**** GET INSTANCE OF THE APPLICATION ****\\
     public Application self(){
@@ -99,6 +111,37 @@ public class App {
 
     public int mouseY() {
         return ((MouseServiceProvider) this.kernel.getServiceProvider("mouse")).getMouseY();
+    }
+
+    //
+    public int textureWidth(){
+        return this.kernel.getConfig().textureWidth;
+    }
+    //
+    public int textureHeight(){
+        return this.kernel.getConfig().textureHeight;
+    }
+    //
+    public int textureMapWidth(){
+        return this.kernel.getConfig().textureMapWidth;
+    }
+    //
+    public int textureMapHeight(){
+        return this.kernel.getConfig().textureMapHeight;
+    }
+    //
+    public String texturePath(){
+        return this.kernel.getConfig().texturePath;
+    }
+
+    public BufferedImage[] getImages(){
+        AssetServiceProvider provider = ((AssetServiceProvider)this.kernel.getServiceProvider("assets"));
+        if(provider!=null){
+        return provider.getImages();
+        }
+        else{
+            return null;
+        }
     }
 
 }

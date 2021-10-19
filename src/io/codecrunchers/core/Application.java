@@ -72,6 +72,13 @@ public class Application {
 
        //__ START RENDER
 
+        //Test
+        g.drawImage(this.app.getImages()[0],16,16,null);
+
+           //PLACEHOLDER TESTING
+           g.drawString("Hello World!",20,20);
+           g.setColor(Color.red);
+           g.drawRect(50,50,100,100);
            //render providers
            this.app.render(g);
 

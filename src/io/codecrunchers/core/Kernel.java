@@ -1,6 +1,7 @@
 package io.codecrunchers.core;
 
 import io.codecrunchers.facades.App;
+import io.codecrunchers.facades.Texture;
 import io.codecrunchers.providers.*;
 
 
@@ -22,6 +23,9 @@ public class Kernel {
         //create the app facade
         this.app = new App(this);
 
+        //
+        this.app.textureCallback( new Texture());
+
         //create providers hashmap and set it to a new hashmap
         this.providers = new HashMap<String, Provider>();
 
@@ -30,6 +34,7 @@ public class Kernel {
         this.providers.put("loop", new LoopServiceProvider());
         this.providers.put("http", new HttpServiceProvider());
         this.providers.put("interface", new InterfaceServiceProvider());
+        this.providers.put("asset", new AssetServiceProvider());
         this.providers.put("levelgenerator",new LevelGeneratorServiceProvider());
         this.providers.put("keyboard", new KeyboardServiceProvider());
         this.providers.put("mouse", new MouseServiceProvider());
