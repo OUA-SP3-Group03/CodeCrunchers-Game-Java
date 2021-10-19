@@ -1,7 +1,8 @@
 package io.codecrunchers.core;
 
 import io.codecrunchers.classes.gui.InterfaceButton;
-import io.codecrunchers.classes.states.State;
+import io.codecrunchers.classes.states.GameState;
+import io.codecrunchers.classes.states.SettingsState;
 import io.codecrunchers.facades.App;
 
 import java.awt.*;
@@ -26,7 +27,7 @@ public class Application {
                 .setWidth(200)
                 .setHeight(50)
                 .setText("Play")
-                .setState(new State())
+                .setState(new GameState())
                 .setTextColor(Color.black)
                 .showOutline(true));
 
@@ -35,9 +36,9 @@ public class Application {
                 .setX(this.app.config().interfaceWidth()/2-200/2)
                 .setY(this.app.config().interfaceHeight()/2-50/2+75)
                 .setWidth(200)
-                .setText("Setting")
+                .setText("Settings")
                 .setHeight(50)
-                .setState(new State())
+                .setState(new SettingsState())
                 .setTextColor(Color.blue)
                 .showOutline(true));
 
@@ -47,8 +48,9 @@ public class Application {
                 .setY(this.app.config().interfaceHeight()/2-50/2+150)
                 .setWidth(200)
                 .setHeight(50)
-                .setText("Quite")
-                .setState(new State())
+                .setText("Quit")
+                //TODO does a new state need to be called to quit the game?
+                //.setState(new State())
                 .setTextColor(Color.red)
                 .showOutline(true)
         );
@@ -85,7 +87,7 @@ public class Application {
 
        //__ END RENDER
 
-       //finally show the buffered strategy and dispose of the old graphics
+       //finally, show the buffered strategy and dispose of the old graphics
        bs.show();
        g.dispose();
     }

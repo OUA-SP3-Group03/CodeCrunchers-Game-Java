@@ -2,6 +2,7 @@ package io.codecrunchers.facades;
 
 import io.codecrunchers.classes.gui.InterfaceObject;
 import io.codecrunchers.classes.states.State;
+import io.codecrunchers.classes.states.StateManager;
 import io.codecrunchers.core.Application;
 import io.codecrunchers.core.Kernel;
 
@@ -88,7 +89,7 @@ public class App {
     //**** CURRENT STATE ****\\
     public State state(){
         //returns the current state
-        return new State();
+        return StateManager.getCurrentState();
     }
 
     //**** ADD GUI OBJECT ****\\
