@@ -13,6 +13,9 @@ public class ServiceProviderTemplate extends Provider {
     //in addition to the methods provided here, please feel free to create your own accessor methods that hook into the app facade.
     //when a program or service provider needs access to methods in here go via the app facade and keep it simple!
 
+    //______ REMEMBER TO REGISTER PROVIDER WITH KERNEL ______\\
+    // refer to notes in kernel.class for instructions
+
     //**** BOOT METHOD ****\\
     @Override
     public void boot(App app) {

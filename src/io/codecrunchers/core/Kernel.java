@@ -14,6 +14,7 @@ public class Kernel {
     private final Application application;
     private final App app;
     private final Config config;
+    private boolean booted = false;
 
     public Kernel() {
         //create the config
@@ -34,33 +35,59 @@ public class Kernel {
         this.providers.put("http", new HttpServiceProvider());
         this.providers.put("interface", new InterfaceServiceProvider());
         this.providers.put("asset", new AssetServiceProvider());
+        this.providers.put("levelgenerator",new LevelGeneratorServiceProvider());
+        this.providers.put("keyboard", new KeyboardServiceProvider());
+        this.providers.put("mouse", new MouseServiceProvider());
+
+        //_________ REGISTER YOUR NEW PROVIDER HERE ___________\\
+
+        //this.provider.put("provider", new YourServiceProvider());
+
+        //______________________________________________________\\
 
         //boot all service providers
         this.bootProviders();
 
         //create our application singleton instance
-        this.application = new Application(this.app);
+        this.application = new Application();
 
-        //parse the application in via the callback
-        ((LoopServiceProvider) this.providers.get("loop") ).setApplicationCallback(application);
-        //start the main loop
-        ((LoopServiceProvider) this.providers.get("loop") ).startLoop();
+        //run the after boot application method
+        if(this.booted){
+            this.application.onBootCompletion(this.app);
+        }else{
+            System.out.println("Application failed to boot");
+        }
 
     }
 
     public void bootProviders(){
-        //run boot method on all service providers
+        //Display how many service providers are registered
         System.out.println(this.providers.size()+" Service Providers Registered");
+
+        //Boot display first to avoid any boot errors
+        this.providers.get("display").boot(this.app);
+
+        //run boot method on all service providers
         for(Provider provider : this.providers.values()){
             //display what provider is being booted in console
             System.out.println("Booting : "+provider);
-            //boot provider
-            provider.boot(this.app);
+            //if provider isn't already booted
+            if(!provider.isBooted()) {
+                //boot provider
+                provider.boot(this.app);
+            }
         }
+
+        this.booted = true;
+
     }
 
     public Config getConfig(){
         return this.config;
+    }
+
+    public boolean getBootedStatus(){
+        return this.booted;
     }
 
     public Application getApplication(){
