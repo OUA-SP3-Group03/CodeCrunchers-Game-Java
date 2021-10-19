@@ -23,45 +23,41 @@ public class AssetServiceProvider extends Provider {
     //this method is called by the Kernel when the program loads for the first time, you can think of this like your constructor class
     //place any code that you need to run at the start of the program once in here
     public void boot(App app) {
-        //
-        textureMap = imageLoader(app.texturePath());
+
+        //Code Block below is responsible for loading sprite sheet into application
+        textureMap = imageLoader(app.config().texturePath());
         int i = 0;
         int rows = 0;
-        while (i < app.textureMapWidth()){
+        while (i < app.config().textureMapWidth()){
             rows ++;
-            i += app.textureWidth();
-            System.out.println(i);
+            i += app.config().textureWidth();
         }
-        System.out.println(rows);
-
         i = 0;
         int columns = 0;
-        while(i < app.textureMapHeight()){
+        while(i < app.config().textureMapHeight()){
             columns ++;
-            i += app.textureHeight();
-            System.out.println(i);
+            i += app.config().textureHeight();
         }
-        System.out.println(columns);
+
         this.images = new BufferedImage[rows * columns];
 
-        //
+        //Code block below is responsible for auto-cropping loaded sprite sheet.
         int x = 0;
         int y = 0;
         int currentImage = 0;
 
+        //While loop create sub-images from texture map depending on their position.
         while (x < rows){
             while (y < columns){
-                System.out.println("position ; x="+x+" y="+y);
-                this.images[currentImage] = textureMap.getSubimage(x*app.textureWidth(),y*app.textureHeight(),app.textureWidth(),app.textureHeight());
+                this.images[currentImage] = textureMap.getSubimage(x*app.config().textureWidth(),y*app.config().textureHeight(),app.config().textureWidth(),app.config().textureHeight());
                 currentImage++;
-                System.out.println(currentImage);
                 y++;
             }
             y=0;
             x++;
         }
 
-
+    this.booted=true;
     }
 
     //**** PERFORM TICK METHOD ****\\
@@ -92,7 +88,7 @@ public class AssetServiceProvider extends Provider {
         //keep this code as lean as possible to keep performance high
     }
 
-    //**** YOUR METHOD ****\\
+    //**** Image loader method ****\\
     private BufferedImage imageLoader(String path ){
         try{
             return ImageIO.read(new File(path));
@@ -102,6 +98,7 @@ public class AssetServiceProvider extends Provider {
         return null;
     }
 
+    //**** Image getter method ****\\
     public BufferedImage[] getImages(){
         return this.images;
     }
