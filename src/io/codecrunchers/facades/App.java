@@ -25,10 +25,6 @@ public class App {
         return this.texture;
     }
 
-//Testing
-    public BufferedImage image(){
-        return ((AssetServiceProvider) this.kernel.getServiceProvider("asset")).getTest();
-    }
 
     //**** GET INSTANCE OF THE APPLICATION ****\\
     public Application self(){
@@ -70,22 +66,35 @@ public class App {
         return this.kernel.getConfig().targetFPS;
     }
 
+    //
     public int textureWidth(){
         return this.kernel.getConfig().textureWidth;
     }
-
+    //
     public int textureHeight(){
         return this.kernel.getConfig().textureHeight;
     }
+    //
     public int textureMapWidth(){
         return this.kernel.getConfig().textureMapWidth;
     }
+    //
     public int textureMapHeight(){
         return this.kernel.getConfig().textureMapHeight;
     }
-
+    //
     public String texturePath(){
         return this.kernel.getConfig().texturePath;
+    }
+
+    public BufferedImage[] getImages(){
+        AssetServiceProvider provider = ((AssetServiceProvider)this.kernel.getServiceProvider("assets"));
+        if(provider!=null){
+        return provider.getImages();
+        }
+        else{
+            return null;
+        }
     }
 
 }
