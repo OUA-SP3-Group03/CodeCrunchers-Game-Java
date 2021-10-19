@@ -11,22 +11,18 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class App {
-
+    private final Texture texture;
     private final Kernel kernel;
     private final Config config;
     private final Callback callback;
-
-    private Texture texture;
 
     public App(Kernel kernel){
         this.kernel = kernel;
         this.config = new Config(this.kernel);
         this.callback = new Callback(this.kernel);
+        this.texture = new Texture(this.kernel);
     }
 
-    public void textureCallback(Texture texture){
-        this.texture = texture;
-    }
     public Texture texture (){
         return this.texture;
     }
@@ -113,35 +109,8 @@ public class App {
         return ((MouseServiceProvider) this.kernel.getServiceProvider("mouse")).getMouseY();
     }
 
-    //
-    public int textureWidth(){
-        return this.kernel.getConfig().textureWidth;
-    }
-    //
-    public int textureHeight(){
-        return this.kernel.getConfig().textureHeight;
-    }
-    //
-    public int textureMapWidth(){
-        return this.kernel.getConfig().textureMapWidth;
-    }
-    //
-    public int textureMapHeight(){
-        return this.kernel.getConfig().textureMapHeight;
-    }
-    //
-    public String texturePath(){
-        return this.kernel.getConfig().texturePath;
-    }
 
-    public BufferedImage[] getImages(){
-        AssetServiceProvider provider = ((AssetServiceProvider)this.kernel.getServiceProvider("assets"));
-        if(provider!=null){
-        return provider.getImages();
-        }
-        else{
-            return null;
-        }
-    }
+
+
 
 }
