@@ -34,7 +34,7 @@ public class Application {
        //__ START RENDER
 
         //Test
-        g.drawImage(this.app.image(), 10, 10, null);
+        g.drawImage(this.app.getImages()[0],16,16,null);
 
            //PLACEHOLDER TESTING
            g.drawString("Hello World!",20,20);
