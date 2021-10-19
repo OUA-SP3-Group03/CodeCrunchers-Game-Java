@@ -23,9 +23,6 @@ public class Kernel {
         //create the app facade
         this.app = new App(this);
 
-        //
-        this.app.textureCallback( new Texture());
-
         //create providers hashmap and set it to a new hashmap
         this.providers = new HashMap<String, Provider>();
 
@@ -66,6 +63,7 @@ public class Kernel {
 
         //Boot display first to avoid any boot errors
         this.providers.get("display").boot(this.app);
+        this.providers.get("asset").boot(this.app);
 
         //run boot method on all service providers
         for(Provider provider : this.providers.values()){
