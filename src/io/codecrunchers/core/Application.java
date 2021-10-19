@@ -72,8 +72,10 @@ public class Application {
 
        //__ START RENDER
 
-        //Test
-        g.drawImage(this.app.getImages()[0],16,16,null);
+        //Used to test applications' ability to get specific points in sprite sheet and render.
+        g.drawImage(this.app.texture().allImages()[0],16,16,null);
+        g.drawImage(this.app.texture().allImages()[15],16,32, null );
+        g.drawImage(this.app.texture().userIcon(), 16,48,null);
 
            //PLACEHOLDER TESTING
            g.drawString("Hello World!",20,20);
