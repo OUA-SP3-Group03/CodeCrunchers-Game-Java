@@ -60,7 +60,7 @@ public class AssetServiceProvider extends Provider {
             y=0;
             x++;
         }
-
+        this.booted = true;
 
     }
 
