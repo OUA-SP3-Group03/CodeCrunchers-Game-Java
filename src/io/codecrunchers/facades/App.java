@@ -85,7 +85,7 @@ public class App {
     public void generateWorld(){
         ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
     }
-    public void loadOnFILE(){
+    public void writeWorldOnFile(){
         ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).writeWorldOnFile();
     }
     public void chooseWorld(){
