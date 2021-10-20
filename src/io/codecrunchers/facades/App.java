@@ -86,10 +86,10 @@ public class App {
         ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
     }
     public void loadOnFILE(){
-        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
+        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).writeWorldOnFile();
     }
     public void chooseWorld(){
-        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
+        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).chooseWorld();
     }
 
     //**** CURRENT STATE ****\\
