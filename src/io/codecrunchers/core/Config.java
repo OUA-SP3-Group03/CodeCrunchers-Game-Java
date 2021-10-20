@@ -16,4 +16,6 @@ public class Config {
     public int textureMapWidth = 64;
     public int textureMapHeight = 64;
 
+    public String world0path="res/WORLD_0.txt";
+    public String world1path="res/WORLD_1.txt";
 }
