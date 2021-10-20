@@ -4,6 +4,7 @@ import io.codecrunchers.core.Application;
 import io.codecrunchers.core.Kernel;
 import io.codecrunchers.providers.DisplayServiceProvider;
 import io.codecrunchers.providers.HttpServiceProvider;
+import io.codecrunchers.providers.LevelGeneratorServiceProvider;
 import io.codecrunchers.providers.LoopServiceProvider;
 
 import java.awt.*;
@@ -67,6 +68,15 @@ public class App {
         return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).logout(token);
     }
 
+    public void generateWorld(){
+        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
+    }
+    public void loadOnFILE(){
+        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
+    }
+    public void chooseWorld(){
+        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
+    }
 
 
 
