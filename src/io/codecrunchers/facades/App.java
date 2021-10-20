@@ -81,6 +81,17 @@ public class App {
         return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).logout(token);
     }
 
+
+    public void generateWorld(){
+        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
+    }
+    public void loadOnFILE(){
+        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
+    }
+    public void chooseWorld(){
+        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
+    }
+
     //**** CURRENT STATE ****\\
     public State state(){
         //returns the current state
@@ -108,7 +119,6 @@ public class App {
     public int mouseY() {
         return ((MouseServiceProvider) this.kernel.getServiceProvider("mouse")).getMouseY();
     }
-
 
 
 
