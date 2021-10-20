@@ -51,7 +51,11 @@ public class Application {
                 .setState(new State())
                 .setTextColor(Color.red)
                 .showOutline(true)
+
         );
+        this.app.chooseWorld();
+        this.app.generateWorld();
+        this.app.writeWorldOnFile();
     }
 
     public void tick(){
