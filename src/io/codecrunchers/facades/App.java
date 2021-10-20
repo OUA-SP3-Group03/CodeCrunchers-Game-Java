@@ -1,23 +1,32 @@
 package io.codecrunchers.facades;
 
+import io.codecrunchers.classes.gui.InterfaceObject;
+import io.codecrunchers.classes.states.State;
 import io.codecrunchers.core.Application;
 import io.codecrunchers.core.Kernel;
-import io.codecrunchers.providers.DisplayServiceProvider;
-import io.codecrunchers.providers.HttpServiceProvider;
-import io.codecrunchers.providers.LevelGeneratorServiceProvider;
-import io.codecrunchers.providers.LoopServiceProvider;
+
+import io.codecrunchers.providers.*;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class App {
-
+    private final Texture texture;
     private final Kernel kernel;
     private final Config config;
+    private final Callback callback;
 
     public App(Kernel kernel){
         this.kernel = kernel;
         this.config = new Config(this.kernel);
+        this.callback = new Callback(this.kernel);
+        this.texture = new Texture(this.kernel);
     }
+
+    public Texture texture (){
+        return this.texture;
+    }
+
 
     //**** GET INSTANCE OF THE APPLICATION ****\\
     public Application self(){
@@ -27,6 +36,10 @@ public class App {
     //**** GET CONFIG ****\\
     public Config config(){
         return this.config;
+    }
+
+    public Callback callback() {
+        return this.callback;
     }
 
     public boolean booted(){
@@ -68,6 +81,7 @@ public class App {
         return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).logout(token);
     }
 
+
     public void generateWorld(){
         ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
     }
@@ -77,6 +91,35 @@ public class App {
     public void chooseWorld(){
         ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
     }
+
+    //**** CURRENT STATE ****\\
+    public State state(){
+        //returns the current state
+        return new State();
+    }
+
+    //**** ADD GUI OBJECT ****\\
+    public void addInterfaceObject(InterfaceObject newObject){
+        ((InterfaceServiceProvider) this.kernel.getServiceProvider("interface")).addInterfaceObject(newObject);
+    }
+
+    //**** INPUTS ****\\
+    public Boolean keyPressed(char key) {
+        return ((KeyboardServiceProvider) this.kernel.getServiceProvider("keyboard")).keyCodes.containsKey((int) key);
+    }
+
+    public Boolean mousePressed(){
+        return ((MouseServiceProvider) this.kernel.getServiceProvider("mouse")).isMousePressed();
+    }
+
+    public int mouseX() {
+        return ((MouseServiceProvider) this.kernel.getServiceProvider("mouse")).getMouseX();
+    }
+
+    public int mouseY() {
+        return ((MouseServiceProvider) this.kernel.getServiceProvider("mouse")).getMouseY();
+    }
+
 
 
 

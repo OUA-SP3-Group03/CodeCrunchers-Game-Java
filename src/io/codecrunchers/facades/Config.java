@@ -25,9 +25,14 @@ public class Config {
         return this.kernel.getConfig().title;
     }
 
-    //**** GET TARGET FPS & TPS ****\\
+    //**** GET TARGET FPS  ****\\
     public int targetFPS(){
         return this.kernel.getConfig().targetFPS;
+    }
+
+    //**** GET TARGET TPS ****\\
+    public int targetTPS(){
+        return this.kernel.getConfig().targetTPS;
     }
 
     //**** GET SHOW FPS ****\\
@@ -38,5 +43,27 @@ public class Config {
     //**** GET API URL ****\\
     public String apiUrl(){
         return this.kernel.getConfig().apiUrl;
+    }
+
+    //**** GET TEXTURE WIDTH ****\\
+    public int textureWidth(){
+        return this.kernel.getConfig().textureWidth;
+    }
+
+    //**** GET TEXTURE HEIGHT ****\\
+    public int textureHeight(){
+        return this.kernel.getConfig().textureHeight;
+    }
+    //**** GET TEXTURE MAP WIDTH ****\\
+    public int textureMapWidth(){
+        return this.kernel.getConfig().textureMapWidth;
+    }
+    //**** GET TEXTURE MAP HEIGHT ****\\
+    public int textureMapHeight(){
+        return this.kernel.getConfig().textureMapHeight;
+    }
+    //**** GET TEXTURE PATH ****\\
+    public String texturePath(){
+        return this.kernel.getConfig().texturePath;
     }
 }

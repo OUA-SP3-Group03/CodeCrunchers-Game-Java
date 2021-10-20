@@ -1,6 +1,7 @@
 package io.codecrunchers.core;
 
 import io.codecrunchers.facades.App;
+import io.codecrunchers.facades.Texture;
 import io.codecrunchers.providers.*;
 
 
@@ -30,7 +31,10 @@ public class Kernel {
         this.providers.put("loop", new LoopServiceProvider());
         this.providers.put("http", new HttpServiceProvider());
         this.providers.put("interface", new InterfaceServiceProvider());
+        this.providers.put("asset", new AssetServiceProvider());
         this.providers.put("levelgenerator",new LevelGeneratorServiceProvider());
+        this.providers.put("keyboard", new KeyboardServiceProvider());
+        this.providers.put("mouse", new MouseServiceProvider());
 
         //_________ REGISTER YOUR NEW PROVIDER HERE ___________\\
 
@@ -54,13 +58,22 @@ public class Kernel {
     }
 
     public void bootProviders(){
-        //run boot method on all service providers
+        //Display how many service providers are registered
         System.out.println(this.providers.size()+" Service Providers Registered");
+
+        //Boot display first to avoid any boot errors
+        this.providers.get("display").boot(this.app);
+        this.providers.get("asset").boot(this.app);
+
+        //run boot method on all service providers
         for(Provider provider : this.providers.values()){
             //display what provider is being booted in console
             System.out.println("Booting : "+provider);
-            //boot provider
-            provider.boot(this.app);
+            //if provider isn't already booted
+            if(!provider.isBooted()) {
+                //boot provider
+                provider.boot(this.app);
+            }
         }
 
         this.booted = true;

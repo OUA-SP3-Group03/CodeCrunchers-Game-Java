@@ -13,7 +13,11 @@ public class LevelGeneratorServiceProvider extends Provider {
     @Override
     public void boot(App app) {
 
+
         this.levelGenerator = new LevelGeneratorService();
+
+
+        this.booted = true;
 
     }
 
