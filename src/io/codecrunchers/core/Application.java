@@ -18,17 +18,16 @@ public class Application {
         this.app.startLoop();
 
         //DEBUGGING INTERFACE OBJECT
-
         //button one
         this.app.addInterfaceObject(new InterfaceButton()
                 .setX(this.app.config().interfaceWidth()/2-200/2)
                 .setY(this.app.config().interfaceHeight()/2-50/2)
                 .setWidth(200)
                 .setHeight(50)
-                .setText("Play")
+                .setAppFacade(this.app)
                 .setState(new State())
-                .setTextColor(Color.black)
-                .showOutline(true));
+                .setText("Play")
+                .setClickEvent(()-> System.out.println("Clicked Play!")));
 
         //button two
         this.app.addInterfaceObject(new InterfaceButton()
@@ -37,9 +36,11 @@ public class Application {
                 .setWidth(200)
                 .setText("Setting")
                 .setHeight(50)
+                .setAppFacade(this.app)
+                .setHoverColor(Color.red)
                 .setState(new State())
                 .setTextColor(Color.blue)
-                .showOutline(true));
+                .setClickEvent(()-> System.out.println("Clicked Settings!")));
 
         //button three
         this.app.addInterfaceObject(new InterfaceButton()
@@ -47,11 +48,11 @@ public class Application {
                 .setY(this.app.config().interfaceHeight()/2-50/2+150)
                 .setWidth(200)
                 .setHeight(50)
-                .setText("Quite")
+                .setAppFacade(this.app)
+                .setText("Quit")
                 .setState(new State())
                 .setTextColor(Color.red)
-                .showOutline(true)
-        );
+                .setClickEvent(()-> System.out.println("Clicked Quit!")));
     }
 
     public void tick(){

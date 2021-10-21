@@ -49,14 +49,16 @@ public class MouseServiceProvider extends Provider implements MouseListener, Mou
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(e.getButton() == MouseEvent.BUTTON1)
+        if(e.getButton() == MouseEvent.BUTTON1) {
             mousePressed = true;
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(e.getButton() == MouseEvent.BUTTON1)
+        if(e.getButton() == MouseEvent.BUTTON1) {
             mousePressed = false;
+        }
     }
 
     @Override
