@@ -25,7 +25,8 @@ public abstract class InterfaceObject {
     //Interface object hovering status
     protected Boolean hovering = false;
     protected Boolean showOnHover = true;
-    protected Color hoverColor = new Color(0,0,0,0.5F );
+    protected Color hoverColor = new Color(0,0,0,0.2F );
+    protected int hoverBoxCurve = 0;
 
     //Interface Object text and alignment variables
     protected String text = "New Button";
@@ -33,6 +34,7 @@ public abstract class InterfaceObject {
     protected int textWidth = 0;
     protected int textHeight = 0;
     protected int drawTextX = 0;
+    protected boolean inputHidden = false;
 
     protected int drawTextY = 0;
     protected int textPadding = 10;
@@ -40,6 +42,10 @@ public abstract class InterfaceObject {
 
     //Interface Object system variables
     protected Boolean booted= false;
+
+    //texture variables
+    protected int tileWidth = 0;
+    protected int tileHeight = 0;
 
 
     //Abstract methods
@@ -81,7 +87,7 @@ public abstract class InterfaceObject {
 
     public void drawOnHover(Graphics g){
         g.setColor(this.hoverColor);
-        g.fillRect(this.x, this.y, this.width, this.height);
+        g.fillRoundRect(this.x, this.y, this.width, this.height, this.hoverBoxCurve,this.hoverBoxCurve);
     }
 
 
@@ -108,14 +114,16 @@ public abstract class InterfaceObject {
     }
 
     public InterfaceObject setWidth(int width){
-        this.width = width;
-        this.bounds = new Rectangle(x,y,width, height);
+        this.width = width*this.app.config().textureScale();
+        this.bounds = new Rectangle(x,y,this.width, height);
+        this.tileWidth = this.width/this.app.config().textureWidth()/this.app.config().textureScale();
         return this;
     }
 
     public InterfaceObject setHeight(int height){
-        this.height = height;
-        this.bounds = new Rectangle(x,y,width, height);
+        this.height = height*this.app.config().textureScale();
+        this.bounds = new Rectangle(x,y,this.width, this.height);
+        this.tileHeight = this.height/this.app.config().textureWidth()/this.app.config().textureScale();
         return this;
     }
 
@@ -161,6 +169,23 @@ public abstract class InterfaceObject {
 
     public InterfaceObject setHoverColor(Color value){
         this.hoverColor = value;
+        return this;
+    }
+
+    public InterfaceObject setShowDefaultText(boolean value){
+        if(!value){
+            this.text = "";
+        }
+        return this;
+    }
+
+    public InterfaceObject setHoverBoxCurve(int value){
+        this.hoverBoxCurve = value;
+        return this;
+    }
+
+    public InterfaceObject setHiddenInput(boolean value){
+        this.inputHidden = value;
         return this;
     }
 
