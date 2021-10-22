@@ -16,9 +16,8 @@ public class KeyboardServiceProvider extends Provider implements KeyListener {
     //**** BOOT METHOD ****\\
     @Override
     public void boot(App app) {
-        app.callback().setKeyListener(this);
-
-        keyCodes = new HashMap<Integer, Boolean>();
+        app.canvas().addKeyListener(this);
+        keyCodes = new HashMap<>();
 
         this.booted = true;
     }
@@ -41,7 +40,8 @@ public class KeyboardServiceProvider extends Provider implements KeyListener {
 
     //**** TICK METHOD ****\\
     @Override
-    public void tick() {}
+    public void tick() {
+    }
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -55,4 +55,8 @@ public class KeyboardServiceProvider extends Provider implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {}
+
+    public boolean isCapsLocked(){
+        return Toolkit.getDefaultToolkit().getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
+    }
 }

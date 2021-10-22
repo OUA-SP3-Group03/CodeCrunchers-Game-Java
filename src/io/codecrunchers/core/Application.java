@@ -1,11 +1,14 @@
 package io.codecrunchers.core;
 
 import io.codecrunchers.classes.gui.InterfaceButton;
+import io.codecrunchers.classes.gui.InterfaceCheckBox;
+import io.codecrunchers.classes.gui.InterfaceInput;
 import io.codecrunchers.classes.states.State;
 import io.codecrunchers.facades.App;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.IOException;
 
 public class Application {
 
@@ -19,43 +22,69 @@ public class Application {
 
         //DEBUGGING INTERFACE OBJECT
         //button one
-        this.app.addInterfaceObject(new InterfaceButton()
-                .setX(this.app.config().interfaceWidth()/2-200/2)
-                .setY(this.app.config().interfaceHeight()/2-50/2)
-                .setWidth(200)
-                .setHeight(50)
+        this.app.addInterfaceObject(new InterfaceInput()
                 .setAppFacade(this.app)
+                .setX(this.app.config().interfaceWidth()/2-(this.app.config().textureWidth()*3)*this.app.config().textureScale())
+                .setY(this.app.config().interfaceHeight()/2 - this.app.config().textureHeight()*this.app.config().textureScale())
+                .setWidth(this.app.config().textureWidth()*6)
+                .setHeight(this.app.config().textureHeight())
+                .setTextAlign("left")
+                .setText("Email"));
+
+        this.app.addInterfaceObject(new InterfaceInput()
+                .setAppFacade(this.app)
+                .setX(this.app.config().interfaceWidth()/2-(this.app.config().textureWidth()*3)*this.app.config().textureScale())
+                .setY((int) (this.app.config().interfaceHeight()/2+ this.app.config().textureHeight()*this.app.config().textureScale()*0.5))
+                .setWidth(this.app.config().textureWidth()*6)
+                .setHeight(this.app.config().textureHeight())
+                .setHiddenInput(true)
+                .setTextAlign("left")
+                .setText("Password"));
+
+        this.app.addInterfaceObject(new InterfaceCheckBox()
+                .setAppFacade(this.app)
+                .setX(this.app.config().interfaceWidth()/2- (this.app.config().textureWidth()*3)*this.app.config().textureScale())
+                .setY((this.app.config().interfaceHeight()/2 + this.app.config().textureHeight() *2* this.app.config().textureScale()-14))
+                .setWidth(this.app.config().textureWidth()*2)
+                .setHeight(this.app.config().textureHeight())
+                .setShowOnHover(false)
+                .setClickEvent(()-> System.out.println("toggled")));
+
+
+        this.app.addInterfaceObject(new InterfaceButton()
+                .setAppFacade(this.app)
+                .setX(this.app.config().interfaceWidth()/2-this.app.config().textureWidth()*3*this.app.config().textureScale())
+                .setY((this.app.config().interfaceHeight()/2 + this.app.config().textureHeight()*3 * this.app.config().textureScale()))
+                .setWidth(this.app.config().textureWidth()*3)
+                .setHeight(this.app.config().textureHeight())
                 .setState(new State())
-                .setText("Play")
-                .setClickEvent(()-> System.out.println("Clicked Play!")));
+                .setText("Login")
+                .setHoverBoxCurve(22)
+                .setClickEvent(()-> System.out.println("Clicked Login")));
 
         //button two
         this.app.addInterfaceObject(new InterfaceButton()
-                .setX(this.app.config().interfaceWidth()/2-200/2)
-                .setY(this.app.config().interfaceHeight()/2-50/2+75)
-                .setWidth(200)
-                .setText("Setting")
-                .setHeight(50)
                 .setAppFacade(this.app)
-                .setHoverColor(Color.red)
+                .setX(this.app.config().interfaceWidth()/2+4)
+                .setY((this.app.config().interfaceHeight()/2 + this.app.config().textureHeight()*3 * this.app.config().textureScale()))
+                .setWidth(this.app.config().textureWidth()*3)
+                .setText("Register")
+                .setHeight(this.app.config().textureHeight())
                 .setState(new State())
-                .setTextColor(Color.blue)
-                .setClickEvent(()-> System.out.println("Clicked Settings!")));
+                .setHoverBoxCurve(22)
+                .setClickEvent(()-> {
+                    try {
+                        Desktop.getDesktop().browse(java.net.URI.create("http://codecrunchers.io/register"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }));
 
-        //button three
-        this.app.addInterfaceObject(new InterfaceButton()
-                .setX(this.app.config().interfaceWidth()/2-200/2)
-                .setY(this.app.config().interfaceHeight()/2-50/2+150)
-                .setWidth(200)
-                .setHeight(50)
-                .setAppFacade(this.app)
-                .setText("Quit")
-                .setState(new State())
-                .setTextColor(Color.red)
-                .setClickEvent(()-> System.out.println("Clicked Quit!")));
+
     }
 
     public void tick(){
+
         this.app.tick();
     }
 
@@ -69,22 +98,23 @@ public class Application {
 
        //create the graphics object to draw to that buffered strategy
        Graphics g = bs.getDrawGraphics();
+
        g.clearRect(0,0,this.app.config().interfaceWidth(),this.app.config().interfaceHeight());
 
        //__ START RENDER
+        g.setColor(Color.white);
+        g.fillRect(0,0,this.app.config().interfaceWidth(),this.app.config().interfaceHeight());
 
-        //Used to test applications' ability to get specific points in sprite sheet and render.
-        g.drawImage(this.app.texture().allImages()[0],16,16,null);
-        g.drawImage(this.app.texture().allImages()[15],16,32, null );
-        g.drawImage(this.app.texture().userIcon(), 16,48,null);
+            Font currentFont = g.getFont();
+            Font newFont = currentFont.deriveFont(currentFont.getSize() * 1.4F);
+            g.setFont(newFont);
+            g.setColor(Color.black);
 
-           //PLACEHOLDER TESTING
-           g.drawString("Hello World!",20,20);
-           g.setColor(Color.red);
-           g.drawRect(50,50,100,100);
+            g.drawImage(app.texture().logo(),0,64,null);
+
+        g.drawString("Keep me logged in",this.app.config().interfaceWidth()/2-55,this.app.config().interfaceHeight()/2 + this.app.config().textureHeight() *2* this.app.config().textureScale()+24);
            //render providers
            this.app.render(g);
-
 
        //__ END RENDER
 

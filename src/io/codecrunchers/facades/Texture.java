@@ -18,9 +18,9 @@ public class Texture {
 
         return ((AssetServiceProvider)this.kernel.getServiceProvider("asset")).getImages();
     }
-    //Demo method for displaying a "user icon" from test sprite sheet
-    public BufferedImage userIcon(){
-        return ((AssetServiceProvider)this.kernel.getServiceProvider("asset")).getImages()[6];
+
+    public BufferedImage logo(){
+        return ((AssetServiceProvider)this.kernel.getServiceProvider("asset")).getLogo();
     }
 
 }

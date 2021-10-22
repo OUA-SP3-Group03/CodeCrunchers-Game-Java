@@ -66,4 +66,14 @@ public class Config {
     public String texturePath(){
         return this.kernel.getConfig().texturePath;
     }
+    //**** GET LOGO PATH ****\\
+    public String logoTexturePath(){
+        return this.kernel.getConfig().logoPath;
+    }
+
+
+    //**** GET TEXTURE SCALE ****\\
+    public int textureScale(){
+        return this.kernel.getConfig().textureScale;
+    }
 }
