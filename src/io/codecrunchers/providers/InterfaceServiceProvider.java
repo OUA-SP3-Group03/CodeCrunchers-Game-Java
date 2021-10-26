@@ -32,17 +32,15 @@ public class InterfaceServiceProvider extends Provider {
 
     @Override
     public void render(Graphics g) {
-        for(InterfaceObject object : this.interfaceObjects){
-            if(this.app.state() != object.getAssignedState()){
 
-                if(object.getHovering() && object.getShowOnHover()){
+        for(InterfaceObject object : this.interfaceObjects){
+            if(object.getAssignedState().matches(this.app.currentState())) {
+                if (object.getHovering() && object.getShowOnHover()) {
                     object.render(g);
                     object.drawOnHover(g);
-                }else{
+                } else {
                     object.render(g);
                 }
-
-
             }
         }
     }
@@ -50,12 +48,10 @@ public class InterfaceServiceProvider extends Provider {
     @Override
     public void tick() {
         for(InterfaceObject object : this.interfaceObjects){
-
-            if(this.app.state() != object.getAssignedState()){
+            if(object.getAssignedState().matches(this.app.currentState())) {
 
                 object.checkHover();
                 object.tick();
-
             }
         }
     }
