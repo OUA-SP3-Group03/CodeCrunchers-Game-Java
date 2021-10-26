@@ -13,7 +13,7 @@ public class LoginState extends State {
     @Override
     public void boot(App app) {
         this.app = app;
-        //DEBUGGING INTERFACE OBJECT
+
         //button one
         this.app.addInterfaceObject(new InterfaceInput()
                 .setAppFacade(this.app)
