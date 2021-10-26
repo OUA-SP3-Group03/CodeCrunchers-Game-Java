@@ -4,8 +4,7 @@ import io.codecrunchers.facades.App;
 
 import java.awt.*;
 
-public class SettingsState extends State{
-
+public class MenuState extends State{
     @Override
     public void boot(App app) {
 
@@ -20,5 +19,4 @@ public class SettingsState extends State{
     public void render(Graphics g) {
 
     }
-
 }
