@@ -37,6 +37,7 @@ public class Kernel {
         this.providers.put("keyboard", new KeyboardServiceProvider());
         this.providers.put("mouse", new MouseServiceProvider());
         this.providers.put("states", new StatesServiceProvider());
+        this.providers.put("tile", new TileServiceProvider());
 
         //_________ REGISTER YOUR NEW PROVIDER HERE ___________\\
 
