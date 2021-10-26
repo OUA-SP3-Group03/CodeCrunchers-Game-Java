@@ -2,7 +2,6 @@ package io.codecrunchers.facades;
 
 import io.codecrunchers.classes.gui.InterfaceObject;
 import io.codecrunchers.classes.states.State;
-import io.codecrunchers.classes.states.StateManager;
 import io.codecrunchers.core.Application;
 import io.codecrunchers.core.Kernel;
 
@@ -95,12 +94,6 @@ public class App {
         ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
     }
 
-    //**** CURRENT STATE ****\\
-    public State state(){
-        //returns the current state
-        return StateManager.getCurrentState();
-    }
-
     //**** ADD GUI OBJECT ****\\
     public void addInterfaceObject(InterfaceObject newObject){
         ((InterfaceServiceProvider) this.kernel.getServiceProvider("interface")).addInterfaceObject(newObject);
@@ -133,6 +126,22 @@ public class App {
 
     public boolean isCapsLocked(){
         return ((KeyboardServiceProvider) this.kernel.getServiceProvider("keyboard")).isCapsLocked();
+    }
+
+    public void registerState(String key, State state){
+        ((StatesServiceProvider)this.kernel.getServiceProvider("states")).registerState(key,state);
+    }
+
+    public void setCurrentState(String key){
+            ((StatesServiceProvider)this.kernel.getServiceProvider("states")).setCurrentState(key);
+    }
+
+    public String currentState(){
+        return ((StatesServiceProvider)this.kernel.getServiceProvider("states")).getCurrentState();
+    }
+
+    public void initializeStates(){
+        ((StatesServiceProvider)this.kernel.getServiceProvider("states")).initialize();
     }
 
 
