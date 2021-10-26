@@ -144,6 +144,15 @@ public class App {
         ((StatesServiceProvider)this.kernel.getServiceProvider("states")).initialize();
     }
 
+    public void setWorldWidth(int width){
+        ((TileServiceProvider)this.kernel.getServiceProvider("tile")).setWorldWidth(width);
+    }
+    public void setWorldHeight(int height){
+        ((TileServiceProvider)this.kernel.getServiceProvider("tile")).setWorldHeight(height);
+    }
+    public void setWorld(int[] world){
+        ((TileServiceProvider)this.kernel.getServiceProvider("tile")).setWorld(world);
+    }
 
 
 
