@@ -1,6 +1,5 @@
 package io.codecrunchers.classes.states;
 
-import io.codecrunchers.classes.ASCII;
 import io.codecrunchers.classes.gui.InterfaceButton;
 import io.codecrunchers.facades.App;
 
