@@ -10,7 +10,7 @@ public abstract class InterfaceObject {
     //Interface Object references variables targeting other objects
     //NEW APP NEEDED TO PREVENT FIST CALL FAILURE
     protected App app = new App(null);
-    protected State state = null;
+    protected String state = null;
     protected ClickEvent clickListener = null;
     protected boolean isPressed = false;
 
@@ -127,7 +127,7 @@ public abstract class InterfaceObject {
         return this;
     }
 
-    public InterfaceObject setState(State state){
+    public InterfaceObject setState(String state){
         this.state = state;
         return this;
     }
@@ -191,7 +191,7 @@ public abstract class InterfaceObject {
 
     //**** GETTER METHODS ****\\
 
-    public State getAssignedState() {
+    public String getAssignedState() {
         return this.state;
     }
 
