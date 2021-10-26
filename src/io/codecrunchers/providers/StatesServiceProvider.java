@@ -62,10 +62,6 @@ public class StatesServiceProvider extends Provider {
         return this.currentState;
     }
 
-    public boolean checkStateKey(String key){
-        return this.states.containsKey(key);
-    }
-
     public void initialize(){
         for (State state: this.states.values()) {
                 state.boot(this.app);
