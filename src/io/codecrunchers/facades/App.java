@@ -5,21 +5,22 @@ import io.codecrunchers.classes.states.State;
 import io.codecrunchers.core.Application;
 import io.codecrunchers.core.Kernel;
 
+import io.codecrunchers.core.Provider;
 import io.codecrunchers.providers.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 public class App {
     private final Texture texture;
     private final Kernel kernel;
     private final Config config;
-    private final Callback callback;
 
     public App(Kernel kernel){
         this.kernel = kernel;
         this.config = new Config(this.kernel);
-        this.callback = new Callback(this.kernel);
         this.texture = new Texture(this.kernel);
     }
 
@@ -38,9 +39,6 @@ public class App {
         return this.config;
     }
 
-    public Callback callback() {
-        return this.callback;
-    }
 
     public boolean booted(){
         return this.kernel.getBootedStatus();
@@ -49,6 +47,10 @@ public class App {
     //**** GET INSTANCE OF THE CANVAS ****\\
     public Canvas canvas(){
         return ((DisplayServiceProvider) this.kernel.getServiceProvider("display")).getCanvas();
+    }
+
+    public Provider getProvider(String name){
+        return this.kernel.getServiceProvider(name);
     }
 
     //**** RENDER PROVIDERS FACADE ****\\
@@ -81,10 +83,15 @@ public class App {
         return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).logout(token);
     }
 
-    //**** CURRENT STATE ****\\
-    public State state(){
-        //returns the current state
-        return new State();
+
+    public void generateWorld(){
+        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
+    }
+    public void loadOnFILE(){
+        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
+    }
+    public void chooseWorld(){
+        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
     }
 
     //**** ADD GUI OBJECT ****\\
@@ -93,8 +100,8 @@ public class App {
     }
 
     //**** INPUTS ****\\
-    public Boolean keyPressed(char key) {
-        return ((KeyboardServiceProvider) this.kernel.getServiceProvider("keyboard")).keyCodes.containsKey((int) key);
+    public HashMap<Integer, Boolean> keyPressed() {
+        return ((KeyboardServiceProvider) this.kernel.getServiceProvider("keyboard")).keyCodes;
     }
 
     public Boolean mousePressed(){
@@ -109,6 +116,33 @@ public class App {
         return ((MouseServiceProvider) this.kernel.getServiceProvider("mouse")).getMouseY();
     }
 
+    public void setSelectedInterfaceObject(InterfaceObject target){
+        ((InterfaceServiceProvider)this.kernel.getServiceProvider("interface")).setSelectedObject(target);
+    }
+
+    public InterfaceObject selectedInterfaceObject(){
+        return   ((InterfaceServiceProvider)this.kernel.getServiceProvider("interface")).getSelectedObject();
+    }
+
+    public boolean isCapsLocked(){
+        return ((KeyboardServiceProvider) this.kernel.getServiceProvider("keyboard")).isCapsLocked();
+    }
+
+    public void registerState(String key, State state){
+        ((StatesServiceProvider)this.kernel.getServiceProvider("states")).registerState(key,state);
+    }
+
+    public void setCurrentState(String key){
+            ((StatesServiceProvider)this.kernel.getServiceProvider("states")).setCurrentState(key);
+    }
+
+    public String currentState(){
+        return ((StatesServiceProvider)this.kernel.getServiceProvider("states")).getCurrentState();
+    }
+
+    public void initializeStates(){
+        ((StatesServiceProvider)this.kernel.getServiceProvider("states")).initialize();
+    }
 
 
 

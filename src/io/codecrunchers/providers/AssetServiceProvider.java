@@ -6,6 +6,8 @@ import io.codecrunchers.facades.App;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,28 +15,33 @@ import java.io.IOException;
 public class AssetServiceProvider extends Provider {
 
     //**** BOOT METHOD ****\\
-    private BufferedImage test;
     private BufferedImage textureMap;
-    private BufferedImage enemy;
     private BufferedImage[] images;
+    private BufferedImage logo;
 
 
     @Override
     //this method is called by the Kernel when the program loads for the first time, you can think of this like your constructor class
     //place any code that you need to run at the start of the program once in here
     public void boot(App app) {
-
         //Code Block below is responsible for loading sprite sheet into application
-        textureMap = imageLoader(app.config().texturePath());
+        this.logo = imageLoader(app.config().logoTexturePath());
+
+        this.textureMap = imageLoader(app.config().texturePath());
+
+        assert textureMap != null;
+        int textureMapWidth = textureMap.getWidth();
+        int textureMapHeight = textureMap.getHeight();
+
         int i = 0;
         int rows = 0;
-        while (i < app.config().textureMapWidth()){
+        while (i < textureMapWidth){
             rows ++;
             i += app.config().textureWidth();
         }
         i = 0;
         int columns = 0;
-        while(i < app.config().textureMapHeight()){
+        while(i < textureMapHeight){
             columns ++;
             i += app.config().textureHeight();
         }
@@ -47,16 +54,15 @@ public class AssetServiceProvider extends Provider {
         int currentImage = 0;
 
         //While loop create sub-images from texture map depending on their position.
-        while (x < rows){
-            while (y < columns){
-                this.images[currentImage] = textureMap.getSubimage(x*app.config().textureWidth(),y*app.config().textureHeight(),app.config().textureWidth(),app.config().textureHeight());
+        while (y < columns){
+            while (x < rows){
+                this.images[currentImage] = this.resizeImg(textureMap.getSubimage(x*app.config().textureWidth(),y*app.config().textureHeight(),app.config().textureWidth(),app.config().textureHeight()));
                 currentImage++;
-                y++;
+                x++;
             }
-            y=0;
-            x++;
+            x=0;
+            y++;
         }
-
     this.booted=true;
     }
 
@@ -98,9 +104,29 @@ public class AssetServiceProvider extends Provider {
         return null;
     }
 
+    public BufferedImage resizeImg(BufferedImage originalImage)
+    {
+        int scaledWidth = originalImage.getWidth()*2;
+        int scaledHeight = originalImage.getHeight()*2;
+
+        int originalWidth = originalImage.getWidth();
+        int originalHeight = originalImage.getHeight();
+
+        BufferedImage scaledImage = new BufferedImage(scaledWidth, scaledHeight, originalImage.getType());
+        Graphics2D g = scaledImage.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+        g.drawImage(originalImage, 0, 0, scaledWidth, scaledHeight, 0, 0, originalWidth, originalHeight, null);
+        g.dispose();
+        return scaledImage;
+    }
+
     //**** Image getter method ****\\
     public BufferedImage[] getImages(){
         return this.images;
+    }
+
+    public BufferedImage getLogo(){
+        return this.logo;
     }
 
 }
