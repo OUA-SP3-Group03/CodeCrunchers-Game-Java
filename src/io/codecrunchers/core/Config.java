@@ -15,7 +15,4 @@ public class Config {
     public int textureWidth = 32;
     public int textureHeight = 32;
     public int textureScale = 2;
-    public int textureMapWidth = 256;
-    public int textureMapHeight = 256;
-
 }
