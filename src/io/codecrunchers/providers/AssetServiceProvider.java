@@ -27,16 +27,21 @@ public class AssetServiceProvider extends Provider {
         //Code Block below is responsible for loading sprite sheet into application
         this.logo = imageLoader(app.config().logoTexturePath());
 
-        textureMap = imageLoader(app.config().texturePath());
+        this.textureMap = imageLoader(app.config().texturePath());
+
+        assert textureMap != null;
+        int textureMapWidth = textureMap.getWidth();
+        int textureMapHeight = textureMap.getHeight();
+
         int i = 0;
         int rows = 0;
-        while (i < app.config().textureMapWidth()){
+        while (i < textureMapWidth){
             rows ++;
             i += app.config().textureWidth();
         }
         i = 0;
         int columns = 0;
-        while(i < app.config().textureMapHeight()){
+        while(i < textureMapHeight){
             columns ++;
             i += app.config().textureHeight();
         }
