@@ -6,28 +6,25 @@ import io.codecrunchers.classes.states.StateManager;
 import io.codecrunchers.core.Application;
 import io.codecrunchers.core.Kernel;
 
+import io.codecrunchers.core.Provider;
 import io.codecrunchers.providers.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 public class App {
-
+    private final Texture texture;
     private final Kernel kernel;
     private final Config config;
-    private final Callback callback;
-
-    private Texture texture;
 
     public App(Kernel kernel){
         this.kernel = kernel;
         this.config = new Config(this.kernel);
-        this.callback = new Callback(this.kernel);
+        this.texture = new Texture(this.kernel);
     }
 
-    public void textureCallback(Texture texture){
-        this.texture = texture;
-    }
     public Texture texture (){
         return this.texture;
     }
@@ -43,9 +40,6 @@ public class App {
         return this.config;
     }
 
-    public Callback callback() {
-        return this.callback;
-    }
 
     public boolean booted(){
         return this.kernel.getBootedStatus();
@@ -54,6 +48,10 @@ public class App {
     //**** GET INSTANCE OF THE CANVAS ****\\
     public Canvas canvas(){
         return ((DisplayServiceProvider) this.kernel.getServiceProvider("display")).getCanvas();
+    }
+
+    public Provider getProvider(String name){
+        return this.kernel.getServiceProvider(name);
     }
 
     //**** RENDER PROVIDERS FACADE ****\\
@@ -86,6 +84,17 @@ public class App {
         return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).logout(token);
     }
 
+
+    public void generateWorld(){
+        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
+    }
+    public void loadOnFILE(){
+        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
+    }
+    public void chooseWorld(){
+        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
+    }
+
     //**** CURRENT STATE ****\\
     public State state(){
         //returns the current state
@@ -98,8 +107,8 @@ public class App {
     }
 
     //**** INPUTS ****\\
-    public Boolean keyPressed(char key) {
-        return ((KeyboardServiceProvider) this.kernel.getServiceProvider("keyboard")).keyCodes.containsKey((int) key);
+    public HashMap<Integer, Boolean> keyPressed() {
+        return ((KeyboardServiceProvider) this.kernel.getServiceProvider("keyboard")).keyCodes;
     }
 
     public Boolean mousePressed(){
@@ -114,35 +123,19 @@ public class App {
         return ((MouseServiceProvider) this.kernel.getServiceProvider("mouse")).getMouseY();
     }
 
-    //
-    public int textureWidth(){
-        return this.kernel.getConfig().textureWidth;
-    }
-    //
-    public int textureHeight(){
-        return this.kernel.getConfig().textureHeight;
-    }
-    //
-    public int textureMapWidth(){
-        return this.kernel.getConfig().textureMapWidth;
-    }
-    //
-    public int textureMapHeight(){
-        return this.kernel.getConfig().textureMapHeight;
-    }
-    //
-    public String texturePath(){
-        return this.kernel.getConfig().texturePath;
+    public void setSelectedInterfaceObject(InterfaceObject target){
+        ((InterfaceServiceProvider)this.kernel.getServiceProvider("interface")).setSelectedObject(target);
     }
 
-    public BufferedImage[] getImages(){
-        AssetServiceProvider provider = ((AssetServiceProvider)this.kernel.getServiceProvider("assets"));
-        if(provider!=null){
-        return provider.getImages();
-        }
-        else{
-            return null;
-        }
+    public InterfaceObject selectedInterfaceObject(){
+        return   ((InterfaceServiceProvider)this.kernel.getServiceProvider("interface")).getSelectedObject();
     }
+
+    public boolean isCapsLocked(){
+        return ((KeyboardServiceProvider) this.kernel.getServiceProvider("keyboard")).isCapsLocked();
+    }
+
+
+
 
 }

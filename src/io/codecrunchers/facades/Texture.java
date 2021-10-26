@@ -1,9 +1,26 @@
 package io.codecrunchers.facades;
 
+import io.codecrunchers.core.Kernel;
+import io.codecrunchers.providers.AssetServiceProvider;
+
 import java.awt.image.BufferedImage;
 
+
+
 public class Texture {
-    public BufferedImage player(){
-        return null;
+    private Kernel kernel;
+    public Texture(Kernel kernel){
+    this.kernel = kernel;
     }
+
+    //
+    public BufferedImage[] allImages(){
+
+        return ((AssetServiceProvider)this.kernel.getServiceProvider("asset")).getImages();
+    }
+
+    public BufferedImage logo(){
+        return ((AssetServiceProvider)this.kernel.getServiceProvider("asset")).getLogo();
+    }
+
 }

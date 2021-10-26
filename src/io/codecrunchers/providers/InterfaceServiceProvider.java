@@ -1,5 +1,6 @@
 package io.codecrunchers.providers;
 
+import io.codecrunchers.classes.gui.InterfaceButton;
 import io.codecrunchers.classes.gui.InterfaceObject;
 import io.codecrunchers.core.Provider;
 import io.codecrunchers.facades.App;
@@ -11,11 +12,12 @@ public class InterfaceServiceProvider extends Provider {
 
     private ArrayList <InterfaceObject> interfaceObjects;
     private App app;
+    private InterfaceObject selectedObject = new InterfaceButton();
 
     @Override
     public void boot(App app) {
         this.app = app;
-        this.interfaceObjects = new ArrayList<InterfaceObject>();
+        this.interfaceObjects = new ArrayList<>();
     }
 
     @Override
@@ -32,7 +34,15 @@ public class InterfaceServiceProvider extends Provider {
     public void render(Graphics g) {
         for(InterfaceObject object : this.interfaceObjects){
             if(this.app.state() != object.getAssignedState()){
-                object.render(g);
+
+                if(object.getHovering() && object.getShowOnHover()){
+                    object.render(g);
+                    object.drawOnHover(g);
+                }else{
+                    object.render(g);
+                }
+
+
             }
         }
     }
@@ -40,8 +50,12 @@ public class InterfaceServiceProvider extends Provider {
     @Override
     public void tick() {
         for(InterfaceObject object : this.interfaceObjects){
+
             if(this.app.state() != object.getAssignedState()){
+
+                object.checkHover();
                 object.tick();
+
             }
         }
     }
@@ -50,5 +64,12 @@ public class InterfaceServiceProvider extends Provider {
         this.interfaceObjects.add(interfaceObject);
     }
 
+    public void setSelectedObject(InterfaceObject target){
+        this.selectedObject = target;
+    }
+
+    public InterfaceObject getSelectedObject(){
+        return this.selectedObject;
+    }
 
 }

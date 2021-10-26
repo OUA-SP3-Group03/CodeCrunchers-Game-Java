@@ -3,10 +3,14 @@ package io.codecrunchers.core;
 import io.codecrunchers.classes.gui.InterfaceButton;
 import io.codecrunchers.classes.states.GameState;
 import io.codecrunchers.classes.states.SettingsState;
+import io.codecrunchers.classes.gui.InterfaceCheckBox;
+import io.codecrunchers.classes.gui.InterfaceInput;
+import io.codecrunchers.classes.states.State;
 import io.codecrunchers.facades.App;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.IOException;
 
 public class Application {
 
@@ -19,44 +23,68 @@ public class Application {
         this.app.startLoop();
 
         //DEBUGGING INTERFACE OBJECT
-
         //button one
+        this.app.addInterfaceObject(new InterfaceInput()
+                .setAppFacade(this.app)
+                .setX(this.app.config().interfaceWidth()/2-(this.app.config().textureWidth()*3)*this.app.config().textureScale())
+                .setY(this.app.config().interfaceHeight()/2 - this.app.config().textureHeight()*this.app.config().textureScale())
+                .setWidth(this.app.config().textureWidth()*6)
+                .setHeight(this.app.config().textureHeight())
+                .setTextAlign("left")
+                .setText("Email"));
+
+        this.app.addInterfaceObject(new InterfaceInput()
+                .setAppFacade(this.app)
+                .setX(this.app.config().interfaceWidth()/2-(this.app.config().textureWidth()*3)*this.app.config().textureScale())
+                .setY((int) (this.app.config().interfaceHeight()/2+ this.app.config().textureHeight()*this.app.config().textureScale()*0.5))
+                .setWidth(this.app.config().textureWidth()*6)
+                .setHeight(this.app.config().textureHeight())
+                .setHiddenInput(true)
+                .setTextAlign("left")
+                .setText("Password"));
+
+        this.app.addInterfaceObject(new InterfaceCheckBox()
+                .setAppFacade(this.app)
+                .setX(this.app.config().interfaceWidth()/2- (this.app.config().textureWidth()*3)*this.app.config().textureScale())
+                .setY((this.app.config().interfaceHeight()/2 + this.app.config().textureHeight() *2* this.app.config().textureScale()-14))
+                .setWidth(this.app.config().textureWidth()*2)
+                .setHeight(this.app.config().textureHeight())
+                .setShowOnHover(false)
+                .setClickEvent(()-> System.out.println("toggled")));
+
+
         this.app.addInterfaceObject(new InterfaceButton()
-                .setX(this.app.config().interfaceWidth()/2-200/2)
-                .setY(this.app.config().interfaceHeight()/2-50/2)
-                .setWidth(200)
-                .setHeight(50)
-                .setText("Play")
-                .setState(new GameState())
-                .setTextColor(Color.black)
-                .showOutline(true));
+                .setAppFacade(this.app)
+                .setX(this.app.config().interfaceWidth()/2-this.app.config().textureWidth()*3*this.app.config().textureScale())
+                .setY((this.app.config().interfaceHeight()/2 + this.app.config().textureHeight()*3 * this.app.config().textureScale()))
+                .setWidth(this.app.config().textureWidth()*3)
+                .setHeight(this.app.config().textureHeight())
+                .setState(new State())
+                .setText("Login")
+                .setHoverBoxCurve(22)
+                .setClickEvent(()-> System.out.println("Clicked Login")));
 
         //button two
         this.app.addInterfaceObject(new InterfaceButton()
-                .setX(this.app.config().interfaceWidth()/2-200/2)
-                .setY(this.app.config().interfaceHeight()/2-50/2+75)
-                .setWidth(200)
-                .setText("Settings")
-                .setHeight(50)
-                .setState(new SettingsState())
-                .setTextColor(Color.blue)
-                .showOutline(true));
-
-        //button three
-        this.app.addInterfaceObject(new InterfaceButton()
-                .setX(this.app.config().interfaceWidth()/2-200/2)
-                .setY(this.app.config().interfaceHeight()/2-50/2+150)
-                .setWidth(200)
-                .setHeight(50)
-                .setText("Quit")
-                //TODO does a new state need to be called to quit the game?
-                //.setState(new State())
-                .setTextColor(Color.red)
-                .showOutline(true)
-        );
+                .setAppFacade(this.app)
+                .setX(this.app.config().interfaceWidth()/2+4)
+                .setY((this.app.config().interfaceHeight()/2 + this.app.config().textureHeight()*3 * this.app.config().textureScale()))
+                .setWidth(this.app.config().textureWidth()*3)
+                .setText("Register")
+                .setHeight(this.app.config().textureHeight())
+                .setState(new State())
+                .setHoverBoxCurve(22)
+                .setClickEvent(()-> {
+                    try {
+                        Desktop.getDesktop().browse(java.net.URI.create("http://codecrunchers.io/register"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }));
     }
 
     public void tick(){
+
         this.app.tick();
     }
 
@@ -70,20 +98,23 @@ public class Application {
 
        //create the graphics object to draw to that buffered strategy
        Graphics g = bs.getDrawGraphics();
+
        g.clearRect(0,0,this.app.config().interfaceWidth(),this.app.config().interfaceHeight());
 
        //__ START RENDER
+        g.setColor(Color.white);
+        g.fillRect(0,0,this.app.config().interfaceWidth(),this.app.config().interfaceHeight());
 
-        //Test
-        g.drawImage(this.app.getImages()[0],16,16,null);
+            Font currentFont = g.getFont();
+            Font newFont = currentFont.deriveFont(currentFont.getSize() * 1.4F);
+            g.setFont(newFont);
+            g.setColor(Color.black);
 
-           //PLACEHOLDER TESTING
-           g.drawString("Hello World!",20,20);
-           g.setColor(Color.red);
-           g.drawRect(50,50,100,100);
+            g.drawImage(app.texture().logo(),0,64,null);
+
+        g.drawString("Keep me logged in",this.app.config().interfaceWidth()/2-55,this.app.config().interfaceHeight()/2 + this.app.config().textureHeight() *2* this.app.config().textureScale()+24);
            //render providers
            this.app.render(g);
-
 
        //__ END RENDER
 
