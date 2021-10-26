@@ -1,6 +1,8 @@
 package io.codecrunchers.core;
 
 import io.codecrunchers.classes.gui.InterfaceButton;
+import io.codecrunchers.classes.states.GameState;
+import io.codecrunchers.classes.states.SettingsState;
 import io.codecrunchers.classes.gui.InterfaceCheckBox;
 import io.codecrunchers.classes.gui.InterfaceInput;
 import io.codecrunchers.classes.states.State;
@@ -79,8 +81,6 @@ public class Application {
                         e.printStackTrace();
                     }
                 }));
-
-
     }
 
     public void tick(){
@@ -118,7 +118,7 @@ public class Application {
 
        //__ END RENDER
 
-       //finally show the buffered strategy and dispose of the old graphics
+       //finally, show the buffered strategy and dispose of the old graphics
        bs.show();
        g.dispose();
     }
