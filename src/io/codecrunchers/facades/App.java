@@ -1,5 +1,6 @@
 package io.codecrunchers.facades;
 
+import io.codecrunchers.classes.entities.Entity;
 import io.codecrunchers.classes.gui.InterfaceObject;
 import io.codecrunchers.classes.states.State;
 import io.codecrunchers.core.Application;
@@ -154,6 +155,8 @@ public class App {
         ((TileServiceProvider)this.kernel.getServiceProvider("tile")).setWorld(world);
     }
 
-
+    public void registerEntity(Entity e){
+        ((EntityServiceProvider)this.kernel.getServiceProvider("entity")).registerEntity(e);
+    }
 
 }
