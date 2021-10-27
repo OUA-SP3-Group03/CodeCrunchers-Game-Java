@@ -3,14 +3,15 @@ package io.codecrunchers.providers;
 
 import io.codecrunchers.core.Provider;
 import io.codecrunchers.facades.App;
+import io.codecrunchers.service.AnimationService;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class AssetServiceProvider extends Provider {
 
@@ -19,6 +20,7 @@ public class AssetServiceProvider extends Provider {
     private BufferedImage[] images;
     private BufferedImage logo;
 
+    private HashMap<String, AnimationService> animations;
 
     @Override
     //this method is called by the Kernel when the program loads for the first time, you can think of this like your constructor class
@@ -28,6 +30,8 @@ public class AssetServiceProvider extends Provider {
         this.logo = imageLoader(app.config().logoTexturePath());
 
         this.textureMap = imageLoader(app.config().texturePath());
+
+        this.animations = new HashMap<String, AnimationService>();
 
         assert textureMap != null;
         int textureMapWidth = textureMap.getWidth();
@@ -63,14 +67,17 @@ public class AssetServiceProvider extends Provider {
             x=0;
             y++;
         }
-    this.booted=true;
+
+        this.animations.put("powerUp", new AnimationService(Arrays.copyOfRange(images, 32, 35), 80));
+
+        this.booted=true;
     }
 
     //**** PERFORM TICK METHOD ****\\
     @Override
     public boolean performTick() {
         //this method tells the kernel if this service provider needs to be ticked or not, return true for yes or false for no
-        return false;
+        return true;
     }
 
     //**** PERFORM RENDER METHOD ****\\
@@ -92,6 +99,11 @@ public class AssetServiceProvider extends Provider {
     public void tick() {
         //place all your tick or update code in this method, this is called by the kernel at a time specified by the max ticks per second
         //keep this code as lean as possible to keep performance high
+
+        for (AnimationService animation : this.animations.values()) {
+            animation.tick();
+        }
+
     }
 
     //**** Image loader method ****\\
@@ -129,4 +141,7 @@ public class AssetServiceProvider extends Provider {
         return this.logo;
     }
 
+    public BufferedImage animation(String key) {
+        return this.animations.get(key).getCurrentImage();
+    }
 }
