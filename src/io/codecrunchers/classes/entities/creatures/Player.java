@@ -4,6 +4,7 @@ import io.codecrunchers.providers.EntityServiceProvider;
 import java.awt.*;
 
 public class Player extends Creature {
+
     EntityServiceProvider entityList;
 
     //Records the player's direction
@@ -11,46 +12,62 @@ public class Player extends Creature {
     //left = -1
     private int facing = 1;
     private App app;
+
     public Player(float x, float y, int width, int height, App app) {
         super(x, y, width, height);
         this.app = app;
         this.texture = this.app.texture().allImages()[26];
     }
+
     @Override
     public boolean isAlive() {
         return alive;
     }
+
     @Override
     public void tick() {
+        this.xVel = 0;
+
         if(this.app.keyPressed().containsKey((int)'D')){
             this.xVel = 20;
-        }else if(this.app.keyPressed().containsKey((int)'A')){
+        }
+        if(this.app.keyPressed().containsKey((int)'A')){
             this.xVel = -20;
-        }else{
-            this.xVel = 0;
         }
 
-
         x += xVel;
-        y += yVel;
+
         if (xVel > 0) facing = 1;
         if (xVel < 0 ) facing = -1;
-        //TODO Implement gravity
 
-
+        fall();
         collision();
     }
+
     @Override
     public void render(Graphics g) {
-        g.drawImage(this.app.texture().animation("powerUp"),(int)this.x,(int)this.y,null);
+        g.drawImage(this.app.texture().animation("powerUp"), (int) ((int)this.x - this.app.getCamera().getxOffset()), (int) ((int)this.y - this.app.getCamera().getyOffset()),null);
     }
+
+    //Gravity method (numbers might need tweaking, waiting on collision)
+    public void fall() {
+        //if(no collision below) {
+            y += yVel;
+            if (yVel <= gravity) {
+            yVel = yVel + 3f;
+            }
+       //}
+    }
+
     @Override
     public void die() {
     }
+
     @Override
     public Rectangle getBounds() {
         return new Rectangle((int) x, (int) y,width,height);
     }
+
     private void collision(){
         //for (int i = 0; i < entityList.getEntities().size(); i++){
         //    Entity temp = entityList.getEntities().get(i);
