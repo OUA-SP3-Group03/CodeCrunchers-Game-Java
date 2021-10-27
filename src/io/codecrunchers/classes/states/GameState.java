@@ -10,12 +10,13 @@ import java.awt.*;
 public class GameState extends State {
 
     private App app;
+    Entity player;
 
     @Override
     public void boot(App app) {
         this.app = app;
         int[] World;
-        String worldRaw="00000000000000000000" +
+        String worldRaw="00000222000000000000" +
                         "00000000000000000000" +
                         "00000000000000000000" +
                         "00000000000000000000" +
@@ -38,7 +39,7 @@ public class GameState extends State {
         this.app.setWorldHeight(worldHeight);
         this.app.setWorld(World);
 
-        Entity player = new Player(10, 10, 64, 64, this.app);
+        player = new Player(0, 0, 64, 64, this.app);
         this.app.registerEntity(player);
     }
 
@@ -47,6 +48,8 @@ public class GameState extends State {
             this.app.keyPressed().remove(ASCII.escape);
             this.app.setCurrentState("pause");
         }
+
+        this.app.getCamera().centerOnEntity(player);
     }
     public void render(Graphics g) {
 
