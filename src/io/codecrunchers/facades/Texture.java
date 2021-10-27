@@ -23,4 +23,7 @@ public class Texture {
         return ((AssetServiceProvider)this.kernel.getServiceProvider("asset")).getLogo();
     }
 
+    public BufferedImage animation(String key){
+        return ((AssetServiceProvider)this.kernel.getServiceProvider("asset")).animation(key);
+    }
 }
