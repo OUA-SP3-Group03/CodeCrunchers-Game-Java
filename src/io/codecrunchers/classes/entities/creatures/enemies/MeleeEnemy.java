@@ -1,4 +1,4 @@
-package io.codecrunchers.entities.creatures.enemies;
+package io.codecrunchers.classes.entities.creatures.enemies;
 
 import java.awt.*;
 
