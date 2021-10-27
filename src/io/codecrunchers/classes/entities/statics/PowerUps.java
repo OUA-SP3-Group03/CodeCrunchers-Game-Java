@@ -1,4 +1,4 @@
-package io.codecrunchers.entities.statics;
+package io.codecrunchers.classes.entities.statics;
 
 import java.awt.*;
 

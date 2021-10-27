@@ -1,6 +1,6 @@
-package io.codecrunchers.entities.statics;
+package io.codecrunchers.classes.entities.statics;
 
-import io.codecrunchers.entities.Entity;
+import io.codecrunchers.classes.entities.Entity;
 
 public abstract class StaticEntity extends Entity {
 
