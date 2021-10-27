@@ -14,6 +14,7 @@ public class Kernel {
     private final App app;
     private final Config config;
     private boolean booted = false;
+    private Camera camera;
 
     public Kernel() {
         //create the config
@@ -43,6 +44,7 @@ public class Kernel {
         //this.provider.put("provider", new YourServiceProvider());
 
         //______________________________________________________\\
+        this.camera = new Camera(this.app, 0, 0);
 
         //boot all service providers
         this.bootProviders();
@@ -115,5 +117,7 @@ public class Kernel {
     }
 
 
-
+    public Camera getCamera() {
+        return this.camera;
+    }
 }
