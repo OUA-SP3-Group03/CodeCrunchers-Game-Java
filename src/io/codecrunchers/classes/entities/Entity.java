@@ -1,13 +1,15 @@
-package io.codecrunchers.entities;
+package io.codecrunchers.classes.entities;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public abstract class Entity {
 
-    protected float x,y;
+    protected float x;
+    protected float y;
     protected int width, height;
     protected boolean alive = true;
-
+    protected BufferedImage texture;
 
     public Entity(float x, float y, int width, int height) {
         this.x = x;

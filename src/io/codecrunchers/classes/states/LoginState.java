@@ -15,7 +15,7 @@ public class LoginState extends State {
         this.app = app;
 
         //button one
-        this.app.addInterfaceObject(new InterfaceInput()
+        this.app.registerInterfaceObject(new InterfaceInput()
                 .setAppFacade(this.app)
                 .setX(this.app.config().interfaceWidth()/2-(this.app.config().textureWidth()*3)*this.app.config().textureScale())
                 .setY(this.app.config().interfaceHeight()/2 - this.app.config().textureHeight()*this.app.config().textureScale())
@@ -25,7 +25,7 @@ public class LoginState extends State {
                 .setTextAlign("left")
                 .setText("Email"));
 
-        this.app.addInterfaceObject(new InterfaceInput()
+        this.app.registerInterfaceObject(new InterfaceInput()
                 .setAppFacade(this.app)
                 .setX(this.app.config().interfaceWidth()/2-(this.app.config().textureWidth()*3)*this.app.config().textureScale())
                 .setY((int) (this.app.config().interfaceHeight()/2+ this.app.config().textureHeight()*this.app.config().textureScale()*0.5))
@@ -36,7 +36,7 @@ public class LoginState extends State {
                 .setTextAlign("left")
                 .setText("Password"));
 
-        this.app.addInterfaceObject(new InterfaceCheckBox()
+        this.app.registerInterfaceObject(new InterfaceCheckBox()
                 .setAppFacade(this.app)
                 .setX(this.app.config().interfaceWidth()/2- (this.app.config().textureWidth()*3)*this.app.config().textureScale())
                 .setY((this.app.config().interfaceHeight()/2 + this.app.config().textureHeight() *2* this.app.config().textureScale()-14))
@@ -47,7 +47,7 @@ public class LoginState extends State {
                 .setClickEvent(()-> System.out.println("toggled")));
 
 
-        this.app.addInterfaceObject(new InterfaceButton()
+        this.app.registerInterfaceObject(new InterfaceButton()
                 .setAppFacade(this.app)
                 .setX(this.app.config().interfaceWidth()/2-this.app.config().textureWidth()*3*this.app.config().textureScale())
                 .setY((this.app.config().interfaceHeight()/2 + this.app.config().textureHeight()*3 * this.app.config().textureScale()))
@@ -59,7 +59,7 @@ public class LoginState extends State {
                 .setClickEvent(()-> this.app.setCurrentState("game")));
 
         //button two
-        this.app.addInterfaceObject(new InterfaceButton()
+        this.app.registerInterfaceObject(new InterfaceButton()
                 .setAppFacade(this.app)
                 .setX(this.app.config().interfaceWidth()/2+4)
                 .setY((this.app.config().interfaceHeight()/2 + this.app.config().textureHeight()*3 * this.app.config().textureScale()))

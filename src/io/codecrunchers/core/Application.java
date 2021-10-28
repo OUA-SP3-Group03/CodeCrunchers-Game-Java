@@ -1,5 +1,7 @@
 package io.codecrunchers.core;
 
+import io.codecrunchers.classes.entities.Entity;
+import io.codecrunchers.classes.entities.creatures.Player;
 import io.codecrunchers.classes.states.*;
 
 import io.codecrunchers.facades.App;

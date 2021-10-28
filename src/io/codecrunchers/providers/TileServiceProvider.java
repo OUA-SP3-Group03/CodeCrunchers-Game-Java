@@ -17,16 +17,19 @@ public class TileServiceProvider extends Provider {
     private int roomHeight;
     private App app;
     private int [] roomTiles;
+    private int roomStartingY;
 
     @Override
     public void boot(App app) {
         this.app=app;
         this.roomWidth=0;
         this.roomHeight=0;
-        this.tiles = new ArrayList<Tile>();
+        this.roomStartingY = this.app.config().interfaceHeight()-128;
+
+        this.tiles = new ArrayList<>();
         this.tiles.add(new AirTile(this.app.texture().allImages()[20]));
-        this.tiles.add(new RoofTile(this.app.texture().allImages()[1]));
-        this.tiles.add(new ScaffoldingTile(this.app.texture().allImages()[4]));
+        this.tiles.add(new RoofTile(this.app.texture().allImages()[25]));
+        this.tiles.add(new ScaffoldingTile(this.app.texture().allImages()[24]));
 
 }
 
@@ -49,10 +52,9 @@ public class TileServiceProvider extends Provider {
             int currentTile=0;
             while (y < this.roomHeight) {
                 while (x < this.roomWidth) {
-                    this.tiles.get(this.roomTiles[currentTile]).render(g,64*x,64*y);
+                    this.tiles.get(this.roomTiles[currentTile]).render(g, (int) ((64*x)+this.app.getCamera().getxOffset()), 720+(int) ((64*y)+this.app.getCamera().getyOffset()));
                     currentTile++;
                     x++;
-
                 }
                 x = 0;
                 y++;
@@ -62,8 +64,13 @@ public class TileServiceProvider extends Provider {
 
     @Override
     public void tick() {
-
     }
+
+    public Tile getTile(int x, int y){
+        System.out.println("x/64: "+x/64+" y/64: "+y/64);
+        return null;
+    }
+
     public void setWorldWidth(int width){
         this.roomWidth=width;
     }

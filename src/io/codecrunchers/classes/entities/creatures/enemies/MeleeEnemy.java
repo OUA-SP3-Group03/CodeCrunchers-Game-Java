@@ -1,10 +1,10 @@
-package io.codecrunchers.entities.statics;
+package io.codecrunchers.classes.entities.creatures.enemies;
 
 import java.awt.*;
 
-public class PowerUps extends StaticEntity {
+public class MeleeEnemy extends Enemy {
 
-    public PowerUps(float x, float y, int width, int height) {
+    public MeleeEnemy(float x, float y, int width, int height) {
         super(x, y, width, height);
     }
 
@@ -20,7 +20,7 @@ public class PowerUps extends StaticEntity {
 
     @Override
     public boolean isAlive() {
-        return false;
+        return true;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class PowerUps extends StaticEntity {
 
     @Override
     public Rectangle getBounds() {
-        return null;
+        return new Rectangle((int) x, (int) y,width,height);
     }
 
 

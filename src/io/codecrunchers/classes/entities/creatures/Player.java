@@ -1,8 +1,7 @@
-package io.codecrunchers.entities.creatures;
+package io.codecrunchers.classes.entities.creatures;
 
-import io.codecrunchers.entities.Entity;
+import io.codecrunchers.facades.App;
 import io.codecrunchers.providers.EntityServiceProvider;
-import org.w3c.dom.css.Rect;
 
 import java.awt.*;
 
@@ -16,8 +15,12 @@ public class Player extends Creature {
     //left = -1
     private int facing = 1;
 
-    public Player(float x, float y, int width, int height) {
+    private App app;
+
+    public Player(float x, float y, int width, int height, App app) {
         super(x, y, width, height);
+        this.app = app;
+        this.texture = this.app.texture().allImages()[26];
     }
 
     @Override
@@ -27,6 +30,20 @@ public class Player extends Creature {
 
     @Override
     public void tick() {
+
+        this.app.getTile((int)this.x, (int) this.y);
+
+
+        if(this.app.keyPressed().containsKey((int)'D')){
+            this.xVel = +20;
+        }else if(this.app.keyPressed().containsKey((int)'A')){
+            this.xVel = -20;
+        }else{
+            this.xVel = 0;
+        }
+
+
+
 
         x += xVel;
         y += yVel;
@@ -44,18 +61,7 @@ public class Player extends Creature {
 
     @Override
     public void render(Graphics g) {
-
-        Graphics2D g2d = (Graphics2D) g;
-
-
-        g2d.setColor(Color.red);
-        g2d.draw(getBottom());
-        g2d.setColor(Color.blue);
-        g2d.draw(getTop());
-        g2d.draw(getLeft());
-        g2d.draw(getRight());
-        g2d.setColor(Color.green);
-        g2d.draw(getBounds());
+        g.drawImage(this.texture, (int) ((int)this.x-this.app.getCamera().getxOffset()), (int) ((int)this.y-this.app.getCamera().getyOffset()),null);
     }
 
     @Override
@@ -69,24 +75,24 @@ public class Player extends Creature {
     }
 
     private void collision(){
-        for (int i = 0; i < entityList.getEntities().size(); i++){
-            Entity temp = entityList.getEntities().get(i);
-            if (getBottom().intersects(temp.getBounds())){
-                y = temp.getY() - height;
-                yVel = 0;
-            }
-            if (getTop().intersects(temp.getBounds())){
-                y = temp.getHeight() + 10;
-                yVel = 0;
-            } if (getLeft().intersects(temp.getBounds())){
-                x = temp.getX() + temp.getWidth() + 5;
-                xVel = 0;
-            } if (getRight().intersects(temp.getBounds())){
-                x = temp.getX() - 5;
-                xVel = 0;
-            }
-
-        }
+        //for (int i = 0; i < entityList.getEntities().size(); i++){
+        //    Entity temp = entityList.getEntities().get(i);
+        //    if (getBottom().intersects(temp.getBounds())){
+        //        y = temp.getY() - height;
+        //        yVel = 0;
+        //    }
+        //    if (getTop().intersects(temp.getBounds())){
+        //        y = temp.getHeight() + 10;
+        //        yVel = 0;
+        //    } if (getLeft().intersects(temp.getBounds())){
+        //        x = temp.getX() + temp.getWidth() + 5;
+        //        xVel = 0;
+        //    } if (getRight().intersects(temp.getBounds())){
+        //        x = temp.getX() - 5;
+        //        xVel = 0;
+        //    }
+//
+  //      }
     }
 
 

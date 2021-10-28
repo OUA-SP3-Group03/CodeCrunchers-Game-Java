@@ -1,16 +1,17 @@
 package io.codecrunchers.facades;
 
+import io.codecrunchers.classes.entities.Entity;
 import io.codecrunchers.classes.gui.InterfaceObject;
 import io.codecrunchers.classes.states.State;
+import io.codecrunchers.classes.tiles.Tile;
 import io.codecrunchers.core.Application;
+import io.codecrunchers.core.Camera;
 import io.codecrunchers.core.Kernel;
 
 import io.codecrunchers.core.Provider;
 import io.codecrunchers.providers.*;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 public class App {
@@ -95,7 +96,7 @@ public class App {
     }
 
     //**** ADD GUI OBJECT ****\\
-    public void addInterfaceObject(InterfaceObject newObject){
+    public void registerInterfaceObject(InterfaceObject newObject){
         ((InterfaceServiceProvider) this.kernel.getServiceProvider("interface")).addInterfaceObject(newObject);
     }
 
@@ -154,6 +155,15 @@ public class App {
         ((TileServiceProvider)this.kernel.getServiceProvider("tile")).setWorld(world);
     }
 
+    public void registerEntity(Entity e){
+        ((EntityServiceProvider)this.kernel.getServiceProvider("entity")).registerEntity(e);
+    }
 
+    public Camera getCamera(){
+        return this.kernel.getCamera();
+    }
 
+    public Tile getTile(int x, int y){
+        return ((TileServiceProvider)this.kernel.getServiceProvider("tile")).getTile(x,y);
+    }
 }

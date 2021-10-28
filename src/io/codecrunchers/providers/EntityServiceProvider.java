@@ -1,8 +1,7 @@
 package io.codecrunchers.providers;
 
 import io.codecrunchers.core.Provider;
-import io.codecrunchers.entities.Entity;
-import io.codecrunchers.entities.creatures.Player;
+import io.codecrunchers.classes.entities.Entity;
 import io.codecrunchers.facades.App;
 
 import java.awt.*;
@@ -16,7 +15,7 @@ public class EntityServiceProvider extends Provider {
 
     @Override
     public void boot(App app) {
-        entities = new ArrayList<Entity>();
+        entities = new ArrayList<>();
     }
 
     @Override
@@ -57,7 +56,7 @@ public class EntityServiceProvider extends Provider {
         return entities;
     }
 
-    public void addEntity(Entity e){
+    public void registerEntity(Entity e){
         entities.add(e);
     }
 
