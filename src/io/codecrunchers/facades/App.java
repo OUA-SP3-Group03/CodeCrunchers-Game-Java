@@ -1,8 +1,10 @@
 package io.codecrunchers.facades;
 
+import io.codecrunchers.classes.entities.Entity;
 import io.codecrunchers.classes.gui.InterfaceObject;
 import io.codecrunchers.classes.states.State;
 import io.codecrunchers.core.Application;
+import io.codecrunchers.core.Camera;
 import io.codecrunchers.core.Kernel;
 
 import io.codecrunchers.core.Provider;
@@ -154,6 +156,12 @@ public class App {
         ((TileServiceProvider)this.kernel.getServiceProvider("tile")).setWorld(world);
     }
 
+    public void registerEntity(Entity e){
+        ((EntityServiceProvider)this.kernel.getServiceProvider("entity")).registerEntity(e);
+    }
 
+    public Camera getCamera() {
+        return this.kernel.getCamera();
+    }
 
 }

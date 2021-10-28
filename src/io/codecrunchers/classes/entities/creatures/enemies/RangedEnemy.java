@@ -1,16 +1,10 @@
-package io.codecrunchers.entities.creatures.enemies;
-
-import io.codecrunchers.entities.creatures.Creature;
+package io.codecrunchers.classes.entities.creatures.enemies;
 
 import java.awt.*;
 
-public class BossEnemy extends Enemy {
-
-    Creature creature;
-
-    public BossEnemy(float x, float y, int width, int height, int health) {
+public class RangedEnemy extends Enemy {
+    public RangedEnemy(float x, float y, int width, int height) {
         super(x, y, width, height);
-        creature.setHealth(health);
     }
 
     @Override

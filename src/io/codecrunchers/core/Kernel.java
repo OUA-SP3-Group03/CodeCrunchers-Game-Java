@@ -1,8 +1,6 @@
 package io.codecrunchers.core;
 
-import io.codecrunchers.classes.states.State;
 import io.codecrunchers.facades.App;
-import io.codecrunchers.facades.Texture;
 import io.codecrunchers.providers.*;
 
 
@@ -16,6 +14,7 @@ public class Kernel {
     private final App app;
     private final Config config;
     private boolean booted = false;
+    private Camera camera;
 
     public Kernel() {
         //create the config
@@ -38,12 +37,14 @@ public class Kernel {
         this.providers.put("mouse", new MouseServiceProvider());
         this.providers.put("states", new StatesServiceProvider());
         this.providers.put("tile", new TileServiceProvider());
+        this.providers.put("entity", new EntityServiceProvider());
 
         //_________ REGISTER YOUR NEW PROVIDER HERE ___________\\
 
         //this.provider.put("provider", new YourServiceProvider());
 
         //______________________________________________________\\
+        this.camera = new Camera(this.app, 0, 0);
 
         //boot all service providers
         this.bootProviders();
@@ -116,5 +117,7 @@ public class Kernel {
     }
 
 
-
+    public Camera getCamera() {
+        return this.camera;
+    }
 }

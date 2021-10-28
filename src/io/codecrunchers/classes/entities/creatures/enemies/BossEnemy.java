@@ -1,11 +1,16 @@
-package io.codecrunchers.entities.creatures.enemies;
+package io.codecrunchers.classes.entities.creatures.enemies;
+
+import io.codecrunchers.classes.entities.creatures.Creature;
 
 import java.awt.*;
 
-public class MeleeEnemy extends Enemy {
+public class BossEnemy extends Enemy {
 
-    public MeleeEnemy(float x, float y, int width, int height) {
+    Creature creature;
+
+    public BossEnemy(float x, float y, int width, int height, int health) {
         super(x, y, width, height);
+        creature.setHealth(health);
     }
 
     @Override
@@ -32,6 +37,4 @@ public class MeleeEnemy extends Enemy {
     public Rectangle getBounds() {
         return new Rectangle((int) x, (int) y,width,height);
     }
-
-
 }
