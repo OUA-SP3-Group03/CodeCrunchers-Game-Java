@@ -1,5 +1,7 @@
 package io.codecrunchers.service;
 
+import io.codecrunchers.providers.LevelGeneratorServiceProvider;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -25,6 +27,12 @@ public class LevelGeneratorService {
     private final int numberOfRooms = 3;
     private final int worldHeight = 4;
 
+    private LevelGeneratorServiceProvider provider;
+
+    public LevelGeneratorService(LevelGeneratorServiceProvider provider){
+        this.provider=provider;
+    }
+
 
     public void chooseWorld() {
         rooms = new int[numberOfRooms];
@@ -41,40 +49,27 @@ public class LevelGeneratorService {
         int pointer = 0;
 
 
+
+
+
         for (int i = 0; i < numberOfRooms; i++) {
+            int skip=this.rooms[i]*(worldHeight+1)+1;
 
-            //a case for every room must be implemented
-            switch (rooms[i]) {
-                case 0:
-
-                    try {
-                        file0 = new Scanner(new FileReader("res/textures/worlds/WORLD_0.txt"));
-                    } catch (Exception e) {
-                        System.out.println("Error with room 0");
-                    }
-                    while (file0.hasNextLine()) {
-                        inputLine = file0.nextLine();
-                        tiles[pointer] = inputLine;
-                        pointer++;
-
-                    }
-                    file0.close();
-                    break;
-                case 1:
-
-                    try {
-                        file1 = new Scanner(new FileReader("res/textures/worlds/WORLD_1.txt"));
-                    } catch (Exception e) {
-                        System.out.println("Error with room 1");
-                    }
-                    while (file1.hasNextLine()) {
-                        inputLine = file1.nextLine();
-                        tiles[pointer] = inputLine;
-                        pointer++;
-                    }
-                    file1.close();
-                    break;
+            try {
+                file0 = new Scanner(new FileReader(this.provider.world0path()));
+            } catch (Exception e) {
+                System.out.println("Error with file");
             }
+            for(int j=0;j<skip;j++){
+                file0.nextLine();
+            }
+            for(int n=0;n<worldHeight;n++) {
+                inputLine = file0.nextLine();
+                tiles[pointer] = inputLine;
+                pointer++;
+            }
+            file0.close();
+
         }
 
 
@@ -82,7 +77,7 @@ public class LevelGeneratorService {
 
     public void writeWorldOnFile() {
         try {
-            pw = new PrintWriter(new FileWriter("res/textures/worlds/finalWorld.txt"));
+            pw = new PrintWriter(new FileWriter("res/finalWorld.txt"));
         } catch (Exception e) {
             System.out.println("File error-Wrong path");
         }

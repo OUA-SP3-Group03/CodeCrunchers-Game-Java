@@ -59,6 +59,12 @@ public class Config {
     public String texturePath(){
         return this.kernel.getConfig().texturePath;
     }
+
+    //**** GET WORLD PATH ****\\
+    public String world0path(){
+      return this.kernel.getConfig().world0path; 
+    }
+  
     //**** GET LOGO PATH ****\\
     public String logoTexturePath(){
         return this.kernel.getConfig().logoPath;

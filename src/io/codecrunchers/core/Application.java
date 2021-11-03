@@ -31,6 +31,9 @@ public class Application {
         //start the main loop
         this.app.startLoop();
 
+        this.app.chooseWorld();
+        this.app.generateWorld();
+        this.app.writeWorldOnFile();
     }
 
     public void tick(){
