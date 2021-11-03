@@ -68,5 +68,5 @@ public class Config {
     }
 
     public String world0path(){return this.kernel.getConfig().world0path; }
-    public String world1path(){return this.kernel.getConfig().world1path; }
+
 }
