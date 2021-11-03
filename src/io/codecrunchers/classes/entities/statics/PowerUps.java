@@ -1,9 +1,10 @@
-package io.codecrunchers.entities.creatures.enemies;
+package io.codecrunchers.classes.entities.statics;
 
 import java.awt.*;
 
-public class RangedEnemy extends Enemy {
-    public RangedEnemy(float x, float y, int width, int height) {
+public class PowerUps extends StaticEntity {
+
+    public PowerUps(float x, float y, int width, int height) {
         super(x, y, width, height);
     }
 
@@ -19,7 +20,7 @@ public class RangedEnemy extends Enemy {
 
     @Override
     public boolean isAlive() {
-        return true;
+        return false;
     }
 
     @Override
@@ -29,6 +30,8 @@ public class RangedEnemy extends Enemy {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle((int) x, (int) y,width,height);
+        return null;
     }
+
+
 }

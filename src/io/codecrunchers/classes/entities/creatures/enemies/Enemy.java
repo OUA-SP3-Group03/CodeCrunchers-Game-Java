@@ -1,6 +1,6 @@
-package io.codecrunchers.entities.creatures.enemies;
+package io.codecrunchers.classes.entities.creatures.enemies;
 
-import io.codecrunchers.entities.creatures.Creature;
+import io.codecrunchers.classes.entities.creatures.Creature;
 
 public abstract class Enemy extends Creature {
 

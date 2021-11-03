@@ -54,19 +54,25 @@ public class Config {
     public int textureHeight(){
         return this.kernel.getConfig().textureHeight;
     }
-    //**** GET TEXTURE MAP WIDTH ****\\
-    public int textureMapWidth(){
-        return this.kernel.getConfig().textureMapWidth;
-    }
-    //**** GET TEXTURE MAP HEIGHT ****\\
-    public int textureMapHeight(){
-        return this.kernel.getConfig().textureMapHeight;
-    }
+
     //**** GET TEXTURE PATH ****\\
     public String texturePath(){
         return this.kernel.getConfig().texturePath;
     }
 
-    public String world0path(){return this.kernel.getConfig().world0path; }
+    //**** GET WORLD PATH ****\\
+    public String world0path(){
+      return this.kernel.getConfig().world0path; 
+    }
+  
+    //**** GET LOGO PATH ****\\
+    public String logoTexturePath(){
+        return this.kernel.getConfig().logoPath;
+    }
 
+
+    //**** GET TEXTURE SCALE ****\\
+    public int textureScale(){
+        return this.kernel.getConfig().textureScale;
+    }
 }
