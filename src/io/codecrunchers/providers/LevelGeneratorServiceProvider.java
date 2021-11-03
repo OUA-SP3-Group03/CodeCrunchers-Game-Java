@@ -55,6 +55,6 @@ public class LevelGeneratorServiceProvider extends Provider {
 
 
     public String world0path(){return this.app.config().world0path(); }
-    public String world1path(){return this.app.config().world1path(); }
+
 
 }
