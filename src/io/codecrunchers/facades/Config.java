@@ -75,4 +75,7 @@ public class Config {
     public int textureScale(){
         return this.kernel.getConfig().textureScale;
     }
+
+    //**** GET MAX ROOMS ****\\
+    public int maxRooms() { return this.kernel.getConfig().maxRooms; }
 }
