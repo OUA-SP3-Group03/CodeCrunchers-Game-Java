@@ -1,10 +1,18 @@
-//Rooom 0
-0 0 0 0
-2 2 2 2
-2 2 2 2
-0 0 0 0
-//Room 1
-1 1 1 1
-2 2 2 2
-2 2 2 2
-1 1 1 1
+//set room variables first
+//set room width must match the width of all the lines below,do not put a space after equals
+{{room_width}} =4
+//set room height must match the height of all the lines below,do not put a space after equals
+{{room_height}} =4
+//sets the amount of rooms in this file, this must match
+{{room_count}} =2
+0000
+1111
+2222
+3333
+//always finish a room with the new room flag as shown below on line 13 and 18
+{{new_room}}
+4444
+5555
+6666
+7777
+{{new_room}}
