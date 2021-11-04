@@ -2,95 +2,138 @@ package io.codecrunchers.service;
 
 import io.codecrunchers.providers.LevelGeneratorServiceProvider;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
 
 public class LevelGeneratorService {
 
-    //Rooms
-    private static final int ROOM_0 = 0;
-    private static final int ROOM_1 = 1;
 
-    //Scanners
-    private Scanner file0 = null;
-    private Scanner file1 = null;
-
-    //PrintWriter
-    PrintWriter pw = null;
 
     //
-    private int rooms[];
-    String tiles[];
-    private final int numberOfRooms = 3;
-    private final int worldHeight = 4;
+    String[] world;
+    private int worldWidth;
+
+    //new variables
+    private int roomCount;
+    private int roomHeight;
+    private int roomWidth;
+    private int[][] rooms;
+    private int maxRooms;
 
     private LevelGeneratorServiceProvider provider;
 
-    public LevelGeneratorService(LevelGeneratorServiceProvider provider){
-        this.provider=provider;
-    }
+    public LevelGeneratorService(LevelGeneratorServiceProvider provider) {
+
+        this.provider = provider;
 
 
-    public void chooseWorld() {
-        rooms = new int[numberOfRooms];
-        Random random = new Random();
-        for (int i = 0; i < numberOfRooms; i++) {
-            rooms[i] = random.nextInt(numberOfRooms - 1);
-            System.out.println(rooms[i]);
+        this.loadFile(this.provider.world0path());
+        for (int i = 0; i < this.rooms[0].length; i++) {
+            System.out.println("room 1 tile " + i + " = " + this.rooms[0][i]);
         }
-    }
-
-    public void generateWorld() {
-        String inputLine = "";
-        tiles = new String[worldHeight * numberOfRooms];
-        int pointer = 0;
-
-
-
-
-
-        for (int i = 0; i < numberOfRooms; i++) {
-            int skip=this.rooms[i]*(worldHeight+1)+1;
-
-            try {
-                file0 = new Scanner(new FileReader(this.provider.world0path()));
-            } catch (Exception e) {
-                System.out.println("Error with file");
-            }
-            for(int j=0;j<skip;j++){
-                file0.nextLine();
-            }
-            for(int n=0;n<worldHeight;n++) {
-                inputLine = file0.nextLine();
-                tiles[pointer] = inputLine;
-                pointer++;
-            }
-            file0.close();
-
+        for (int i = 0; i < this.rooms[1].length; i++) {
+            System.out.println("room 2 tile " + i + " = " + this.rooms[1][i]);
         }
 
-
+        this.maxRooms = this.provider.getMaxRooms();
+        this.generate();
     }
 
-    public void writeWorldOnFile() {
+
+
+    public void loadFile(String path) {
+
+        int currentRoom = 0;
+
         try {
-            pw = new PrintWriter(new FileWriter("res/finalWorld.txt"));
-        } catch (Exception e) {
-            System.out.println("File error-Wrong path");
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            String line;
+            String room = "";
+
+            while ((line = br.readLine()) != null) {
+
+                if (line.contains("{{new_room}}")) {
+                    this.rooms[currentRoom] = new int[room.length()];
+
+                    for (int i = 0; i < room.length(); i++) {
+                        this.rooms[currentRoom][i] = room.charAt(i) - '0';
+                    }
+                    room = "";
+                    currentRoom++;
+
+                }
+                if (!line.contains("//") && !line.contains("{{") && !line.isBlank()) {
+
+                    room += line;
+
+                } else if (line.contains("{{room_width}}")) {
+                    this.roomWidth = Integer.parseInt(line.split("=")[1]);
+                } else if (line.contains("{{room_count}}")) {
+
+                    this.roomCount = Integer.parseInt(line.split("=")[1]);
+                    this.rooms = new int[this.roomCount][this.roomWidth];
+                } else if (line.contains("{{room_height}}")) {
+                    this.roomHeight = Integer.parseInt(line.split("=")[1]);
+                }
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        for (int i = 0; i < worldHeight; i++) {
-            for (int j = 0; j < numberOfRooms; j++)
-                if (j == numberOfRooms - 1)
-                    pw.println(tiles[i + worldHeight * j] + " ");
-                else
-                    pw.print(tiles[i + worldHeight * j] + " ");
-        }
-        pw.close();
+
     }
+
+    public void generate() {
+        String world = "";
+        int worldWidth = this.roomWidth * this.maxRooms;
+        int worldHeight = roomHeight;
+        int[] worldRooms = new int[this.maxRooms];
+        int i = 0;
+        Random random = new Random();
+        while (i < this.maxRooms) {
+            worldRooms[i] = random.nextInt(this.rooms.length);
+            i++;
+
+        }
+        int x = 0;
+        int y = 0;
+        int offset = 0;
+        while (y < this.roomHeight) {
+        for (int j = 0; j < this.maxRooms; j++) {
+
+            int selectedRoom = worldRooms[j];
+
+
+
+
+                while (x < this.roomWidth) {
+                    int tile = this.roomWidth * y;
+
+                    world += this.rooms[selectedRoom][x+tile];
+
+
+                    x++;
+
+                }
+                x = 0;
+
+            }
+
+            y++;
+        }
+
+        System.out.println("world= " + world);
+        System.out.println("rooms array lenght " + rooms.length);
+        System.out.println("printing world rooms");
+        for ( i=0;i<worldRooms.length;i++)
+            System.out.println(worldRooms[i]);
+
+
+    }
+
+
 }
 
 
