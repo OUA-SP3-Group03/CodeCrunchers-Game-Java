@@ -56,5 +56,6 @@ public class LevelGeneratorServiceProvider extends Provider {
 
     public String world0path(){return this.app.config().world0path(); }
 
+    public int getMaxRooms(){ return this.app.config().maxRooms(); }
 
 }
