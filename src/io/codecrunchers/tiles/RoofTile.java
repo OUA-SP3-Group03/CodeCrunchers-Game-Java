@@ -1,10 +1,10 @@
-package io.codecrunchers.classes.tiles;
+package io.codecrunchers.tiles;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class ScaffoldingTile extends Tile{
-    public ScaffoldingTile(BufferedImage texture) {
+public class RoofTile extends Tile{
+    public RoofTile(BufferedImage texture) {
         super(texture);
     }
 
