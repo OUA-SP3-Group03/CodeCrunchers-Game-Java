@@ -1,8 +1,7 @@
-package io.codecrunchers.core;
+package io.codecrunchers;
 
-import io.codecrunchers.classes.states.*;
-
-import io.codecrunchers.facades.App;
+import io.codecrunchers.engine.facades.App;
+import io.codecrunchers.states.*;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -30,10 +29,6 @@ public class Application {
 
         //start the main loop
         this.app.startLoop();
-
-        this.app.chooseWorld();
-        this.app.generateWorld();
-        this.app.writeWorldOnFile();
     }
 
     public void tick(){
