@@ -1,4 +1,4 @@
-package io.codecrunchers.service;
+package io.codecrunchers.engine.service;
 
 import java.awt.image.BufferedImage;
 
