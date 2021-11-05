@@ -6,19 +6,17 @@ import io.codecrunchers.service.LevelGeneratorService;
 
 import java.awt.*;
 
-public class LevelGeneratorServiceProvider extends Provider {
+public class LevelServiceProvider extends Provider {
 
-    private LevelGeneratorService levelGenerator;
     private App app;
+    private LevelGeneratorService levelGeneratorService;
     @Override
     public void boot(App app) {
         this.app=app;
 
-        this.levelGenerator = new LevelGeneratorService(this);
-
+        this.levelGeneratorService = new LevelGeneratorService(this);
 
         this.booted = true;
-
     }
 
     @Override
@@ -39,6 +37,22 @@ public class LevelGeneratorServiceProvider extends Provider {
     @Override
     public void tick() {
 
+    }
+
+    public void generateWorld(){
+        this.levelGeneratorService.generateWorld();
+    }
+
+    public int[] getWorld(){
+        return this.levelGeneratorService.getWorld();
+    }
+
+    public int getWorldWidth(){
+        return  this.levelGeneratorService.getWorldWidth();
+    }
+
+    public int getWorldHeight(){
+        return this.levelGeneratorService.getWorldHeight();
     }
 
     public String world0path(){return this.app.config().world0path(); }
