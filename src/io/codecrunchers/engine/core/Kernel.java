@@ -1,7 +1,9 @@
-package io.codecrunchers.core;
+package io.codecrunchers.engine.core;
 
-import io.codecrunchers.facades.App;
-import io.codecrunchers.providers.*;
+import io.codecrunchers.Application;
+import io.codecrunchers.engine.facades.App;
+import io.codecrunchers.engine.gfx.Camera;
+import io.codecrunchers.engine.providers.*;
 
 
 import java.awt.*;
