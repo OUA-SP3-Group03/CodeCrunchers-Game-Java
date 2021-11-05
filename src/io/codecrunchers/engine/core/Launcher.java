@@ -1,4 +1,4 @@
-package io.codecrunchers.core;
+package io.codecrunchers.engine.core;
 
 public class Launcher {
 
