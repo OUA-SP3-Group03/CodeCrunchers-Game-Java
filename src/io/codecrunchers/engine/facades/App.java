@@ -1,18 +1,16 @@
-package io.codecrunchers.facades;
+package io.codecrunchers.engine.facades;
 
-import io.codecrunchers.classes.entities.Entity;
-import io.codecrunchers.classes.gui.InterfaceObject;
-import io.codecrunchers.classes.states.State;
-import io.codecrunchers.core.Application;
-import io.codecrunchers.core.Camera;
-import io.codecrunchers.core.Kernel;
+import io.codecrunchers.engine.entity.Entity;
+import io.codecrunchers.engine.gfx.InterfaceObject;
+import io.codecrunchers.engine.core.State;
+import io.codecrunchers.Application;
+import io.codecrunchers.engine.gfx.Camera;
+import io.codecrunchers.engine.core.Kernel;
 
-import io.codecrunchers.core.Provider;
-import io.codecrunchers.providers.*;
+import io.codecrunchers.engine.core.Provider;
+import io.codecrunchers.engine.providers.*;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 public class App {
@@ -83,17 +81,6 @@ public class App {
     //**** LOGOUT HTTP CALL ****\\
     public String authLogout(String token){
         return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).logout(token);
-    }
-
-
-    public void generateWorld(){
-        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).generateWorld();
-    }
-    public void writeWorldOnFile(){
-        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).writeWorldOnFile();
-    }
-    public void chooseWorld(){
-        ((LevelGeneratorServiceProvider)this.kernel.getServiceProvider("levelgenerator")).chooseWorld();
     }
 
     //**** ADD GUI OBJECT ****\\
