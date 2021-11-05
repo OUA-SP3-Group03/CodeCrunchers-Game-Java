@@ -1,7 +1,6 @@
 package io.codecrunchers.engine.gfx;
 
 import io.codecrunchers.engine.facades.App;
-import io.codecrunchers.gui.ClickEvent;
 
 import java.awt.*;
 
