@@ -18,17 +18,22 @@ public class App {
     private final Texture texture;
     private final Kernel kernel;
     private final Config config;
+    private final Level level;
 
     public App(Kernel kernel){
         this.kernel = kernel;
         this.config = new Config(this.kernel);
         this.texture = new Texture(this.kernel);
+        this.level = new Level(this.kernel);
     }
 
     public Texture texture (){
         return this.texture;
     }
 
+    public Level level(){
+        return this.level;
+    }
 
     //**** GET INSTANCE OF THE APPLICATION ****\\
     public Application self(){
