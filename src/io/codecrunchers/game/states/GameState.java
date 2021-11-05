@@ -1,7 +1,6 @@
 package io.codecrunchers.game.states;
 
 import io.codecrunchers.core.ASCII;
-import io.codecrunchers.core.State;
 import io.codecrunchers.game.entities.Entity;
 import io.codecrunchers.game.entities.creatures.Player;
 import io.codecrunchers.facades.App;

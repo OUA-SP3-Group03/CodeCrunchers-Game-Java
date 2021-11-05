@@ -1,6 +1,6 @@
 package io.codecrunchers.providers;
 
-import io.codecrunchers.core.State;
+import io.codecrunchers.game.states.State;
 import io.codecrunchers.core.Provider;
 import io.codecrunchers.facades.App;
 

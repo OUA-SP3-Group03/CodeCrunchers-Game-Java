@@ -2,7 +2,7 @@ package io.codecrunchers.facades;
 
 import io.codecrunchers.game.entities.Entity;
 import io.codecrunchers.game.gui.InterfaceObject;
-import io.codecrunchers.core.State;
+import io.codecrunchers.game.states.State;
 import io.codecrunchers.core.Application;
 import io.codecrunchers.game.gfx.Camera;
 import io.codecrunchers.core.Kernel;

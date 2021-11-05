@@ -1,4 +1,4 @@
-package io.codecrunchers.core;
+package io.codecrunchers.game.states;
 
 import io.codecrunchers.facades.App;
 

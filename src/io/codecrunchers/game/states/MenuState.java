@@ -1,6 +1,5 @@
 package io.codecrunchers.game.states;
 
-import io.codecrunchers.core.State;
 import io.codecrunchers.facades.App;
 
 import java.awt.*;
