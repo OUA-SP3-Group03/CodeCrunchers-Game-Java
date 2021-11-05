@@ -33,7 +33,7 @@ public class Kernel {
         this.providers.put("http", new HttpServiceProvider());
         this.providers.put("interface", new InterfaceServiceProvider());
         this.providers.put("asset", new AssetServiceProvider());
-        this.providers.put("levelgenerator",new LevelGeneratorServiceProvider());
+        this.providers.put("levelgenerator",new LevelServiceProvider());
         this.providers.put("keyboard", new KeyboardServiceProvider());
         this.providers.put("mouse", new MouseServiceProvider());
         this.providers.put("states", new StatesServiceProvider());
