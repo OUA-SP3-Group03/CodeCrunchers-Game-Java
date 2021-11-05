@@ -1,36 +1,30 @@
 package io.codecrunchers.service;
 
-import io.codecrunchers.providers.LevelGeneratorServiceProvider;
+import io.codecrunchers.providers.LevelServiceProvider;
 
 import java.io.*;
 import java.util.Random;
 
 public class LevelGeneratorService {
 
-
-
-    //
-    String[] world;
+    //world variables
+    private boolean generated = false;
     private int worldWidth;
+    private int worldHeight;
+    private int[] worldTiles;
 
+    //room variables
     private int roomHeight;
     private int roomWidth;
     private int[][] rooms;
     private final int maxRooms;
 
-    public LevelGeneratorService(LevelGeneratorServiceProvider provider) {
-
-
-        this.loadFile(provider.world0path());
-        for (int i = 0; i < this.rooms[0].length; i++) {
-            System.out.println("room 1 tile " + i + " = " + this.rooms[0][i]);
-        }
-        for (int i = 0; i < this.rooms[1].length; i++) {
-            System.out.println("room 2 tile " + i + " = " + this.rooms[1][i]);
-        }
-
+    public LevelGeneratorService(LevelServiceProvider provider) {
+        //set the max rooms variable
         this.maxRooms = provider.getMaxRooms();
-        this.generate();
+
+        //load file on boot
+        this.loadFile(provider.world0path());
     }
 
 
@@ -81,8 +75,10 @@ public class LevelGeneratorService {
 
     public void generate() {
         String world = "";
-        int worldWidth = this.roomWidth * this.maxRooms;
-        int worldHeight = roomHeight;
+
+        this.worldWidth = this.roomWidth * this.maxRooms;
+        this.worldHeight = roomHeight;
+
         int[] worldRooms = new int[this.maxRooms];
         int i = 0;
         Random random = new Random();
@@ -93,40 +89,45 @@ public class LevelGeneratorService {
         }
         int x = 0;
         int y = 0;
-        int offset = 0;
         while (y < this.roomHeight) {
         for (int j = 0; j < this.maxRooms; j++) {
-
             int selectedRoom = worldRooms[j];
-
-
-
-
                 while (x < this.roomWidth) {
                     int tile = this.roomWidth * y;
 
                     world += this.rooms[selectedRoom][x+tile];
-
-
                     x++;
-
                 }
                 x = 0;
-
             }
-
             y++;
         }
 
-        System.out.println("world= " + world);
-        System.out.println("rooms array lenght " + rooms.length);
-        System.out.println("printing world rooms");
-        for ( i=0;i<worldRooms.length;i++)
-            System.out.println(worldRooms[i]);
+        int[] worldTiles = new int[world.length()];
+        for (i = 0; i < world.length(); i++) {
+            worldTiles[i] = world.charAt(i) - '0';
+        }
 
+        //return the final world tiles array
+        this.worldTiles = worldTiles;
 
     }
 
+    public void generateWorld(){
+        this.generate();
+    }
+
+    public int[] getWorld(){
+        return this.worldTiles;
+    }
+
+    public int getWorldWidth(){
+            return this.worldWidth;
+    }
+
+    public int getWorldHeight(){
+            return this.worldHeight;
+    }
 
 }
 
