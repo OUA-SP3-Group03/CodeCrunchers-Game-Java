@@ -48,7 +48,7 @@ public class TileServiceProvider extends Provider {
             int currentTile=0;
             while (y < this.roomHeight) {
                 while (x < this.roomWidth) {
-                    this.tiles.get(this.roomTiles[currentTile]).render(g, (int) ((64*x) - this.app.getCamera().getxOffset()), (int) ((64*y) - this.app.getCamera().getyOffset()));
+                        this.tiles.get(this.roomTiles[currentTile]).render(g, (int) ((64 * x) - this.app.getCamera().getxOffset()), (int) ((64 * y) - this.app.getCamera().getyOffset()));
 
                     currentTile++;
                     x++;
@@ -74,7 +74,7 @@ public class TileServiceProvider extends Provider {
 
                 while (x < roomWidth) {
                     if(x == targetX && y == targetY) {
-                        if(currentTile < this.roomTiles.length) {
+                        if(currentTile < this.roomTiles.length && this.roomTiles.length >1) {
                             selectedTile = this.tiles.get(this.roomTiles[currentTile]);
                         }
                         break;
