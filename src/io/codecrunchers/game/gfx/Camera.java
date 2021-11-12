@@ -14,13 +14,13 @@ public class Camera {
 
     public void centerOnEntity(Entity e){
 
-        //tempXOffset = e.getX() - (float)this.app.config().interfaceWidth() / 2 + (float)e.getWidth() / 2;
+        tempXOffset = e.getX() - (float)this.app.config().interfaceWidth() / 2 + (float)e.getWidth() / 2;
 
-        //if(tempXOffset >= xOffset) {
+        if(tempXOffset >= xOffset) {
             this.xOffset = e.getX() - (float) this.app.config().interfaceWidth() / 2 + (float) e.getWidth() / 2;
-        //}
+        }
 
-        this.yOffset = e.getY() - (float) this.app.config().interfaceHeight() / 2 + (float) e.getHeight() / 2;
+        //this.yOffset = e.getY() - (float) this.app.config().interfaceHeight() / 2 + (float) e.getHeight() / 2;
     }
 
     public float getxOffset() {
