@@ -1,13 +1,17 @@
 package io.codecrunchers.game.entities.creatures;
 import io.codecrunchers.core.ASCII;
 import io.codecrunchers.facades.App;
-import io.codecrunchers.providers.EntityServiceProvider;
 
+import javax.sound.sampled.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.io.File;
 
 public class Player extends Creature {
 
-    EntityServiceProvider entityList;
+    private static Clip jumpClip, attackClip;
+    private static AudioInputStream stream;
+    private static AudioFormat format;
 
     //Records the player's direction
     //right = 1
@@ -15,11 +19,22 @@ public class Player extends Creature {
     private int facing = 1;
     private App app;
     private boolean jumping = false;
+    private boolean attacking = false;
+    private int fallSpeed = 0;
+    private int jumpSpeed = 30;
 
     public Player(float x, float y, int width, int height, App app) {
         super(x, y, width, height);
         this.app = app;
         this.texture = this.app.texture().allImages()[26];
+
+        //Load first jump+attack sound clips
+        try {
+            jumpSound();
+            attackSound();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -29,35 +44,31 @@ public class Player extends Creature {
 
     @Override
     public void tick() {
-        this.xVel = 0;
-        this.yVel = 0;
-
-        if(this.app.keyPressed().containsKey((int)'D') ){
-            if(!this.app.getTileAtLocation(((int)(this.x+32)/64),(int)this.y/64).solid()) {
-                this.x += 32;
-            }
+        if((this.app.keyPressed().containsKey((int)'D') || this.app.keyPressed().containsKey(KeyEvent.VK_RIGHT))
+                && !this.app.getTileAtLocation(((int)(this.x+46)/64),(int)(this.y+32)/64).solid() ){
+                this.x += 6;
         }
-        if(this.app.keyPressed().containsKey((int)'A') && !this.app.getTileAtLocation(((int)this.x/64),((int)this.y/64)).solid()){
-            if(!this.app.getTileAtLocation(((int)(this.x-32)/64),(int)this.y/64).solid()) {
-                this.x -= 32;
-            }
+        if((this.app.keyPressed().containsKey((int)'A') || this.app.keyPressed().containsKey(KeyEvent.VK_LEFT))
+                && !this.app.getTileAtLocation(((int)(this.x+12)/64),(int)(this.y+32)/64).solid()
+                && this.x >= this.app.getCamera().getxOffset() - 12 ) {
+                this.x -= 6;
         }
 
-        if(this.app.keyPressed().containsKey(ASCII.space)){
-            this.jumping = true;
-        }else{
-            this.jumping = false;
+        if(this.app.keyPressed().containsKey((int)'W') || this.app.keyPressed().containsKey(KeyEvent.VK_UP)) {
+            jumping = true;
         }
 
-        x += xVel;
-        y += yVel;
+        //Temp attack statement
+        if(this.app.keyPressed().containsKey(ASCII.space)) {
+            attacking = true;
+        }
+        else {
+            attacking = false;
+        }
 
-        if (xVel > 0) facing = 1;
-        if (xVel < 0 ) facing = -1;
-
-
+        attack();
+        jump();
         fall();
-
     }
 
     @Override
@@ -65,13 +76,69 @@ public class Player extends Creature {
         g.drawImage(this.texture, (int) ((int)this.x - this.app.getCamera().getxOffset()), (int) ((int)this.y - this.app.getCamera().getyOffset()),null);
     }
 
-    //Gravity method (numbers might need tweaking, waiting on collision)
     public void fall() {
-        if(!this.app.getTileAtLocation(((int)(this.x)/64),(int)(this.y+64)/64).solid() && !this.jumping) {
-            this.y += 32;
-       }else if(this.jumping){
-            this.jumping = false;
-            this.y -= 64;
+        if(!(this.app.getTileAtLocation( ((int)(this.x+32)/64),(int)(this.y+64)/64).solid() ||
+                this.app.getTileAtLocation( ((int)(this.x)/64),(int)(this.y+64)/64).solid())
+                        && !jumping) {
+            y += fallSpeed;
+            falling = true;
+
+            if (fallSpeed != gravity) {
+                fallSpeed = fallSpeed + 2;
+            }
+
+            //Player doesn't fall through tiles
+            if (this.app.getTileAtLocation( ((int)(this.x+32)/64),(int)(this.y+64)/64).solid() && !jumping) {
+                float tempY = this.y;
+                tempY = tempY / 64;
+
+                this.y = (int)tempY * 64;
+            }
+       } else {
+            falling = false;
+            fallSpeed = 0;
+        }
+    }
+
+    public void jump() {
+        if(!this.app.getTileAtLocation( ((int)(this.x+32)/64),(int)(this.y)/64).solid() && jumping && !falling) {
+
+            //Play jump sound
+            jumpClip.start();
+
+            y -= jumpSpeed;
+            jumpSpeed -= 2;
+
+            if (jumpSpeed <= 0) {
+                jumpSpeed = 30;
+                jumping = false;
+                falling = true;
+            }
+        }
+        else {
+            //Reload jump sound for next use
+            try {
+                jumpSound();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            jumping = false;
+            falling = true;
+            jumpSpeed = 30;
+        }
+    }
+
+    //Temp attack method, to test sound
+    public void attack() {
+        if (attacking) {
+            attackClip.start();
+        }
+        else {
+            try {
+                attackSound();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -97,5 +164,50 @@ public class Player extends Creature {
     }
     public Rectangle getRight(){
         return new Rectangle((int)( x + width - 10), (int) y + 10,  5,  height - 20);
+    }
+
+
+    public void jumpSound() throws Exception {
+        stream = AudioSystem.getAudioInputStream(new File("res/Jump.wav"));
+        format = stream.getFormat();
+
+        if (format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED) {
+            format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, format.getSampleRate(),
+                    format.getSampleSizeInBits() * 2, format.getChannels(), format.getFrameSize() * 2,
+                    format.getFrameRate(), true);
+            stream = AudioSystem.getAudioInputStream(format, stream);
+        }
+
+        DataLine.Info info = new DataLine.Info(Clip.class, stream.getFormat(),
+                ((int) stream.getFrameLength() * format.getFrameSize()));
+        jumpClip = (Clip) AudioSystem.getLine(info);
+
+        jumpClip.open(stream);
+
+        //Volume control
+        FloatControl volume = (FloatControl) jumpClip.getControl(FloatControl.Type.MASTER_GAIN);
+        volume.setValue(-10f);
+    }
+
+    public void attackSound() throws Exception {
+        stream = AudioSystem.getAudioInputStream(new File("res/Attack.wav"));
+        format = stream.getFormat();
+
+        if (format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED) {
+            format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, format.getSampleRate(),
+                    format.getSampleSizeInBits() * 2, format.getChannels(), format.getFrameSize() * 2,
+                    format.getFrameRate(), true);
+            stream = AudioSystem.getAudioInputStream(format, stream);
+        }
+
+        DataLine.Info info = new DataLine.Info(Clip.class, stream.getFormat(),
+                ((int) stream.getFrameLength() * format.getFrameSize()));
+        attackClip = (Clip) AudioSystem.getLine(info);
+
+        attackClip.open(stream);
+
+        //Volume control
+        FloatControl volume = (FloatControl) attackClip.getControl(FloatControl.Type.MASTER_GAIN);
+        volume.setValue(-10f);
     }
 }
