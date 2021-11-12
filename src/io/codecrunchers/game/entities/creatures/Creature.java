@@ -7,13 +7,11 @@ public abstract class Creature extends Entity {
     protected int health;
     protected boolean jumping = false, falling = true;
     protected float xVel, yVel;
-    protected float gravity = 3.0f;
-
+    protected float gravity = 20.0f;
 
     public Creature(float x, float y, int width, int height) {
         super(x, y, width, height);
     }
-
 
     //Mutators and Accessors
     public int getHealth() {
