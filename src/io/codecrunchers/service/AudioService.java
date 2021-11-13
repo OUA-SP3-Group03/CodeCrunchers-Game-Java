@@ -14,11 +14,6 @@ public class AudioService {
         this.path = path;
         this.volume = volume;
 
-        this.reset();
-
-    }
-
-    public void reset(){
         try{
             AudioInputStream stream = AudioSystem.getAudioInputStream(new File(path));
             AudioFormat format = stream.getFormat();
@@ -44,6 +39,11 @@ public class AudioService {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+    }
+
+    public void reset(){
+        this.clip.setMicrosecondPosition(0);
     }
 
     public void play(){
