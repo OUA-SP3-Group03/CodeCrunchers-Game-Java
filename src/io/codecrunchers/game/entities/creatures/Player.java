@@ -5,13 +5,8 @@ import io.codecrunchers.facades.App;
 import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.File;
 
 public class Player extends Creature {
-
-    private static Clip jumpClip, attackClip;
-    private static AudioInputStream stream;
-    private static AudioFormat format;
 
     //Records the player's direction
     //right = 1
@@ -103,6 +98,7 @@ public class Player extends Creature {
             jumpSpeed -= 2;
 
             if (jumpSpeed <= 0) {
+                this.app.resetAudioClip("jump");
                 jumpSpeed = 30;
                 jumping = false;
                 falling = true;
@@ -110,9 +106,6 @@ public class Player extends Creature {
         }
         else {
             //Reload jump sound for next use
-
-            this.app.resetAudioClip("jump");
-
             jumping = false;
             falling = true;
             jumpSpeed = 30;
