@@ -53,10 +53,9 @@ public class Application {
             g.setColor(Color.cyan);
             g.fillRect(0,0,this.app.config().interfaceWidth(), this.app.config().interfaceHeight());
         }
+
         //render all providers
        this.app.render(g);
-
-
 
 
        //__ END RENDER
