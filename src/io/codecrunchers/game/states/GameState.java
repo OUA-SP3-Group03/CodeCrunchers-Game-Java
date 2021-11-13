@@ -1,27 +1,25 @@
 package io.codecrunchers.game.states;
 
-import io.codecrunchers.core.ASCII;
 import io.codecrunchers.game.entities.Entity;
 import io.codecrunchers.game.entities.creatures.Player;
 import io.codecrunchers.facades.App;
 
-import javax.sound.sampled.*;
 import java.awt.*;
-import java.io.File;
+import java.text.DecimalFormat;
 import java.util.Random;
 
 public class GameState extends State {
 
     private App app;
     private Entity player;
-    private boolean gameStarted;
     private String backgroundTrack;
+    private float timer;
+    private DecimalFormat df;
 
     @Override
     public void boot(App app) {
         this.app = app;
-        this.gameStarted = false;
-
+        this.df = new DecimalFormat("#.#");
         player = new Player(64, 0, 64, 64, this.app);
         this.app.registerEntity(player);
 
@@ -33,9 +31,15 @@ public class GameState extends State {
         if(!this.player.isAlive()){
             this.endGame();
         }
+
+        this.timer ++;
+
     }
 
     public void render(Graphics g) {
+        g.setFont(new Font("Copperplate",Font.BOLD,40));
+        g.setColor(Color.red);
+        g.drawString("Time: "+this.df.format(this.timer/60),100,100);
     }
 
     public void startGame(){
@@ -53,15 +57,14 @@ public class GameState extends State {
         this.app.setWorld(this.app.level().tiles());
 
         this.backgroundTrack = getRandomMusic();
-        this.gameStarted = true;
 
         //Start BGM
         this.app.playAudioClipLooped(this.backgroundTrack);
     }
 
     public void endGame(){
-        this.gameStarted = false;
         this.app.stopAudioClip(this.backgroundTrack);
+        this.timer = 0;
         this.app.setCurrentState("login");
     }
 
