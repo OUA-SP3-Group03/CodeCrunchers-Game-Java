@@ -165,4 +165,24 @@ public class App {
         return ((TileServiceProvider)this.kernel.getServiceProvider("tile")).getTile(index);
     }
 
+    public void playAudioClip(String clip){
+        ((AudioServiceProvider)this.kernel.getServiceProvider("audio")).play(clip);
+    }
+
+    public void playAudioClipLooped(String clip){
+        ((AudioServiceProvider)this.kernel.getServiceProvider("audio")).playLoop(clip);
+    }
+
+    public void resetAudioClip(String clip){
+        ((AudioServiceProvider)this.kernel.getServiceProvider("audio")).reset(clip);
+    }
+
+    public void stopAudioClip(String clip){
+        ((AudioServiceProvider)this.kernel.getServiceProvider("audio")).stop(clip);
+    }
+
+    public State getState(String state){
+        return ((StatesServiceProvider)this.kernel.getServiceProvider("states")).getState(state);
+    }
+
 }
