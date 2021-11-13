@@ -56,7 +56,7 @@ public class LoginState extends State {
                 .setText("Login")
                 .setState("login")
                 .setHoverBoxCurve(22)
-                .setClickEvent(()-> this.app.setCurrentState("game")));
+                .setClickEvent(()-> ((GameState)this.app.getState("game")).startGame()));
 
         //button two
         this.app.addInterfaceObject(new InterfaceButton()
