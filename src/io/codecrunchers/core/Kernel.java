@@ -15,7 +15,7 @@ public class Kernel {
     private final App app;
     private final Config config;
     private boolean booted = false;
-    private Camera camera;
+    private final Camera camera;
 
     public Kernel() {
         //create the config
@@ -25,7 +25,7 @@ public class Kernel {
         this.app = new App(this);
 
         //create providers hashmap and set it to a new hashmap
-        this.providers = new HashMap<String, Provider>();
+        this.providers = new HashMap<>();
 
         //register all our provider instances within the hashmap
         this.providers.put("display", new DisplayServiceProvider());
@@ -39,6 +39,7 @@ public class Kernel {
         this.providers.put("states", new StatesServiceProvider());
         this.providers.put("tile", new TileServiceProvider());
         this.providers.put("entity", new EntityServiceProvider());
+        this.providers.put("audio", new AudioServiceProvider());
 
         //_________ REGISTER YOUR NEW PROVIDER HERE ___________\\
 
