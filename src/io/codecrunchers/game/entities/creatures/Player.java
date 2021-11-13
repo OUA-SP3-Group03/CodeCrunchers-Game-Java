@@ -98,7 +98,6 @@ public class Player extends Creature {
             jumpSpeed -= 2;
 
             if (jumpSpeed <= 0) {
-                this.app.resetAudioClip("jump");
                 jumpSpeed = 30;
                 jumping = false;
                 falling = true;
@@ -106,6 +105,8 @@ public class Player extends Creature {
         }
         else {
             //Reload jump sound for next use
+            if (this.app.getTileAtLocation( ((int)(this.x+32)/64),(int)(this.y+64)/64).solid())
+                this.app.resetAudioClip("jump");
             jumping = false;
             falling = true;
             jumpSpeed = 30;
