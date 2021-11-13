@@ -13,75 +13,62 @@ import java.util.Random;
 public class GameState extends State {
 
     private App app;
-    Entity player;
-
-    Clip musicClip;
+    private Entity player;
+    private boolean gameStarted;
+    private String backgroundTrack;
 
     @Override
     public void boot(App app) {
         this.app = app;
+        this.gameStarted = false;
+
+        player = new Player(64, 0, 64, 64, this.app);
+        this.app.registerEntity(player);
+
+    }
+
+    public void tick() {
+        this.app.getCamera().centerOnEntity(player);
+
+        if(!this.player.isAlive()){
+            this.endGame();
+        }
+    }
+
+    public void render(Graphics g) {
+    }
+
+    public void startGame(){
+        this.app.resetAudioClip("hurt");
+        this.player.setAlive(true);
+        this.player.setX(64);
+        this.player.setY(0);
+        this.app.getCamera().reset();
+
+        this.app.setCurrentState("game");
 
         this.app.level().generate();
         this.app.setWorldWidth(this.app.level().width());
         this.app.setWorldHeight(this.app.level().height());
         this.app.setWorld(this.app.level().tiles());
 
-        player = new Player(64, 0, 64, 64, this.app);
-        this.app.registerEntity(player);
-
-        //Load BGM
-        try {
-            backgroundMusic();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void tick() {
-        if(this.app.keyPressed().containsKey(ASCII.escape)){
-            this.app.keyPressed().remove(ASCII.escape);
-            this.app.level().generate();
-            this.app.setWorldWidth(this.app.level().width());
-            this.app.setWorldHeight(this.app.level().height());
-            this.app.setWorld(this.app.level().tiles());
-        }
-
-        this.app.getCamera().centerOnEntity(player);
+        this.backgroundTrack = getRandomMusic();
+        this.gameStarted = true;
 
         //Start BGM
-        musicClip.loop(5);
+        this.app.playAudioClipLooped(this.backgroundTrack);
     }
 
-    public void render(Graphics g) {
-
+    public void endGame(){
+        this.gameStarted = false;
+        this.app.stopAudioClip(this.backgroundTrack);
+        this.app.setCurrentState("login");
     }
 
-    public void backgroundMusic() throws Exception {
-        AudioInputStream stream = AudioSystem.getAudioInputStream(new File(getRandomMusic()));
-        AudioFormat format = stream.getFormat();
-
-        if (format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED) {
-            format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, format.getSampleRate(),
-                    format.getSampleSizeInBits() * 2, format.getChannels(), format.getFrameSize() * 2,
-                    format.getFrameRate(), true); // big endian
-            stream = AudioSystem.getAudioInputStream(format, stream);
-        }
-
-        DataLine.Info info = new DataLine.Info(Clip.class, stream.getFormat(),
-                ((int) stream.getFrameLength() * format.getFrameSize()));
-        musicClip = (Clip) AudioSystem.getLine(info);
-
-
-        musicClip.open(stream);
-
-        //Volume control
-        FloatControl volume = (FloatControl) musicClip.getControl(FloatControl.Type.MASTER_GAIN);
-        volume.setValue(-25f);
-    }
 
     //Return a random background music track
     public String getRandomMusic() {
-        String[] music = {"res/Music1.wav", "res/Music2.wav", "res/Music3.wav", "res/Music3.wav"};
+        String[] music = {"bgm1", "bgm2", "bgm3", "bgm4"};
         Random rng = new Random();
         int selection;
 
@@ -89,5 +76,6 @@ public class GameState extends State {
 
         return music[selection];
     }
+
 
 }
