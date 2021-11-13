@@ -27,14 +27,6 @@ public class Player extends Creature {
         super(x, y, width, height);
         this.app = app;
         this.texture = this.app.texture().allImages()[26];
-
-        //Load first jump+attack sound clips
-        try {
-            jumpSound();
-            attackSound();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -69,6 +61,7 @@ public class Player extends Creature {
         attack();
         jump();
         fall();
+        die();
     }
 
     @Override
@@ -104,7 +97,7 @@ public class Player extends Creature {
         if(!this.app.getTileAtLocation( ((int)(this.x+32)/64),(int)(this.y)/64).solid() && jumping && !falling) {
 
             //Play jump sound
-            jumpClip.start();
+            this.app.playAudioClip("jump");
 
             y -= jumpSpeed;
             jumpSpeed -= 2;
@@ -117,11 +110,9 @@ public class Player extends Creature {
         }
         else {
             //Reload jump sound for next use
-            try {
-                jumpSound();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
+            this.app.resetAudioClip("jump");
+
             jumping = false;
             falling = true;
             jumpSpeed = 30;
@@ -131,19 +122,19 @@ public class Player extends Creature {
     //Temp attack method, to test sound
     public void attack() {
         if (attacking) {
-            attackClip.start();
+            this.app.playAudioClip("attack");
         }
         else {
-            try {
-                attackSound();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+             this.app.resetAudioClip("attack");
         }
     }
 
     @Override
     public void die() {
+        if(this.y >= this.app.config().interfaceHeight()){
+            this.app.playAudioClip("hurt");
+            this.setAlive(false);
+        }
     }
 
     @Override
@@ -166,48 +157,4 @@ public class Player extends Creature {
         return new Rectangle((int)( x + width - 10), (int) y + 10,  5,  height - 20);
     }
 
-
-    public void jumpSound() throws Exception {
-        stream = AudioSystem.getAudioInputStream(new File("res/Jump.wav"));
-        format = stream.getFormat();
-
-        if (format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED) {
-            format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, format.getSampleRate(),
-                    format.getSampleSizeInBits() * 2, format.getChannels(), format.getFrameSize() * 2,
-                    format.getFrameRate(), true);
-            stream = AudioSystem.getAudioInputStream(format, stream);
-        }
-
-        DataLine.Info info = new DataLine.Info(Clip.class, stream.getFormat(),
-                ((int) stream.getFrameLength() * format.getFrameSize()));
-        jumpClip = (Clip) AudioSystem.getLine(info);
-
-        jumpClip.open(stream);
-
-        //Volume control
-        FloatControl volume = (FloatControl) jumpClip.getControl(FloatControl.Type.MASTER_GAIN);
-        volume.setValue(-10f);
-    }
-
-    public void attackSound() throws Exception {
-        stream = AudioSystem.getAudioInputStream(new File("res/Attack.wav"));
-        format = stream.getFormat();
-
-        if (format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED) {
-            format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, format.getSampleRate(),
-                    format.getSampleSizeInBits() * 2, format.getChannels(), format.getFrameSize() * 2,
-                    format.getFrameRate(), true);
-            stream = AudioSystem.getAudioInputStream(format, stream);
-        }
-
-        DataLine.Info info = new DataLine.Info(Clip.class, stream.getFormat(),
-                ((int) stream.getFrameLength() * format.getFrameSize()));
-        attackClip = (Clip) AudioSystem.getLine(info);
-
-        attackClip.open(stream);
-
-        //Volume control
-        FloatControl volume = (FloatControl) attackClip.getControl(FloatControl.Type.MASTER_GAIN);
-        volume.setValue(-10f);
-    }
 }
