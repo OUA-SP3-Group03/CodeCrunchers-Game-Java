@@ -14,6 +14,7 @@ public class MouseServiceProvider extends Provider implements MouseListener, Mou
     //Is mouse button pressed
     private boolean mousePressed;
 
+
     //Coordinates of mouse cursor
     private int mouseX, mouseY;
 
@@ -45,7 +46,8 @@ public class MouseServiceProvider extends Provider implements MouseListener, Mou
 
     //**** TICK METHOD ****\\
     @Override
-    public void tick() {}
+    public void tick() {
+    }
 
     @Override
     public void mousePressed(MouseEvent e) {
@@ -73,6 +75,9 @@ public class MouseServiceProvider extends Provider implements MouseListener, Mou
         return mousePressed;
     }
 
+    public void resetMouseClick(){
+        this.mousePressed = false;
+    }
     public int getMouseX() {
         return mouseX;
     }

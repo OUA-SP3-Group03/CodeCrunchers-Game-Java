@@ -4,16 +4,18 @@ import io.codecrunchers.facades.App;
 
 import javax.sound.sampled.*;
 import java.io.File;
+import java.io.IOException;
 
 public class AudioService {
 
     private Clip clip;
+    private AudioInputStream stream;
 
     public AudioService(String path, float volume, App app){
         app.debug().increaseServiceCount();
 
         try{
-            AudioInputStream stream = AudioSystem.getAudioInputStream(new File(path));
+            this.stream = AudioSystem.getAudioInputStream(new File(path));
             AudioFormat format = stream.getFormat();
 
             if (format.getEncoding() != AudioFormat.Encoding.PCM_SIGNED) {
@@ -23,10 +25,7 @@ public class AudioService {
                 stream = AudioSystem.getAudioInputStream(format, stream);
             }
 
-            DataLine.Info info = new DataLine.Info(Clip.class, stream.getFormat(),
-                    ((int) stream.getFrameLength() * format.getFrameSize()));
-
-            clip = (Clip) AudioSystem.getLine(info);
+            clip = AudioSystem.getClip();
 
             clip.open(stream);
 
@@ -41,10 +40,11 @@ public class AudioService {
     }
 
     public void reset(){
-        this.clip.setMicrosecondPosition(0);
+        this.clip.setFramePosition(0);
     }
 
     public void play(){
+        this.clip.setFramePosition(0);
         this.clip.start();
     }
 
@@ -53,6 +53,6 @@ public class AudioService {
     }
 
     public void stop(){
-        this.clip.close();
+        this.clip.stop();
     }
 }

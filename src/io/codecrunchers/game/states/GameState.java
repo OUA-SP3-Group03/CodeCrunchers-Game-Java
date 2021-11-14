@@ -33,6 +33,12 @@ public class GameState extends State {
             this.app.keyPressed().remove(ASCII.f3);
         }
 
+        //toggle pause menu
+        if(this.app.keyPressed().containsKey(ASCII.escape)){
+            this.app.setCurrentState("pause");
+            this.app.keyPressed().remove(ASCII.escape);
+        }
+
         //center camera on player
         this.app.getCamera().centerOnEntity(player);
 
@@ -94,10 +100,11 @@ public class GameState extends State {
     }
 
     public void endGame(){
+        this.app.resetAudioClip(this.backgroundTrack);
         this.app.stopAudioClip(this.backgroundTrack);
         this.timer = 0;
         this.app.resetEntitiesInGame();
-        this.app.setCurrentState("login");
+        this.app.setCurrentState("menu");
     }
 
 

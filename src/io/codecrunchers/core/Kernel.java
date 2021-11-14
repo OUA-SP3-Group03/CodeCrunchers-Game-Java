@@ -71,23 +71,33 @@ public class Kernel {
     }
 
     public void bootProviders(){
-        //Display how many service providers are registered
-        System.out.println(this.providers.size()+" Service Providers Registered");
 
         //Boot display first to avoid any boot errors
-        this.providers.get("display").boot(this.app);
-        this.providers.get("asset").boot(this.app);
+        DisplayServiceProvider display = (DisplayServiceProvider) this.providers.get("display");
+        display.boot(this.app);
+
+        //Boot the Asset Service provider second to avoid errors
+        AssetServiceProvider asset = (AssetServiceProvider) this.providers.get("asset");
+        asset.boot(this.app);
+
+        //Show Loading Screen
+        Graphics g = this.app.canvas().getGraphics();
+        g.drawImage(this.app.texture().logo(),0,this.config.interfaceHeight/2-128,null);
+        g.setFont(new Font(g.getFont().getName(), Font.BOLD,60));
+        g.drawString("Loading",this.config.interfaceWidth/2-128,this.config.interfaceHeight/2+64);
 
         //run boot method on all service providers
         for(Provider provider : this.providers.values()){
             //display what provider is being booted in console
-            System.out.println("Booting : "+provider);
+
             //if provider isn't already booted
             if(!provider.isBooted()) {
                 //boot provider
                 provider.boot(this.app);
             }
         }
+
+        g.dispose();
 
         this.booted = true;
 
@@ -147,5 +157,9 @@ public class Kernel {
 
     public Camera getCamera() {
         return this.camera;
+    }
+
+    public boolean isBooted(){
+        return this.booted;
     }
 }

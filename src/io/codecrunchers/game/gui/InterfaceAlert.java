@@ -1,17 +1,11 @@
 package io.codecrunchers.game.gui;
 
-
 import java.awt.*;
 
-public class InterfaceButton extends InterfaceObject {
-
+public class InterfaceAlert extends InterfaceObject{
     @Override
     public void tick() {
 
-        if(this.hovering && this.app.mousePressed()){
-            this.onClick();
-            this.app.resetMouseClick();
-        }
     }
 
     @Override
@@ -26,7 +20,7 @@ public class InterfaceButton extends InterfaceObject {
         g.setColor(this.textColor);
 
         //draw outline
-        g.drawImage(this.app.texture().allImages()[0],this.x,this.y,null);
+        g.drawImage(this.app.texture().allImages()[6],this.x,this.y,null);
         //draw base image
 
         int i = 0;
@@ -35,21 +29,16 @@ public class InterfaceButton extends InterfaceObject {
 
 
         while(i < this.tileWidth-2) {
-            g.drawImage(this.app.texture().allImages()[1], lastX, this.y, null);
+            g.drawImage(this.app.texture().allImages()[7], lastX, this.y, null);
             lastX += textureSize;
             i++;
         }
 
 
-        g.drawImage(this.app.texture().allImages()[2],lastX,this.y,null);
+        g.drawImage(this.app.texture().allImages()[8],lastX,this.y,null);
 
 
         //draw string
         g.drawString(this.text,this.drawTextX,this.drawTextY);
-
     }
-
-
-
-
 }

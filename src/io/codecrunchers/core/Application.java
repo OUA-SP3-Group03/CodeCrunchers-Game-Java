@@ -27,8 +27,17 @@ public class Application {
         //set the default starting state
         this.app.setCurrentState("login");
 
+
+        //check for prior login
+        if(this.app.authCheck()){
+            this.app.setCurrentState("menu");
+        }else{
+            this.app.setCurrentState("login");
+        }
+
         //start the main loop
         this.app.startLoop();
+
     }
 
     public void tick(){
@@ -37,32 +46,36 @@ public class Application {
     }
 
     public void render(){
-        //create buffered strategy for the app canvas
-        BufferStrategy bs = this.app.canvas().getBufferStrategy();
-            if(bs == null){
+        if(this.app.isBooted()) {
+            //create buffered strategy for the app canvas
+            BufferStrategy bs = this.app.canvas().getBufferStrategy();
+            if (bs == null) {
                 this.app.canvas().createBufferStrategy(3);
                 return;
             }
 
-       //create the graphics object to draw to that buffered strategy
-       Graphics g = bs.getDrawGraphics();
+            //create the graphics object to draw to that buffered strategy
+            Graphics g = bs.getDrawGraphics();
 
-       //clear the screen
-       g.clearRect(0,0,this.app.config().interfaceWidth(),this.app.config().interfaceHeight());
-        if(this.app.currentState().matches("game")){
-            g.setColor(Color.decode("#22123b"));
-            g.fillRect(0,0,this.app.config().interfaceWidth(), this.app.config().interfaceHeight());
+            //clear the screen
+            g.clearRect(0, 0, this.app.config().interfaceWidth(), this.app.config().interfaceHeight());
+
+
+            if (this.app.currentState().matches("game")) {
+                g.setColor(Color.decode("#22123b"));
+                g.fillRect(0, 0, this.app.config().interfaceWidth(), this.app.config().interfaceHeight());
+            }
+
+            //render all providers
+            this.app.render(g);
+
+
+            //__ END RENDER
+
+            //finally, show the buffered strategy and dispose of the old graphics
+            bs.show();
+            g.dispose();
         }
-
-        //render all providers
-       this.app.render(g);
-
-
-       //__ END RENDER
-
-       //finally, show the buffered strategy and dispose of the old graphics
-       bs.show();
-       g.dispose();
     }
 
 }

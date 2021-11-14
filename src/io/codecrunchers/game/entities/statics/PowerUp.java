@@ -28,7 +28,6 @@ public class PowerUp extends StaticEntity {
 
     @Override
     public void die() {
-        this.app.resetAudioClip("powerup");
         this.setAlive(false);
     }
 
@@ -40,6 +39,7 @@ public class PowerUp extends StaticEntity {
 
     @Override
     public void collisionWithPlayer() {
+        this.app.resetAudioClip("powerup");
         this.app.playAudioClip("powerup");
         this.die();
     }

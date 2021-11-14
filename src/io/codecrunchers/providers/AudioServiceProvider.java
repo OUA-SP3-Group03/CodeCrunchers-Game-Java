@@ -16,16 +16,22 @@ public class AudioServiceProvider extends Provider {
 
         this.clips = new HashMap<>();
 
-        this.clips.put("bgm1", new AudioService("res/Music1.wav",-25f,app));
-        this.clips.put("bgm2", new AudioService("res/Music2.wav",-25f,app));
-        this.clips.put("bgm3", new AudioService("res/Music3.wav",-25f,app));
-        this.clips.put("bgm4", new AudioService("res/Music4.wav",-25f,app));
+        //Background Music
+        this.clips.put("bgm1", new AudioService("res/Audio/Music1.wav",-25f,app));
+        this.clips.put("bgm2", new AudioService("res/Audio/Music2.wav",-25f,app));
+        this.clips.put("bgm3", new AudioService("res/Audio/Music3.wav",-25f,app));
+        this.clips.put("bgm4", new AudioService("res/Audio/Music4.wav",-25f,app));
 
-        this.clips.put("jump", new AudioService("res/Jump.wav",-10f,app));
-        this.clips.put("attack", new AudioService("res/Attack.wav",-10f,app));
-        this.clips.put("footstep", new AudioService("res/Footstep.wav",-10f,app));
-        this.clips.put("hurt", new AudioService("res/Hurt.wav",-10f,app));
-        this.clips.put("powerup", new AudioService("res/SynthChime4.wav",-10f,app));
+        //Player Game sounds
+        this.clips.put("jump", new AudioService("res/Audio/Jump.wav",-10f,app));
+        this.clips.put("attack", new AudioService("res/Audio/Attack.wav",-10f,app));
+        this.clips.put("footstep", new AudioService("res/Audio/Footstep.wav",-10f,app));
+        this.clips.put("hurt", new AudioService("res/Audio/Hurt.wav",-10f,app));
+        this.clips.put("powerup", new AudioService("res/Audio/SynthChime4.wav",-10f,app));
+
+        //GUI sounds
+        this.clips.put("ui-fail", new AudioService("res/Audio/UI_Quirky29.wav",-10f,app));
+        this.clips.put("ui-click", new AudioService("res/Audio/UI_Quirky21.wav",-10f,app));
 
 
     }

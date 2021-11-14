@@ -22,6 +22,10 @@ public class MeleeEnemy extends Enemy {
 
     @Override
     public void render(Graphics g) {
+        if(this.app.showDebug()){
+            g.setColor(Color.red);
+            g.drawRect((int) ((int)this.x- this.app.getCamera().getxOffset()),(int)this.y,this.width,this.height);
+        }
         g.drawImage(this.texture, (int) ((int)this.x- this.app.getCamera().getxOffset()),(int)this.y,null);
     }
 
