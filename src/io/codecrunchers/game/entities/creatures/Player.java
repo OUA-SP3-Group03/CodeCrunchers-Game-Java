@@ -2,17 +2,12 @@ package io.codecrunchers.game.entities.creatures;
 import io.codecrunchers.core.ASCII;
 import io.codecrunchers.facades.App;
 
-import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class Player extends Creature {
 
-    //Records the player's direction
-    //right = 1
-    //left = -1
-    private int facing = 1;
-    private App app;
+    private final App app;
     private boolean jumping = false;
     private boolean attacking = false;
     private int fallSpeed = 0;
@@ -31,6 +26,8 @@ public class Player extends Creature {
 
     @Override
     public void tick() {
+        this.texture = this.app.texture().animation("playerIdol");
+
         if((this.app.keyPressed().containsKey((int)'D') || this.app.keyPressed().containsKey(KeyEvent.VK_RIGHT))
                 && !this.app.getTileAtLocation(((int)(this.x+46)/64),(int)(this.y+32)/64).solid() ){
                 this.x += 6;
