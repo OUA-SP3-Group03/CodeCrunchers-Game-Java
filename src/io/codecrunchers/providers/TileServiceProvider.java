@@ -25,13 +25,13 @@ public class TileServiceProvider extends Provider {
         this.roomHeight=0;
         this.tiles = new ArrayList<Tile>();
         //Tile 0: Air Tile
-        this.tiles.add(new AirTile(this.app.texture().allImages()[20]));
+        this.tiles.add(new AirTile(this.app.texture().allImages()[15]));
         //Tile 1: Blank Brick Tile -> using dynamic texture
-        this.tiles.add(new BrickTile(this.app.texture().allImages()[24], this));
+        this.tiles.add(new BrickTile(this.app.texture().allImages()[16], this));
         //Tile 2: Blank Interior Wall Tile
-        this.tiles.add(new InteriorTile(this.app.texture().allImages()[26]));
+        this.tiles.add(new InteriorTile(this.app.texture().allImages()[18]));
         //Tile 3: Interior Wall Door
-        this.tiles.add(new InteriorTile(this.app.texture().allImages()[27]));
+        this.tiles.add(new InteriorTile(this.app.texture().allImages()[19]));
         //Tile 4: Free Tile
         this.tiles.add(null);
         //Tile 5: Free Tile
@@ -43,7 +43,7 @@ public class TileServiceProvider extends Provider {
         //Tile 8: Free Tile
         this.tiles.add(null);
         //Tile 9: Spawner Tile
-        this.tiles.add(new SpawnerTile(this.app.texture().allImages()[20]));
+        this.tiles.add(new SpawnerTile(this.app.texture().allImages()[15],app));
         }
 
 
@@ -65,9 +65,7 @@ public class TileServiceProvider extends Provider {
             while (x < this.roomWidth) {
                 if(this.tiles.get(this.roomTiles[currentTile]).getClass().getSimpleName().matches("SpawnerTile"))
                 {
-
                     if(!this.app.checkEntityAtLocation(x*64,y*64)) {
-                        System.out.println("Generated Spawner at"+x+" "+y);
                         this.app.registerEntity(new Spawner(x * 64, y * 64, this.app));
                     }
                 }
