@@ -81,18 +81,13 @@ public class App {
     }
 
     //**** LOGIN HTTP CALL ****\\
-    public String authLogin(String email, String password){
+    public boolean authLogin(String email, String password){
         return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).login(email, password);
     }
 
     //**** CHECK LOGIN HTTP CALL ****\\
-    public String authCheck(String token){
-        return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).check(token);
-    }
-
-    //**** LOGOUT HTTP CALL ****\\
-    public String authLogout(String token){
-        return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).logout(token);
+    public boolean authCheck(){
+        return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).check();
     }
 
     //**** ADD GUI OBJECT ****\\
@@ -205,6 +200,14 @@ public class App {
 
     public void setShowDebug(boolean value){
         this.kernel.setShowDebug(value);
+    }
+
+    public boolean isBooted(){
+        return this.kernel.isBooted();
+    }
+
+    public void resetMouseClick(){
+        ((MouseServiceProvider)this.kernel.getServiceProvider("mouse")).resetMouseClick();
     }
 
 }
