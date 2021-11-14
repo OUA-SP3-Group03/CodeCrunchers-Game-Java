@@ -143,4 +143,8 @@ public class InterfaceInput extends InterfaceObject {
             return false;
         }
     }
+
+    public String getInput(){
+        return this.input;
+    }
 }
