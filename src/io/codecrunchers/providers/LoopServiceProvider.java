@@ -18,7 +18,7 @@ public class LoopServiceProvider extends Provider {
     public void boot(App app) {
         this.app = app;
         this.running = false;
-        this.loopService = new LoopService(this);
+        this.loopService = new LoopService(this, app);
 
         this.booted = true;
 
