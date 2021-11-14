@@ -7,13 +7,20 @@ import java.awt.image.BufferedImage;
 
 public class SpawnerTile extends Tile{
 
-    public SpawnerTile(BufferedImage texture) {
+    private App app;
+
+    public SpawnerTile(BufferedImage texture, App app) {
         super(texture);
+        this.app = app;
     }
 
     @Override
     public void render(Graphics g, int x, int y, int tileX, int tileY) {
-        g.drawImage(this.texture,x,y,null);
+        if(this.app.getTileAtLocation(tileX, tileY-1).getClass().getSimpleName().matches("InteriorTile")){
+            g.drawImage(this.app.texture().allImages()[19],x,y,null);
+        }else {
+            g.drawImage(this.texture, x, y, null);
+        }
     }
 
     @Override
