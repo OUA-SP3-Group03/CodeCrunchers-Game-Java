@@ -1,5 +1,7 @@
 package io.codecrunchers.service;
 
+import io.codecrunchers.facades.App;
+
 import java.awt.image.BufferedImage;
 
 public class AnimationService {
@@ -16,7 +18,8 @@ public class AnimationService {
     private BufferedImage[] animationImages;
 
     //Constructor
-    public AnimationService(BufferedImage[] animationImages, float animationSpeed) {
+    public AnimationService(BufferedImage[] animationImages, float animationSpeed, App app) {
+        app.debug().increaseServiceCount();
         this.animationSpeed = animationSpeed;
         this.animationImages = animationImages;
 

@@ -1,5 +1,7 @@
 package io.codecrunchers.service;
 
+import io.codecrunchers.facades.App;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -14,6 +16,10 @@ public class HttpService {
             .version(HttpClient.Version.HTTP_2)
             .connectTimeout(Duration.ofSeconds(30))
             .build();
+
+    public HttpService(App app){
+        app.debug().increaseServiceCount();
+    }
 
     public String postRequest(String url, String data) throws IOException, InterruptedException {
 

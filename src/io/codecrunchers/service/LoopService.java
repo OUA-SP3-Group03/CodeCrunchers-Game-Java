@@ -1,5 +1,6 @@
 package io.codecrunchers.service;
 
+import io.codecrunchers.facades.App;
 import io.codecrunchers.providers.LoopServiceProvider;
 
 public class LoopService implements Runnable{
@@ -7,7 +8,8 @@ public class LoopService implements Runnable{
     private final LoopServiceProvider loopServiceProvider;
     private Thread thread;
 
-    public LoopService(LoopServiceProvider loopServiceProvider){
+    public LoopService(LoopServiceProvider loopServiceProvider, App app){
+        app.debug().increaseServiceCount();
         this.loopServiceProvider = loopServiceProvider;
     }
 
