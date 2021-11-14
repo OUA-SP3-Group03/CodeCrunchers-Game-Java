@@ -1,26 +1,29 @@
 package io.codecrunchers.game.entities.statics;
 
+import io.codecrunchers.facades.App;
+
 import java.awt.*;
 
-public class PowerUps extends StaticEntity {
+public class PowerUp extends StaticEntity {
 
-    public PowerUps(float x, float y, int width, int height) {
-        super(x, y, width, height);
+    public PowerUp(float x, float y, App app) {
+        super(x, y);
+        this.app = app;
+        this.texture = this.app.texture().allImages()[34];
     }
 
     @Override
     public void tick() {
-
     }
 
     @Override
     public void render(Graphics g) {
-
+        g.drawImage(this.texture, (int) ((int)x+ this.app.getCamera().getxOffset()),(int)y,null);
     }
 
     @Override
     public boolean isAlive() {
-        return false;
+        return true;
     }
 
     @Override
