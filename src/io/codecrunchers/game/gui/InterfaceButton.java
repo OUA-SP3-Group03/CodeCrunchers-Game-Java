@@ -7,17 +7,11 @@ public class InterfaceButton extends InterfaceObject {
 
     @Override
     public void tick() {
-        if(this.hovering && this.app.mousePressed() && !this.isPressed){
 
+        if(this.hovering && this.app.mousePressed()){
             this.onClick();
-
-            //is pressed variable is needed to prevent this firing more than once
-            this.isPressed = true;
-        }else{
-            //else we set the is pressed variable back to false
-            this.isPressed = false;
+            this.app.resetMouseClick();
         }
-
     }
 
     @Override
