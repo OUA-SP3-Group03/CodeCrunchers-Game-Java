@@ -50,7 +50,7 @@ public class Application {
        //clear the screen
        g.clearRect(0,0,this.app.config().interfaceWidth(),this.app.config().interfaceHeight());
         if(this.app.currentState().matches("game")){
-            g.setColor(Color.cyan);
+            g.setColor(Color.decode("#22123b"));
             g.fillRect(0,0,this.app.config().interfaceWidth(), this.app.config().interfaceHeight());
         }
 
