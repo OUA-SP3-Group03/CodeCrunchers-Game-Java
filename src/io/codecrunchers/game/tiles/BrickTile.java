@@ -16,11 +16,11 @@ public class BrickTile extends Tile{
     @Override
     public void render(Graphics g, int x, int y, int tileX, int tileY) {
         if(this.tileServiceProvider.getTileAtLocation( (tileX),  (tileY-1)).getClass().getSimpleName().matches("AirTile")){
-            g.drawImage(this.tileServiceProvider.getTexture()[25], x,y,null);
+            g.drawImage(this.tileServiceProvider.getTexture()[17], x,y,null);
         }else if(this.tileServiceProvider.getTileAtLocation( (tileX),  (tileY-1)).getClass().getSimpleName().matches("InteriorTile")){
-            g.drawImage(this.tileServiceProvider.getTexture()[25], x,y,null);
+            g.drawImage(this.tileServiceProvider.getTexture()[17], x,y,null);
         }else if(this.tileServiceProvider.getTileAtLocation( (tileX),  (tileY-1)).getClass().getSimpleName().matches("SpawnerTile")){
-        g.drawImage(this.tileServiceProvider.getTexture()[25], x,y,null);
+        g.drawImage(this.tileServiceProvider.getTexture()[17], x,y,null);
         }else {
             g.drawImage(this.texture, x, y, null);
         }
