@@ -15,8 +15,6 @@ import java.util.HashMap;
 
 public class AssetServiceProvider extends Provider {
 
-    //**** BOOT METHOD ****\\
-    private BufferedImage textureMap;
     private BufferedImage[] images;
     private BufferedImage logo;
 
@@ -29,9 +27,10 @@ public class AssetServiceProvider extends Provider {
         //Code Block below is responsible for loading sprite sheet into application
         this.logo = imageLoader(app.config().logoTexturePath());
 
-        this.textureMap = imageLoader(app.config().texturePath());
+        //**** BOOT METHOD ****\\
+        BufferedImage textureMap = imageLoader(app.config().texturePath());
 
-        this.animations = new HashMap<String, AnimationService>();
+        this.animations = new HashMap<>();
 
         assert textureMap != null;
         int textureMapWidth = textureMap.getWidth();
@@ -68,7 +67,7 @@ public class AssetServiceProvider extends Provider {
             y++;
         }
 
-        this.animations.put("playerIdol", new AnimationService(Arrays.copyOfRange(images,40,45), 256, app));
+        this.animations.put("playerIdol", new AnimationService(Arrays.copyOfRange(images,33,38), 256, app));
 
         this.booted=true;
     }
