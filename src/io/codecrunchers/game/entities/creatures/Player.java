@@ -64,7 +64,7 @@ public class Player extends Creature {
     public void render(Graphics g) {
         if(this.app.showDebug()){
             g.setColor(Color.green);
-            g.drawRect((int)this.x,(int)this.y,this.width,this.height);
+            g.drawRect((int) ((int)this.x- this.app.getCamera().getxOffset()),(int)this.y,this.width,this.height);
         }
         g.drawImage(this.texture, (int) ((int)this.x - this.app.getCamera().getxOffset()), (int) ((int)this.y - this.app.getCamera().getyOffset()),null);
     }
