@@ -56,7 +56,11 @@ public class GameState extends State {
             g.drawString("Code Crunchers Alpha 0.1",64,64);
             g.drawString(this.app.debug().providerCount()+ " Service Providers Loaded",64,80);
             g.drawString(this.app.debug().serviceCount()+ " Services Loaded",64,96);
-            g.drawString(this.app.debug().entityCount()+ " Entities Ticking & Rendering",64,110);
+            g.drawString(this.app.debug().entityCount()+ " Entity Ticking & Rendering",64,110);
+            g.drawString("Current FPS: "+this.app.debug().currentFPS()+" | Target: "+this.app.config().targetFPS(),64,126);
+            g.drawString("Current TPS: "+this.app.debug().currentTPS()+" | Target: "+this.app.config().targetTPS(),64,142);
+            g.drawString(this.app.debug().usedMemory()+"MB of Memory Used",64,158);
+            g.drawString("Level Play Time: " + this.df.format(this.timer / 60),64,172);
         }
     }
 
