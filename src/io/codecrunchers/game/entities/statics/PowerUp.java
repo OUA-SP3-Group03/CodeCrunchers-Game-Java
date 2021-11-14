@@ -18,7 +18,10 @@ public class PowerUp extends StaticEntity {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(this.texture, (int) ((int)x+ this.app.getCamera().getxOffset()),(int)y,null);
+        if(this.app.showDebug()){
+            g.drawRect((int) ((int)this.x- this.app.getCamera().getxOffset()),(int)this.y,this.width,this.height);
+        }
+        g.drawImage(this.texture, (int) ((int)x- this.app.getCamera().getxOffset()),(int)y,null);
     }
 
     @Override
