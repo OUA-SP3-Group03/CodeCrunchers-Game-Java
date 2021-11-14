@@ -64,6 +64,18 @@ public class LoopServiceProvider extends Provider {
         return this.app.config().targetTPS();
     }
 
+    public int getCurrentFPS(){
+        return this.loopService.getCurrentFPS();
+    }
+
+    public int getCurrentTPS(){
+        return this.loopService.getCurrentTPS();
+    }
+
+    public int getUsedMemory(){
+        return this.loopService.getUsedMemory();
+    }
+
     public Boolean showFPS(){
         return this.app.config().showFPS();
     }
