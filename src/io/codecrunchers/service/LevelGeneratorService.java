@@ -1,5 +1,6 @@
 package io.codecrunchers.service;
 
+import io.codecrunchers.facades.App;
 import io.codecrunchers.providers.LevelServiceProvider;
 
 import java.io.*;
@@ -19,7 +20,8 @@ public class LevelGeneratorService {
     private int[][] rooms;
     private final int maxRooms;
 
-    public LevelGeneratorService(LevelServiceProvider provider) {
+    public LevelGeneratorService(LevelServiceProvider provider, App app) {
+        app.debug().increaseServiceCount();
         //set the max rooms variable
         this.maxRooms = provider.getMaxRooms();
 
