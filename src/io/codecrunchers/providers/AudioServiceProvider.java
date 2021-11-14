@@ -25,6 +25,7 @@ public class AudioServiceProvider extends Provider {
         this.clips.put("attack", new AudioService("res/Attack.wav",-10f,app));
         this.clips.put("footstep", new AudioService("res/Footstep.wav",-10f,app));
         this.clips.put("hurt", new AudioService("res/Hurt.wav",-10f,app));
+        this.clips.put("powerup", new AudioService("res/SynthChime4.wav",-10f,app));
 
 
     }
