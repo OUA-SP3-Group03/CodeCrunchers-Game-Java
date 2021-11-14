@@ -66,7 +66,7 @@ public class GameState extends State {
 
     public void startGame(){
 
-        this.player = new Player(64, 0, 64, 64, this.app);
+        this.player = new Player(64, 0, this.app);
         this.app.registerEntity(player);
 
         //FIX THIS - MUSIC NOT WORKING
