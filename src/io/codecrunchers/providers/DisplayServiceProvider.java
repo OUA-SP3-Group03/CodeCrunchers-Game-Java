@@ -18,8 +18,6 @@ public class DisplayServiceProvider extends Provider {
        this.display = new DisplayService(app.config().interfaceTitle(), app.config().interfaceWidth(), app.config().interfaceHeight(),app);
        //set the canvas from the new display service
        this.displayCanvas = display.createDisplay();
-       //set the target FPS and TPS
-        int targetFPS = app.config().targetFPS();
 
         this.display.frame.addKeyListener(((KeyboardServiceProvider)app.getProvider("keyboard")));
 
