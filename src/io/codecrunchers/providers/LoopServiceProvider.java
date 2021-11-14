@@ -76,10 +76,6 @@ public class LoopServiceProvider extends Provider {
         return this.loopService.getUsedMemory();
     }
 
-    public Boolean showFPS(){
-        return this.app.config().showFPS();
-    }
-
     public void startLoop(){
         this.loopService.start();
     }
