@@ -1,13 +1,12 @@
 package io.codecrunchers.providers;
 
-import io.codecrunchers.game.tiles.AirTile;
-import io.codecrunchers.game.tiles.RoofTile;
-import io.codecrunchers.game.tiles.ScaffoldingTile;
-import io.codecrunchers.game.tiles.Tile;
+import io.codecrunchers.game.entities.statics.Spawner;
+import io.codecrunchers.game.tiles.*;
 import io.codecrunchers.core.Provider;
 import io.codecrunchers.facades.App;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class TileServiceProvider extends Provider {
@@ -17,6 +16,7 @@ public class TileServiceProvider extends Provider {
     private int roomHeight;
     private App app;
     private int [] roomTiles;
+    private SpawnerTile [] spawnerTiles;
 
     @Override
     public void boot(App app) {
@@ -24,10 +24,27 @@ public class TileServiceProvider extends Provider {
         this.roomWidth=0;
         this.roomHeight=0;
         this.tiles = new ArrayList<Tile>();
-        this.tiles.add(new AirTile(this.app.texture().allImages()[20]));
-        this.tiles.add(new RoofTile(this.app.texture().allImages()[25]));
-        this.tiles.add(new ScaffoldingTile(this.app.texture().allImages()[24]));
-}
+        //Tile 0: Air Tile
+        this.tiles.add(new AirTile(this.app.texture().allImages()[15]));
+        //Tile 1: Blank Brick Tile -> using dynamic texture
+        this.tiles.add(new BrickTile(this.app.texture().allImages()[16], this));
+        //Tile 2: Blank Interior Wall Tile
+        this.tiles.add(new InteriorTile(this.app.texture().allImages()[18]));
+        //Tile 3: Interior Wall Door
+        this.tiles.add(new InteriorTile(this.app.texture().allImages()[19]));
+        //Tile 4: Free Tile
+        this.tiles.add(null);
+        //Tile 5: Free Tile
+        this.tiles.add(null);
+        //Tile 6: Free Tile
+        this.tiles.add(null);
+        //Tile 7: Free Tile
+        this.tiles.add(null);
+        //Tile 8: Free Tile
+        this.tiles.add(null);
+        //Tile 9: Spawner Tile
+        this.tiles.add(new SpawnerTile(this.app.texture().allImages()[15],app));
+        }
 
 
     @Override
@@ -40,15 +57,37 @@ public class TileServiceProvider extends Provider {
         return true;
     }
 
+    private void analyse(){
+        int x = 0;
+        int y = 0;
+        int currentTile=0;
+        while (y < this.roomHeight) {
+            while (x < this.roomWidth) {
+                if(this.tiles.get(this.roomTiles[currentTile]).getClass().getSimpleName().matches("SpawnerTile"))
+                {
+                    if(!this.app.checkEntityAtLocation(x*64,y*64)) {
+                        this.app.registerEntity(new Spawner(x * 64, y * 64, this.app));
+                    }
+                }
+                currentTile++;
+                x++;
+
+            }
+            x = 0;
+            y++;
+        }
+    }
+
     @Override
     public void render(Graphics g) {
         if(this.app.currentState().matches("game")&& this.roomTiles!=null) {
+            this.analyse();
             int x = 0;
             int y = 0;
             int currentTile=0;
             while (y < this.roomHeight) {
                 while (x < this.roomWidth) {
-                        this.tiles.get(this.roomTiles[currentTile]).render(g, (int) ((64 * x) - this.app.getCamera().getxOffset()), (int) ((64 * y) - this.app.getCamera().getyOffset()));
+                        this.tiles.get(this.roomTiles[currentTile]).render(g, (int) ((64 * x) - this.app.getCamera().getxOffset()), (int) ((64 * y) - this.app.getCamera().getyOffset()),x,y);
 
                     currentTile++;
                     x++;
@@ -65,8 +104,6 @@ public class TileServiceProvider extends Provider {
         int currentTile=0;
 
         Tile selectedTile = this.tiles.get(0);
-
-
 
         int x = 0;
         int y = 0;
@@ -89,10 +126,6 @@ public class TileServiceProvider extends Provider {
 
         }
 
-
-        //System.out.println("current tile ="+currentTile);
-
-
         return selectedTile;
     }
 
@@ -112,5 +145,9 @@ public class TileServiceProvider extends Provider {
     }
     public void setWorld(int[] tiles){
         this.roomTiles=tiles;
+    }
+
+    public BufferedImage[] getTexture(){
+        return this.app.texture().allImages();
     }
 }

@@ -35,11 +35,6 @@ public class Config {
         return this.kernel.getConfig().targetTPS;
     }
 
-    //**** GET SHOW FPS ****\\
-    public boolean showFPS(){
-        return this.kernel.getConfig().showFPS;
-    }
-
     //**** GET API URL ****\\
     public String apiUrl(){
         return this.kernel.getConfig().apiUrl;

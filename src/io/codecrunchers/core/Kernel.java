@@ -17,9 +17,16 @@ public class Kernel {
     private boolean booted = false;
     private final Camera camera;
 
+    //debug
+    private boolean showDebug;
+    private int serviceCount;
+
     public Kernel() {
         //create the config
         this.config = new Config();
+
+        //set show debug to false by default
+        this.showDebug = false;
 
         //create the app facade
         this.app = new App(this);
@@ -118,6 +125,25 @@ public class Kernel {
         }
     }
 
+    public boolean showDebug(){
+        return this.showDebug;
+    }
+
+    public void setShowDebug(boolean value){
+        this.showDebug = value;
+    }
+
+    public int getProviderCount(){
+        return this.providers.size();
+    }
+
+    public int getServiceCount(){
+        return this.serviceCount;
+    }
+
+    public void increaseServiceCount(){
+        this.serviceCount++;
+    }
 
     public Camera getCamera() {
         return this.camera;

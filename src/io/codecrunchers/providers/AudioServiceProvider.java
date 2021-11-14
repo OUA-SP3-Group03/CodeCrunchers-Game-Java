@@ -16,15 +16,16 @@ public class AudioServiceProvider extends Provider {
 
         this.clips = new HashMap<>();
 
-        this.clips.put("bgm1", new AudioService("res/Music1.wav",-25f));
-        this.clips.put("bgm2", new AudioService("res/Music2.wav",-25f));
-        this.clips.put("bgm3", new AudioService("res/Music3.wav",-25f));
-        this.clips.put("bgm4", new AudioService("res/Music4.wav",-25f));
+        this.clips.put("bgm1", new AudioService("res/Music1.wav",-25f,app));
+        this.clips.put("bgm2", new AudioService("res/Music2.wav",-25f,app));
+        this.clips.put("bgm3", new AudioService("res/Music3.wav",-25f,app));
+        this.clips.put("bgm4", new AudioService("res/Music4.wav",-25f,app));
 
-        this.clips.put("jump", new AudioService("res/Jump.wav",-10f));
-        this.clips.put("attack", new AudioService("res/Attack.wav",-10f));
-        this.clips.put("footstep", new AudioService("res/Footstep.wav",-10f));
-        this.clips.put("hurt", new AudioService("res/Hurt.wav",-10f));
+        this.clips.put("jump", new AudioService("res/Jump.wav",-10f,app));
+        this.clips.put("attack", new AudioService("res/Attack.wav",-10f,app));
+        this.clips.put("footstep", new AudioService("res/Footstep.wav",-10f,app));
+        this.clips.put("hurt", new AudioService("res/Hurt.wav",-10f,app));
+        this.clips.put("powerup", new AudioService("res/SynthChime4.wav",-10f,app));
 
 
     }

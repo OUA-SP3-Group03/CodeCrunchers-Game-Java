@@ -1,11 +1,18 @@
 package io.codecrunchers.game.entities.creatures.enemies;
 
+import io.codecrunchers.facades.App;
+
 import java.awt.*;
 
 public class MeleeEnemy extends Enemy {
 
-    public MeleeEnemy(float x, float y, int width, int height) {
-        super(x, y, width, height);
+    private App app;
+
+    public MeleeEnemy(float x, float y, App app) {
+        super(x, y);
+        this.app = app;
+        this.texture = this.app.texture().allImages()[27];
+
     }
 
     @Override
@@ -15,22 +22,17 @@ public class MeleeEnemy extends Enemy {
 
     @Override
     public void render(Graphics g) {
-
+        g.drawImage(this.texture, (int) ((int)this.x- this.app.getCamera().getxOffset()),(int)this.y,null);
     }
 
-    @Override
-    public boolean isAlive() {
-        return true;
-    }
 
     @Override
     public void die() {
-
+        this.setAlive(false);
     }
 
     @Override
-    public Rectangle getBounds() {
-        return new Rectangle((int) x, (int) y,width,height);
+    public void collisionWithPlayer() {
     }
 
 

@@ -9,8 +9,8 @@ public abstract class Creature extends Entity {
     protected float xVel, yVel;
     protected float gravity = 20.0f;
 
-    public Creature(float x, float y, int width, int height) {
-        super(x, y, width, height);
+    public Creature(float x, float y) {
+        super(x, y, 64, 64);
     }
 
     //Mutators and Accessors

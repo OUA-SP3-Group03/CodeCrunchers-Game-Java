@@ -5,12 +5,11 @@ public class Config {
     public int interfaceWidth = 1280;
     public int interfaceHeight = 704;
     public int targetFPS = 60;
-
-    public boolean showFPS = false;
     public int targetTPS = 60;
+
     public String apiUrl = "http://localhost/api";
 
-    public String texturePath = "res/textureMap_v5.png";
+    public String texturePath = "res/textureMap_v6.1.png";
     public String logoPath = "res/CodeCrunchers-Logo.png";
     public int textureWidth = 32;
     public int textureHeight = 32;

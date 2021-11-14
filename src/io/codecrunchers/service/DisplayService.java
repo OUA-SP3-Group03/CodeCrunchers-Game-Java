@@ -1,5 +1,7 @@
 package io.codecrunchers.service;
 
+import io.codecrunchers.facades.App;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,7 +13,8 @@ public class DisplayService {
 
     public JFrame frame;
 
-    public DisplayService(String title, int width, int height){
+    public DisplayService(String title, int width, int height, App app){
+        app.debug().increaseServiceCount();
         this.title = title;
         this.width = width;
         this.height = height;

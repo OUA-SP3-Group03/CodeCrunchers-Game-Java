@@ -18,7 +18,7 @@ public class HttpServiceProvider extends Provider {
         this.app = app;
 
         //create new HttpService
-        this.httpService = new HttpService();
+        this.httpService = new HttpService(app);
 
         this.booted = true;
     }

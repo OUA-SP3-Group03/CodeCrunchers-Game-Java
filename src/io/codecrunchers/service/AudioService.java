@@ -1,18 +1,16 @@
 package io.codecrunchers.service;
 
+import io.codecrunchers.facades.App;
+
 import javax.sound.sampled.*;
 import java.io.File;
 
 public class AudioService {
 
     private Clip clip;
-    private final String path;
-    private final float volume;
 
-    public AudioService(String path, float volume){
-
-        this.path = path;
-        this.volume = volume;
+    public AudioService(String path, float volume, App app){
+        app.debug().increaseServiceCount();
 
         try{
             AudioInputStream stream = AudioSystem.getAudioInputStream(new File(path));

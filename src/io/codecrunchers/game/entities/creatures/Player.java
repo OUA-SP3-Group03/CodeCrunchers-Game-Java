@@ -1,25 +1,22 @@
 package io.codecrunchers.game.entities.creatures;
 import io.codecrunchers.core.ASCII;
 import io.codecrunchers.facades.App;
+import io.codecrunchers.game.entities.Entity;
+import io.codecrunchers.providers.EntityServiceProvider;
 
-import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class Player extends Creature {
 
-    //Records the player's direction
-    //right = 1
-    //left = -1
-    private int facing = 1;
-    private App app;
+    private final App app;
     private boolean jumping = false;
     private boolean attacking = false;
     private int fallSpeed = 0;
     private int jumpSpeed = 30;
 
-    public Player(float x, float y, int width, int height, App app) {
-        super(x, y, width, height);
+    public Player(float x, float y, App app) {
+        super(x, y);
         this.app = app;
         this.texture = this.app.texture().allImages()[26];
     }
@@ -31,6 +28,8 @@ public class Player extends Creature {
 
     @Override
     public void tick() {
+        this.texture = this.app.texture().animation("playerIdol");
+
         if((this.app.keyPressed().containsKey((int)'D') || this.app.keyPressed().containsKey(KeyEvent.VK_RIGHT))
                 && !this.app.getTileAtLocation(((int)(this.x+46)/64),(int)(this.y+32)/64).solid() ){
                 this.x += 6;
@@ -57,10 +56,16 @@ public class Player extends Creature {
         jump();
         fall();
         die();
+
+        checkCollison();
     }
 
     @Override
     public void render(Graphics g) {
+        if(this.app.showDebug()){
+            g.setColor(Color.green);
+            g.drawRect((int)this.x,(int)this.y,this.width,this.height);
+        }
         g.drawImage(this.texture, (int) ((int)this.x - this.app.getCamera().getxOffset()), (int) ((int)this.y - this.app.getCamera().getyOffset()),null);
     }
 
@@ -132,23 +137,22 @@ public class Player extends Creature {
     }
 
     @Override
-    public Rectangle getBounds() {
-        return new Rectangle((int) x, (int) y,width,height);
+    public void collisionWithPlayer() {
+        //DISREGARD ON PLAYER
     }
 
+    public void checkCollison(){
 
-    //These bounds are called to specify which side the player is colliding
-    public Rectangle getBottom() {
-        return new Rectangle((int)(x + (width/4)), (int)(y + (height)-(height/3)) - 5, width / 2,  height/3);
-    }
-    public Rectangle getTop(){
-        return new Rectangle((int)(x + (width/4)), (int) y + 5,  width / 2,  height/3);
-    }
-    public Rectangle getLeft(){
-        return new Rectangle((int) x + 5, (int) y + 10,  5,  height - 20);
-    }
-    public Rectangle getRight(){
-        return new Rectangle((int)( x + width - 10), (int) y + 10,  5,  height - 20);
+        Rectangle bounds =  new Rectangle((int)this.x,(int)this.y,this.width,this.height);
+
+        for (Entity entity: ((EntityServiceProvider)this.app.getProvider("entity")).getEntities()) {
+            if(entity != this && entity.isAlive()) {
+                if (bounds.intersects(entity.getBounds())) {
+                        entity.collisionWithPlayer();
+                }
+            }
+
+        }
     }
 
 }

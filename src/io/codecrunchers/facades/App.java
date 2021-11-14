@@ -19,16 +19,22 @@ public class App {
     private final Kernel kernel;
     private final Config config;
     private final Level level;
+    private final Debug debug;
 
     public App(Kernel kernel){
         this.kernel = kernel;
         this.config = new Config(this.kernel);
         this.texture = new Texture(this.kernel);
         this.level = new Level(this.kernel);
+        this.debug = new Debug(this.kernel);
     }
 
     public Texture texture (){
         return this.texture;
+    }
+
+    public Debug debug(){
+        return this.debug;
     }
 
     public Level level(){
@@ -183,6 +189,22 @@ public class App {
 
     public State getState(String state){
         return ((StatesServiceProvider)this.kernel.getServiceProvider("states")).getState(state);
+    }
+
+    public boolean checkEntityAtLocation(int x, int y){
+        return ((EntityServiceProvider) this.kernel.getServiceProvider("entity")).checkLocation(x,y);
+    }
+
+    public void resetEntitiesInGame(){
+        ((EntityServiceProvider) this.kernel.getServiceProvider("entity")).reset();
+    }
+
+    public boolean showDebug(){
+        return this.kernel.showDebug();
+    }
+
+    public void setShowDebug(boolean value){
+        this.kernel.setShowDebug(value);
     }
 
 }

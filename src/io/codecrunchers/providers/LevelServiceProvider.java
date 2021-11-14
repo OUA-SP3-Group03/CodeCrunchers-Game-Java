@@ -14,7 +14,7 @@ public class LevelServiceProvider extends Provider {
     public void boot(App app) {
         this.app=app;
 
-        this.levelGeneratorService = new LevelGeneratorService(this);
+        this.levelGeneratorService = new LevelGeneratorService(this, app);
 
         this.booted = true;
     }
