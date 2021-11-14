@@ -8,9 +8,11 @@ public class Config {
     public int targetTPS = 60;
 
     public String apiUrl = "http://localhost/api";
+    public String registerUrl = "http://localhost/register";
+    public String creditsUrl = "http://localhost/credits";
 
-    public String texturePath = "res/textureMap_v6.1.png";
-    public String logoPath = "res/CodeCrunchers-Logo.png";
+    public String texturePath = "res/Textures/textureMap_v6.1.png";
+    public String logoPath = "res/Textures/CodeCrunchers-Logo.png";
     public int textureWidth = 32;
     public int textureHeight = 32;
     public int textureScale = 2;
