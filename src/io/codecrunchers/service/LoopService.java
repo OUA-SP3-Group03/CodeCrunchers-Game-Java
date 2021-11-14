@@ -7,6 +7,10 @@ public class LoopService implements Runnable{
 
     private final LoopServiceProvider loopServiceProvider;
     private Thread thread;
+    private int realFPS;
+    private int realTPS;
+    private int usedMemory;
+    private int mb = 1024*1024;
 
     public LoopService(LoopServiceProvider loopServiceProvider, App app){
         app.debug().increaseServiceCount();
@@ -63,15 +67,27 @@ public class LoopService implements Runnable{
             }
 
             if(timer >= 1000000000){
-                if(this.loopServiceProvider.showFPS()) {
-                    System.out.println("fps: " + fpsReal + " tps: "+tpsReal);
-                }
-                fpsReal = 0;
-                tpsReal = 0;
+                    this.realFPS = fpsReal;
+                    this.realTPS = tpsReal;
+                    this.usedMemory = (int) (Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory())/this.mb;
+                tpsReal=0;
+                fpsReal=0;
                 timer = 0;
             }
         }
         this.stop();
+    }
+
+    public int getCurrentFPS(){
+        return  this.realFPS;
+    }
+
+    public int getCurrentTPS(){
+        return this.realTPS;
+    }
+
+    public int getUsedMemory(){
+        return this.usedMemory;
     }
 
     public synchronized void start(){
