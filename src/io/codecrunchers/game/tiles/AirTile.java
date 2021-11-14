@@ -9,7 +9,7 @@ public class AirTile extends Tile {
     }
 
     @Override
-    public void render(Graphics g, int x, int y) {
+    public void render(Graphics g, int x, int y, int tileX, int tileY) {
 
     }
 
