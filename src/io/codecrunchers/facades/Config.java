@@ -40,6 +40,10 @@ public class Config {
         return this.kernel.getConfig().apiUrl;
     }
 
+    public String registerUrl(){
+        return this.kernel.getConfig().registerUrl;
+    }
+
     //**** GET TEXTURE WIDTH ****\\
     public int textureWidth(){
         return this.kernel.getConfig().textureWidth;
@@ -73,4 +77,8 @@ public class Config {
 
     //**** GET MAX ROOMS ****\\
     public int maxRooms() { return this.kernel.getConfig().maxRooms; }
+
+    public String creditsUrl(){
+        return this.kernel.getConfig().creditsUrl;
+    }
 }
