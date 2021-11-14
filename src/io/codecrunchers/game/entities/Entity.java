@@ -1,5 +1,7 @@
 package io.codecrunchers.game.entities;
 
+import io.codecrunchers.facades.App;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -8,6 +10,7 @@ public abstract class Entity {
     protected float x,y;
     protected int width, height;
     protected boolean alive = true;
+    protected App app;
 
     protected BufferedImage texture;
 
