@@ -1,7 +1,6 @@
 package io.codecrunchers.game.states;
 
 import io.codecrunchers.game.gui.InterfaceButton;
-import io.codecrunchers.game.gui.InterfaceCheckBox;
 import io.codecrunchers.game.gui.InterfaceInput;
 import io.codecrunchers.facades.App;
 
@@ -35,16 +34,6 @@ public class LoginState extends State {
                 .setState("login")
                 .setTextAlign("left")
                 .setText("Password"));
-
-        this.app.addInterfaceObject(new InterfaceCheckBox()
-                .setAppFacade(this.app)
-                .setX(this.app.config().interfaceWidth()/2- (this.app.config().textureWidth()*3)*this.app.config().textureScale())
-                .setY((this.app.config().interfaceHeight()/2 + this.app.config().textureHeight() *2* this.app.config().textureScale()-14))
-                .setWidth(this.app.config().textureWidth()*2)
-                .setHeight(this.app.config().textureHeight())
-                .setState("login")
-                .setShowOnHover(false)
-                .setClickEvent(()-> System.out.println("toggled")));
 
 
         this.app.addInterfaceObject(new InterfaceButton()
@@ -88,15 +77,7 @@ public class LoginState extends State {
         //__ START RENDER
         g.setColor(Color.white);
 
-        Font currentFont = g.getFont();
-        Font newFont = currentFont.deriveFont(currentFont.getSize() * 1.4F);
-        g.setFont(newFont);
-        g.setColor(Color.black);
-
         g.drawImage(app.texture().logo(),0,64,null);
-
-        g.drawString("Keep me logged in",this.app.config().interfaceWidth()/2-55,this.app.config().interfaceHeight()/2 + this.app.config().textureHeight() *2* this.app.config().textureScale()+24);
-
 
 
     }
