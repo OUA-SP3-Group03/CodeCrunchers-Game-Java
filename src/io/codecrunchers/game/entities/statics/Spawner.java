@@ -1,22 +1,31 @@
 package io.codecrunchers.game.entities.statics;
 
 import io.codecrunchers.facades.App;
+import io.codecrunchers.game.entities.creatures.enemies.MeleeEnemy;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Spawner extends StaticEntity{
 
     private final App app;
-    public boolean canSpawn;
 
     public Spawner(float x, float y, App app) {
         super(x,y);
         this.texture = app.texture().allImages()[33];
         this.app = app;
-        this.canSpawn = true;
 
-        this.app.registerEntity(new PowerUp(this.x, this.y, this.app));
+        Random rng = new Random();
+        int selection;
+        selection = rng.nextInt(2);
 
+        if(selection == 1){
+            this.app.registerEntity(new PowerUp(this.x, this.y, this.app));
+        }else {
+            this.app.registerEntity(new MeleeEnemy(this.x,this.y,this.app));
+        }
+
+        this.die();
     }
 
     @Override
@@ -28,22 +37,17 @@ public class Spawner extends StaticEntity{
     public void render(Graphics g) {
         if(this.app.showDebug()){
             g.setColor(Color.pink);
-            g.drawRect((int) ((int)this.x- this.app.getCamera().getxOffset()),(int)this.y,this.width,this.height);
+           // g.drawRect((int) ((int)this.x- this.app.getCamera().getxOffset()),(int)this.y,this.width,this.height);
         }
     }
 
     @Override
-    public boolean isAlive() {
-        return true;
-    }
-
-    @Override
     public void die() {
-
+        this.setAlive(false);
     }
 
     @Override
-    public Rectangle getBounds() {
-        return null;
+    public void collisionWithPlayer() {
+    //DISREGARD ON THIS ENTITY
     }
 }
