@@ -2,8 +2,7 @@ package io.codecrunchers.facades;
 
 import io.codecrunchers.core.Kernel;
 import io.codecrunchers.providers.EntityServiceProvider;
-
-import java.security.cert.CertificateNotYetValidException;
+import io.codecrunchers.providers.LoopServiceProvider;
 
 public class Debug{
     private final Kernel kernel;
@@ -21,6 +20,19 @@ public class Debug{
 
     public int entityCount(){
         return ((EntityServiceProvider)this.kernel.getServiceProvider("entity")).getEntities().size();
+    }
+
+    public int currentFPS(){
+        return ((LoopServiceProvider)this.kernel.getServiceProvider("loop")).getCurrentFPS();
+    }
+
+    public int currentTPS(){
+        return ((LoopServiceProvider)this.kernel.getServiceProvider("loop")).getCurrentTPS();
+    }
+
+    public int usedMemory(){
+        return ((LoopServiceProvider)this.kernel.getServiceProvider("loop")).getUsedMemory();
+
     }
 
     public void increaseServiceCount(){
