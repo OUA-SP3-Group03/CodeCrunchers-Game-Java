@@ -68,7 +68,7 @@ public class AssetServiceProvider extends Provider {
             y++;
         }
 
-        this.animations.put("powerUp", new AnimationService(Arrays.copyOfRange(images, 32, 35), 80));
+        this.animations.put("playerIdol", new AnimationService(Arrays.copyOfRange(images,40,45), 256, app));
 
         this.booted=true;
     }
