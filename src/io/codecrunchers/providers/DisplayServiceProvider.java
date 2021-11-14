@@ -15,7 +15,7 @@ public class DisplayServiceProvider extends Provider {
     @Override
     public void boot(App app) {
        //create a new instance of the display service
-       this.display = new DisplayService(app.config().interfaceTitle(), app.config().interfaceWidth(), app.config().interfaceHeight());
+       this.display = new DisplayService(app.config().interfaceTitle(), app.config().interfaceWidth(), app.config().interfaceHeight(),app);
        //set the canvas from the new display service
        this.displayCanvas = display.createDisplay();
        //set the target FPS and TPS
