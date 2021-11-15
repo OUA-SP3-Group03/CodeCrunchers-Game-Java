@@ -57,7 +57,18 @@ public class MenuState extends State {
                 .setHoverBoxCurve(22)
                 .setClickEvent(this::quit));
 
-
+        //BUGS!
+        //this last button is needed to be hidden off screen to prevent a strange bug where the rendered text appear to have the hover color applied
+        this.app.addInterfaceObject(new InterfaceButton()
+                .setX(-200)
+                .setY(0)
+                .setAppFacade(this.app)
+                .setHeight(0)
+                .setWidth(0)
+                .setText("")
+                .setState("menu")
+                .setHoverBoxCurve(22)
+                );
     }
     private void play(){
         this.app.playAudioClip("ui-click");
@@ -94,6 +105,10 @@ public class MenuState extends State {
 
     @Override
     public void render(Graphics g) {
+            g.setFont(new Font(g.getFont().getName(), Font.BOLD,40));
+            g.drawString("Welcome "+this.app.authUserInfo()[1]+" "+this.app.authUserInfo()[2],450,64);
+            g.setFont(new Font(g.getFont().getName(), Font.ITALIC,10));
+            g.drawString("Code Crunchers Alpha v1",this.app.config().interfaceWidth()/2-50, this.app.config().interfaceHeight()-40);
 
     }
 }

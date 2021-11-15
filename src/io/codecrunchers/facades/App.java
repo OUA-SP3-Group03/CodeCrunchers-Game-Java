@@ -90,6 +90,10 @@ public class App {
         return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).check();
     }
 
+    public String[] authUserInfo(){
+        return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).getUserInfo();
+    }
+
     //**** ADD GUI OBJECT ****\\
     public void addInterfaceObject(InterfaceObject newObject){
         ((InterfaceServiceProvider) this.kernel.getServiceProvider("interface")).addInterfaceObject(newObject);
