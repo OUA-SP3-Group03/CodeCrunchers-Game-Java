@@ -12,6 +12,7 @@ import io.codecrunchers.providers.*;
 import io.codecrunchers.game.tiles.Tile;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class App {
@@ -153,6 +154,12 @@ public class App {
         ((EntityServiceProvider)this.kernel.getServiceProvider("entity")).registerEntity(e);
     }
 
+    public ArrayList<Entity> getEntity(){
+        return ((EntityServiceProvider)this.kernel.getServiceProvider("entity")).getEntities();
+
+    }
+
+
     public Camera getCamera() {
         return this.kernel.getCamera();
     }
@@ -164,5 +171,8 @@ public class App {
     public Tile getTileByIndex(int index){
         return ((TileServiceProvider)this.kernel.getServiceProvider("tile")).getTile(index);
     }
+
+
+
 
 }
