@@ -77,6 +77,7 @@ public class MenuState extends State {
         this.app.resetMouseClick();
         //Reset mouse button needed to prevent bug
         this.app.playAudioClip("ui-click");
+        this.app.resetAudioClip("ui-click");
         this.app.setCurrentState("settings");
     }
     private void quit(){
