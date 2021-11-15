@@ -18,18 +18,6 @@ public class TileServiceProvider extends Provider {
     private int [] roomTiles;
     private SpawnerTile [] spawnerTiles;
 
-    private final int [] menuTiles = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                                      1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1,
-                                      1, 3, 3, 3, 3, 9, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1,
-                                      1, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 1,
-                                      2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2,
-                                      2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 9, 3, 3, 3, 3, 3, 3, 3, 3, 2,
-                                      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                                      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-
     @Override
     public void boot(App app) {
         this.app=app;
@@ -107,24 +95,6 @@ public class TileServiceProvider extends Provider {
                 }
                 x = 0;
                 y++;
-            }
-        }
-        else {
-            this.app.setWorldWidth(20);
-            this.app.setWorldHeight(11);
-            this.app.setWorld(menuTiles);
-            int x = 0;
-            int y = 0;
-            int currentTile=0;
-            while (y < this.roomHeight) {
-                while (x < this.roomWidth) {
-                    this.tiles.get(this.menuTiles[currentTile]).render(g, (int) ((64 * x) - this.app.getCamera().getxOffset()), (int) ((64 * y) - this.app.getCamera().getyOffset()),x,y);
-                    currentTile++;
-                    x++;
-                }
-                x = 0;
-                y++;
-
             }
         }
     }

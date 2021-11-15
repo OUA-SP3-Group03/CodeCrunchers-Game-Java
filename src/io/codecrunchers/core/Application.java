@@ -61,9 +61,10 @@ public class Application {
             g.clearRect(0, 0, this.app.config().interfaceWidth(), this.app.config().interfaceHeight());
 
 
-
-            g.setColor(Color.decode("#22123b"));
-            g.fillRect(0, 0, this.app.config().interfaceWidth(), this.app.config().interfaceHeight());
+            if (this.app.currentState().matches("game")) {
+                g.setColor(Color.decode("#22123b"));
+                g.fillRect(0, 0, this.app.config().interfaceWidth(), this.app.config().interfaceHeight());
+            }
 
             //render all providers
             this.app.render(g);
