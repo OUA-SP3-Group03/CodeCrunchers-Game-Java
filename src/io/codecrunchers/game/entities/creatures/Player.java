@@ -14,7 +14,9 @@ public class Player extends Creature {
     private boolean attacking = false;
     private int fallSpeed = 0;
     private int jumpSpeed = 30;
+    private int moveSpeed = 6;
     private boolean movingRight = true;
+    private boolean showPowerUps = false;
 
     public Player(float x, float y, App app) {
         super(x, y);
@@ -34,19 +36,33 @@ public class Player extends Creature {
         else
             this.texture = this.app.texture().animation("playerIdleLeft");
 
-        if((this.app.keyPressed().containsKey((int)'D') || this.app.keyPressed().containsKey(KeyEvent.VK_RIGHT))
-                && !this.app.getTileAtLocation(((int)(this.x+46)/64),(int)(this.y+32)/64).solid() ){
-                this.x += 6;
+        if (!showPowerUps) {
+            if ((this.app.keyPressed().containsKey((int) 'D') || this.app.keyPressed().containsKey(KeyEvent.VK_RIGHT))
+                    && !this.app.getTileAtLocation(((int) (this.x + 46) / 64), (int) (this.y + 32) / 64).solid()) {
+                this.x += moveSpeed;
                 this.texture = this.app.texture().animation("playerRunRight");
                 movingRight = true;
-        }
+            }
 
-        if((this.app.keyPressed().containsKey((int)'A') || this.app.keyPressed().containsKey(KeyEvent.VK_LEFT))
-                && !this.app.getTileAtLocation(((int)(this.x+12)/64),(int)(this.y+32)/64).solid()
-                && this.x >= this.app.getCamera().getxOffset() - 12 ) {
-                this.x -= 6;
+            if ((this.app.keyPressed().containsKey((int) 'A') || this.app.keyPressed().containsKey(KeyEvent.VK_LEFT))
+                    && !this.app.getTileAtLocation(((int) (this.x + 12) / 64), (int) (this.y + 32) / 64).solid()
+                    && this.x >= this.app.getCamera().getxOffset() - 12) {
+                this.x -= moveSpeed;
                 this.texture = this.app.texture().animation("playerRunLeft");
                 movingRight = false;
+            }
+        }
+        else {
+            if ((this.app.keyPressed().containsKey((int) 'D') && this.app.keyPressed().containsKey(ASCII.space)
+                    || this.app.keyPressed().containsKey(KeyEvent.VK_RIGHT) && this.app.keyPressed().containsKey(ASCII.space))) {
+                showPowerUps = false;
+            }
+
+            if ((this.app.keyPressed().containsKey((int) 'A') && this.app.keyPressed().containsKey(ASCII.space)
+                    || this.app.keyPressed().containsKey(KeyEvent.VK_LEFT) && this.app.keyPressed().containsKey(ASCII.space))) {
+                this.moveSpeed = this.moveSpeed + 10;
+                showPowerUps = false;
+            }
         }
 
         if(this.app.keyPressed().containsKey((int)'W') || this.app.keyPressed().containsKey(KeyEvent.VK_UP)) {
@@ -66,7 +82,7 @@ public class Player extends Creature {
         fall();
         die();
 
-        checkCollison();
+        checkCollision();
     }
 
     @Override
@@ -76,12 +92,44 @@ public class Player extends Creature {
             g.drawRect((int) ((int)this.x- this.app.getCamera().getxOffset()),(int)this.y,this.width,this.height);
         }
         g.drawImage(this.texture, (int) ((int)this.x - this.app.getCamera().getxOffset()), (int) ((int)this.y - this.app.getCamera().getyOffset()),null);
+
+        if(showPowerUps) {
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Dialog", Font.BOLD, 40));
+            g.drawString("HOLD SPACEBAR AND CHOOSE A POWERUP", 200, 160);
+
+            g.setColor(Color.ORANGE);
+            g.fillRect(300,200,200,400);
+
+            g.setColor(Color.BLACK);
+            g.setFont(new Font("Dialog", Font.BOLD, 30));
+            g.drawString("SPEED", 350, 250);
+
+            g.setFont(new Font("Dialog", Font.BOLD, 20));
+            g.drawString("Increase player's", 310, 370);
+            g.drawString("movement speed!", 325, 395);
+            g.setFont(new Font("Dialog", Font.BOLD, 60));
+            g.drawString("<- A", 340, 500);
+
+            g.setColor(Color.ORANGE);
+            g.fillRect(700,200,200,400);
+
+            g.setColor(Color.BLACK);
+            g.setFont(new Font("Dialog", Font.BOLD, 30));
+            g.drawString("DAMAGE", 740, 250);
+
+            g.setFont(new Font("Dialog", Font.BOLD, 20));
+            g.drawString("Increase player's", 710, 370);
+            g.drawString("attack damage!", 730, 395);
+            g.setFont(new Font("Dialog", Font.BOLD, 60));
+            g.drawString("D ->", 745, 500);
+        }
     }
 
     public void fall() {
         if(!(this.app.getTileAtLocation( ((int)(this.x+32)/64),(int)(this.y+64)/64).solid() ||
                 this.app.getTileAtLocation( ((int)(this.x)/64),(int)(this.y+64)/64).solid())
-                        && !jumping) {
+                && !jumping) {
             y += fallSpeed;
             falling = true;
 
@@ -96,7 +144,7 @@ public class Player extends Creature {
 
                 this.y = (int)tempY * 64;
             }
-       } else {
+        } else {
             falling = false;
             fallSpeed = 0;
         }
@@ -133,7 +181,7 @@ public class Player extends Creature {
             this.app.playAudioClip("attack");
         }
         else {
-             this.app.resetAudioClip("attack");
+            this.app.resetAudioClip("attack");
         }
     }
 
@@ -150,18 +198,20 @@ public class Player extends Creature {
         //DISREGARD ON PLAYER
     }
 
-    public void checkCollison(){
+    public void checkCollision(){
 
         Rectangle bounds =  new Rectangle((int)this.x,(int)this.y,this.width,this.height);
 
         for (Entity entity: ((EntityServiceProvider)this.app.getProvider("entity")).getEntities()) {
             if(entity != this && entity.isAlive()) {
                 if (bounds.intersects(entity.getBounds())) {
-                        entity.collisionWithPlayer();
+                    entity.collisionWithPlayer();
+
+                    if(entity.getClass().getName().equals("io.codecrunchers.game.entities.statics.PowerUp")) {
+                        showPowerUps = true;
+                    }
                 }
             }
-
         }
     }
-
 }
