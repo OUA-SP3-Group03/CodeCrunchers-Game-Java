@@ -123,4 +123,31 @@ public class HttpServiceProvider extends Provider {
 
     }
 
+    public String[] getUserInfo(){
+
+        String data = "type=game&token="+this.loadToken();
+        String response;
+
+        try {
+            response = this.httpService.postRequest(this.app.config().apiUrl() + "/auth/get", data);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            response = "no response from http request";
+        }
+
+        JSONObject result = new JSONObject(response);
+        String[] userData = new String[0];
+
+
+        if((boolean)result.get("success")){
+            userData  = new String[4];
+            userData[0] = result.getString("username");
+            userData[1] = result.getString("first_name");
+            userData[2] = result.getString("last_name");
+            userData[3] = result.getString("email");
+        }
+
+        return userData;
+    }
+
 }
