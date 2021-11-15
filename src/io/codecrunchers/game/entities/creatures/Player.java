@@ -1,6 +1,7 @@
 package io.codecrunchers.game.entities.creatures;
 import io.codecrunchers.core.ASCII;
 import io.codecrunchers.facades.App;
+import io.codecrunchers.game.entities.creatures.enemies.Enemy;
 import io.codecrunchers.providers.EntityServiceProvider;
 
 import java.awt.*;
@@ -9,17 +10,128 @@ public class Player extends Creature {
 
     EntityServiceProvider entityList;
 
-    //Records the player's direction
-    //right = 1
-    //left = -1
-    private int facing = 1;
+
+    protected final int maxHealth = 100;
     private App app;
-    private boolean jumping = false;
+
+
 
     public Player(float x, float y, int width, int height, App app) {
-        super(x, y, width, height);
+        super(x, y, width, height, app);
         this.app = app;
+        setHealth(maxHealth);
         this.texture = this.app.texture().allImages()[26];
+    }
+
+
+
+    @Override
+    public void tick() {
+        this.x += xVel;
+        this.y += yVel;
+
+        if(!this.app.getTileAtLocation(((int)(this.x + width)/64),(int)this.y/64).solid()) {
+
+            if(this.app.keyPressed().containsKey((int)'D') ){
+                 this.xVel = 10;
+            } else {
+                this.xVel = 0;
+            }
+        } else {
+            this.xVel = 0;
+
+        }
+
+        if(this.app.keyPressed().containsKey((int)'A')){
+            if(!this.app.getTileAtLocation(((int)(this.x - width/6)/64),(int)this.y/64).solid()) {
+                this.xVel = -10;
+            }
+        }
+
+        if (this.app.keyPressed().containsKey(ASCII.space)){
+            attack();
+        }
+
+        jumping = this.app.keyPressed().containsKey((int)'W');
+
+        if (xVel > 0) facing = 1;
+        if (xVel < 0 ) facing = -1;
+
+
+
+        fall();
+        jump();
+
+    }
+
+    @Override
+    public void render(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g.setColor(Color.yellow);
+        g2d.draw(getBounds());
+        g.setColor(Color.black);
+        g2d.draw(range());
+
+
+        g.setColor(Color.red);
+        //g2d.draw(new Rectangle((int) ((int)this.x - this.app.getCamera().getxOffset()),(int) ((int)this.y - this.app.getCamera().getyOffset()) - 10,getMaxHealth(),10));
+        //g2d.fillRect((int) ((int)this.x - this.app.getCamera().getxOffset()),(int) ((int)this.y - this.app.getCamera().getyOffset()) - 10,getHealth(),10);
+        g.drawImage(this.texture, (int) ((int)this.x - this.app.getCamera().getxOffset()), (int) ((int)this.y - this.app.getCamera().getyOffset()),null);
+    }
+
+
+
+    public void jump(){
+        if (!falling && jumping){
+            if (!this.app.getTileAtLocation(((int)(this.x)/64),(int)(this.y - 128)/64).solid()){
+                falling = true;
+                this.yVel = -20;
+            } else {
+                falling = true;
+                jumping = false;
+            }
+        }
+    }
+
+    public void attack() {
+        attackTimer += System.currentTimeMillis() - lastAttackTimer;
+        lastAttackTimer = System.currentTimeMillis();
+        if (attackTimer < attackCooldown) {
+            return;
+        }
+
+        attackTimer = 0;
+
+        for (int i = 0; i < this.app.getEntity().size(); i++) {
+            Creature tempObject = (Creature) this.app.getEntity().get(i);
+            if (tempObject.equals(this)) {
+                continue;
+            }
+            if (tempObject.getBounds().intersects(super.range())) {
+                Enemy target = (Enemy) tempObject;
+
+                if (target.getBounds().intersects(super.range())) {
+                    System.out.println("attacked");
+                    tempObject.hurt(20);
+                    return;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void hurt(int dmg) {
+        super.hurt(dmg);
+    }
+
+    @Override
+    public void die() {
+        setAlive(false);
+    }
+
+    @Override
+    public Rectangle getBounds() {
+       return super.getBounds();
     }
 
     @Override
@@ -27,63 +139,10 @@ public class Player extends Creature {
         return alive;
     }
 
-    @Override
-    public void tick() {
-        this.xVel = 0;
-        this.yVel = 0;
 
-        if(this.app.keyPressed().containsKey((int)'D') ){
-            if(!this.app.getTileAtLocation(((int)(this.x+32)/64),(int)this.y/64).solid()) {
-                this.x += 32;
-            }
-        }
-        if(this.app.keyPressed().containsKey((int)'A') && !this.app.getTileAtLocation(((int)this.x/64),((int)this.y/64)).solid()){
-            if(!this.app.getTileAtLocation(((int)(this.x-32)/64),(int)this.y/64).solid()) {
-                this.x -= 32;
-            }
-        }
-
-        if(this.app.keyPressed().containsKey(ASCII.space)){
-            this.jumping = true;
-        }else{
-            this.jumping = false;
-        }
-
-        x += xVel;
-        y += yVel;
-
-        if (xVel > 0) facing = 1;
-        if (xVel < 0 ) facing = -1;
-
-
-        fall();
-
+    public int getMaxHealth() {
+        return maxHealth;
     }
-
-    @Override
-    public void render(Graphics g) {
-        g.drawImage(this.texture, (int) ((int)this.x - this.app.getCamera().getxOffset()), (int) ((int)this.y - this.app.getCamera().getyOffset()),null);
-    }
-
-    //Gravity method (numbers might need tweaking, waiting on collision)
-    public void fall() {
-        if(!this.app.getTileAtLocation(((int)(this.x)/64),(int)(this.y+64)/64).solid() && !this.jumping) {
-            this.y += 32;
-       }else if(this.jumping){
-            this.jumping = false;
-            this.y -= 64;
-        }
-    }
-
-    @Override
-    public void die() {
-    }
-
-    @Override
-    public Rectangle getBounds() {
-        return new Rectangle((int) x, (int) y,width,height);
-    }
-
 
     //These bounds are called to specify which side the player is colliding
     public Rectangle getBottom() {
