@@ -65,6 +65,7 @@ public class Application {
             g.setColor(Color.decode("#22123b"));
             g.fillRect(0, 0, this.app.config().interfaceWidth(), this.app.config().interfaceHeight());
 
+
             //render all providers
             this.app.render(g);
 

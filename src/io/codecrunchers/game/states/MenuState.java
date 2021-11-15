@@ -19,15 +19,15 @@ public class MenuState extends State {
         this.logo = this.app.texture().logo();
 
         this.app.addInterfaceObject(new InterfaceButton()
-         .setX(64)
-         .setY(260)
-        .setAppFacade(this.app)
-        .setHeight(this.app.config().textureHeight())
-        .setWidth(this.app.config().textureWidth()*3)
-        .setText("Play!")
-        .setHoverBoxCurve(22)
-        .setState("menu")
-        .setClickEvent(this::play));
+                .setX(64)
+                .setY(260)
+                .setAppFacade(this.app)
+                .setHeight(this.app.config().textureHeight())
+                .setWidth(this.app.config().textureWidth()*3)
+                .setText("Play!")
+                .setHoverBoxCurve(22)
+                .setState("menu")
+                .setClickEvent(this::play));
 
         this.app.addInterfaceObject(new InterfaceButton()
                 .setX(64)
@@ -73,7 +73,7 @@ public class MenuState extends State {
                 .setText("")
                 .setState("menu")
                 .setHoverBoxCurve(22)
-                );
+        );
     }
     private void play(){
         this.app.playAudioClip("ui-click");
@@ -109,13 +109,13 @@ public class MenuState extends State {
 
     @Override
     public void render(Graphics g) {
-            g.setFont(new Font(g.getFont().getName(), Font.BOLD,40));
-            g.drawString("Welcome "+this.app.authUserInfo()[1]+" "+this.app.authUserInfo()[2],450,380);
-            g.setFont(new Font(g.getFont().getName(), Font.ITALIC,10));
-            g.drawString("Code Crunchers Alpha v1",this.app.config().interfaceWidth()/2-50, this.app.config().interfaceHeight()-112);
+        g.setFont(new Font(g.getFont().getName(), Font.BOLD,40));
+        g.drawString("Welcome "+this.app.authUserInfo()[1]+" "+this.app.authUserInfo()[2],450,380);
+        g.setFont(new Font(g.getFont().getName(), Font.ITALIC,10));
+        g.drawString("Code Crunchers Alpha v1",this.app.config().interfaceWidth()/2-50, this.app.config().interfaceHeight()-112);
 
-            Graphics2D g2 = (Graphics2D)g;
-            g2.drawImage(logo, null, 0, 55);
+        Graphics2D g2 = (Graphics2D)g;
+        g2.drawImage(logo, null, 0, 55);
 
     }
 }

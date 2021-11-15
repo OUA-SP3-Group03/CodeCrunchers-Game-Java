@@ -13,22 +13,18 @@ public abstract class Entity {
     protected App app;
 
     protected BufferedImage texture;
-    protected App app;
 
-    public Entity(float x, float y, int width, int height, App app) {
+    public Entity(float x, float y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.app = app;
     }
 
     public abstract void tick();
     public abstract void render(Graphics g);
     public abstract void die();
     public abstract void collisionWithPlayer();
-
-
 
 
     public float getX() {
@@ -66,6 +62,7 @@ public abstract class Entity {
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
+
     public Rectangle getBounds() {
         return new Rectangle((int)this.x,(int)this.y,this.width,this.height);
     }
@@ -73,5 +70,4 @@ public abstract class Entity {
     public boolean isAlive(){
         return this.alive;
     }
-
 }

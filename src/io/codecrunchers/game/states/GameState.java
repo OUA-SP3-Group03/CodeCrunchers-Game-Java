@@ -54,10 +54,11 @@ public class GameState extends State {
 
     public void render(Graphics g) {
         if(!this.app.showDebug()) {
-            g.setFont(new Font("Copperplate", Font.BOLD, 40));
+            g.setFont(new Font("Dialog", Font.BOLD, 40));
             g.setColor(Color.red);
             g.drawString("Time: " + this.df.format(this.timer / 60), 100, 100);
         }else{
+            g.setFont(new Font("Sans-Serif", Font.BOLD, 12));
             g.setColor(Color.white);
             g.drawString("Code Crunchers Alpha 0.1",64,64);
             g.drawString(this.app.debug().providerCount()+ " Service Providers Loaded",64,80);

@@ -159,12 +159,6 @@ public class App {
         ((EntityServiceProvider)this.kernel.getServiceProvider("entity")).registerEntity(e);
     }
 
-    public ArrayList<Entity> getEntity(){
-        return ((EntityServiceProvider)this.kernel.getServiceProvider("entity")).getEntities();
-
-    }
-
-
     public Camera getCamera() {
         return this.kernel.getCamera();
     }
@@ -219,6 +213,11 @@ public class App {
 
     public void resetMouseClick(){
         ((MouseServiceProvider)this.kernel.getServiceProvider("mouse")).resetMouseClick();
+    }
+
+    public ArrayList<Entity> getEntity(){
+        return ((EntityServiceProvider)this.kernel.getServiceProvider("entity")).getEntities();
+
     }
 
 }

@@ -1,101 +1,47 @@
 package io.codecrunchers.game.entities.creatures;
 
-import io.codecrunchers.core.ASCII;
-import io.codecrunchers.facades.App;
 import io.codecrunchers.game.entities.Entity;
-import io.codecrunchers.game.tiles.Tile;
 
 import java.awt.*;
 
 public abstract class Creature extends Entity {
 
-
     protected int health;
-    protected boolean jumping = false, falling = false;
+    protected boolean jumping = false, falling = true;
     protected float xVel, yVel;
-
-    //Records the player's direction
-    //right = 1
-    //left = -1
+    protected float gravity = 20.0f;
     protected int facing;
-    protected float gravity = 1.3f;
+    protected long lastAttackTimer;
+    protected final long attackCooldown = 300;
+    protected long attackTimer = attackCooldown;
+    protected int maxHealth = 100;
+    protected int rangeWidth;
 
-    protected long lastAttackTimer, attackCooldown = 300, attackTimer = attackCooldown;
+    public abstract void hurt(int value);
 
-
-    public Creature(float x, float y, App app) {
-        super(x, y, 64, 64, app);
-
+    public Creature(float x, float y) {
+        super(x, y, 64, 64);
     }
-
-    @Override
-    public void tick() {
-        this.x += xVel;
-        this.y += yVel;
-    }
-
-    //Gravity method (numbers might need tweaking, waiting on collision)
-    public void fall() {
-        if (!this.app.getTileAtLocation(((int) (this.x) / 64), (int) (this.y + height) / 64).solid()) {
-
-            this.yVel += gravity;
-        } else {
-            this.yVel = 0;
-            this.falling = false;
-        }
-    }
-
 
     public Rectangle range() {
         Rectangle bounds = getBounds();
         Rectangle range = new Rectangle();
 
-        range.width = 30;
+        range.width = this.rangeWidth;
         range.height = bounds.height;
 
         if (facing == 1) {
-            range.x = bounds.x + bounds.width - bounds.width/4;
+            range.x = bounds.x + bounds.width - bounds.width / 4;
             range.y = bounds.y;
         }
         if (facing == -1) {
-            range.x = bounds.x - bounds.width/4;
+            range.x = bounds.x - bounds.width / 4;
             range.y = bounds.y;
         }
 
 
         return range;
     }
-
-
-    @Override
-    public void render(Graphics g) {
-
-
-    }
-
-    @Override
-    public boolean isAlive() {
-        return false;
-    }
-
-    @Override
-    public void die() {
-
-    }
-
-    @Override
-    public Rectangle getBounds() {
-        return new Rectangle(((int) ((int) this.x - this.app.getCamera().getxOffset())), (int) ((int) this.y - this.app.getCamera().getyOffset()), 64, 64);
-
-    }
-
-    public void hurt(int dmg) {
-
-        health -= dmg;
-        if (health <= 0) {
-            die();
-        }
-        System.out.println("Remaining Health: " + health);
 
 
     //Mutators and Accessors
@@ -121,5 +67,13 @@ public abstract class Creature extends Entity {
 
     public void setyVel(float yVel) {
         this.yVel = yVel;
+    }
+
+    public int getMaxHealth(){
+        return this.maxHealth;
+    }
+
+    protected void setRangeWidth(int width){
+        this.rangeWidth = width;
     }
 }
