@@ -12,6 +12,7 @@ import io.codecrunchers.providers.*;
 import io.codecrunchers.game.tiles.Tile;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class App {
@@ -212,6 +213,11 @@ public class App {
 
     public void resetMouseClick(){
         ((MouseServiceProvider)this.kernel.getServiceProvider("mouse")).resetMouseClick();
+    }
+
+    public ArrayList<Entity> getEntity(){
+        return ((EntityServiceProvider)this.kernel.getServiceProvider("entity")).getEntities();
+
     }
 
 }
