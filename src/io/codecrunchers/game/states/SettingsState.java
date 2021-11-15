@@ -22,7 +22,7 @@ public class SettingsState extends State {
                 .setHeight(this.app.config().textureHeight())
                 .setHoverBoxCurve(22)
                 .setText("Save and Exit")
-        .setClickEvent(this::save));
+                .setClickEvent(this::save));
 
         //This last interface object is needed to prevent a bug where the displayed "Paused Game" text from the render method
         //turns slightly transparent on hover, this occurs for the last interface object in this boot method.
@@ -38,6 +38,7 @@ public class SettingsState extends State {
     public void save(){
         this.app.resetMouseClick();
         this.app.playAudioClip("ui-click");
+        this.app.resetAudioClip("ui-click");
         this.app.setCurrentState("menu");
     }
 
