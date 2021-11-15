@@ -2,6 +2,7 @@ package io.codecrunchers.game.entities.creatures;
 import io.codecrunchers.core.ASCII;
 import io.codecrunchers.facades.App;
 import io.codecrunchers.game.entities.Entity;
+import io.codecrunchers.game.entities.creatures.enemies.Enemy;
 import io.codecrunchers.providers.EntityServiceProvider;
 
 import java.awt.*;
@@ -22,6 +23,8 @@ public class Player extends Creature {
         super(x, y);
         this.app = app;
         this.texture = this.app.texture().allImages()[26];
+        this.health = 100;
+        this.rangeWidth =30;
     }
 
     @Override
@@ -71,18 +74,17 @@ public class Player extends Creature {
 
         //Temp attack statement
         if(this.app.keyPressed().containsKey(ASCII.space)) {
-            attacking = true;
-        }
-        else {
-            attacking = false;
+            attack();
         }
 
-        attack();
         jump();
         fall();
-        die();
 
         checkCollision();
+
+        if(this.health <= 0 || this.y >= this.app.config().interfaceHeight()){
+            this.die();
+        }
     }
 
     @Override
@@ -92,6 +94,10 @@ public class Player extends Creature {
             g.drawRect((int) ((int)this.x- this.app.getCamera().getxOffset()),(int)this.y,this.width,this.height);
         }
         g.drawImage(this.texture, (int) ((int)this.x - this.app.getCamera().getxOffset()), (int) ((int)this.y - this.app.getCamera().getyOffset()),null);
+
+        g.setColor(Color.red);
+        ((Graphics2D) g).draw(new Rectangle((int) ((int)this.x - this.app.getCamera().getxOffset()),(int) ((int)this.y - this.app.getCamera().getyOffset()) - 10,getMaxHealth(),10));
+        ((Graphics2D) g).fillRect((int) ((int)this.x - this.app.getCamera().getxOffset()),(int) ((int)this.y - this.app.getCamera().getyOffset()) - 10,getHealth(),10);
 
         if(showPowerUps) {
             g.setColor(Color.WHITE);
@@ -175,22 +181,10 @@ public class Player extends Creature {
         }
     }
 
-    //Temp attack method, to test sound
-    public void attack() {
-        if (attacking) {
-            this.app.playAudioClip("attack");
-        }
-        else {
-            this.app.resetAudioClip("attack");
-        }
-    }
-
     @Override
     public void die() {
-        if(this.y >= this.app.config().interfaceHeight()){
             this.app.playAudioClip("hurt");
             this.setAlive(false);
-        }
     }
 
     @Override
@@ -213,5 +207,46 @@ public class Player extends Creature {
                 }
             }
         }
+    }
+
+
+    public void attack() {
+
+        System.out.println("Attacked!");
+
+        this.app.playAudioClip("attack");
+        this.app.resetAudioClip("attack");
+
+        attackTimer += System.currentTimeMillis() - lastAttackTimer;
+        lastAttackTimer = System.currentTimeMillis();
+        if (attackTimer < attackCooldown) {
+            return;
+        }
+
+        attackTimer = 0;
+
+        for (int i = 0; i < this.app.getEntity().size(); i++) {
+            if (this.app.getEntity().get(i).getClass().getSimpleName().matches("MeleeEnemy")) {
+                Creature tempObject = (Creature) this.app.getEntity().get(i);
+                if (tempObject.equals(this)) {
+                    continue;
+                }
+                if (tempObject.getBounds().intersects(super.range())) {
+                    Enemy target = (Enemy) tempObject;
+
+                    if (target.getBounds().intersects(super.range())) {
+                        System.out.println("attacked");
+                        tempObject.hurt(20);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void hurt(int value) {
+        System.out.println("health: "+this.health);
+        this.health -=value;
     }
 }
