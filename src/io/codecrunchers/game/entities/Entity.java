@@ -1,5 +1,7 @@
 package io.codecrunchers.game.entities;
 
+import io.codecrunchers.facades.App;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -10,12 +12,14 @@ public abstract class Entity {
     protected boolean alive = true;
 
     protected BufferedImage texture;
+    protected App app;
 
-    public Entity(float x, float y, int width, int height) {
+    public Entity(float x, float y, int width, int height, App app) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.app = app;
     }
 
     public abstract void tick();
@@ -23,6 +27,8 @@ public abstract class Entity {
     public abstract boolean isAlive();
     public abstract void die();
     public abstract Rectangle getBounds();
+
+
 
     public float getX() {
         return x;
@@ -59,4 +65,6 @@ public abstract class Entity {
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
+
+
 }
