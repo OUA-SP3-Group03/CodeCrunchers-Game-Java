@@ -44,7 +44,6 @@ public class AudioService {
     }
 
     public void play(){
-        this.clip.setFramePosition(0);
         this.clip.start();
     }
 
