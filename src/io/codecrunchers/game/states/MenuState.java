@@ -4,29 +4,34 @@ import io.codecrunchers.facades.App;
 import io.codecrunchers.game.gui.InterfaceButton;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class MenuState extends State {
 
     private App app;
+    private BufferedImage logo;
 
     @Override
     public void boot(App app) {
+
         this.app = app;
-        this.app.addInterfaceObject(new InterfaceButton()
-         .setX(64)
-         .setY(180)
-        .setAppFacade(this.app)
-        .setHeight(this.app.config().textureHeight())
-        .setWidth(this.app.config().textureWidth()*3)
-        .setText("Play!")
-        .setHoverBoxCurve(22)
-        .setState("menu")
-        .setClickEvent(this::play));
+        this.logo = this.app.texture().logo();
 
         this.app.addInterfaceObject(new InterfaceButton()
                 .setX(64)
-                .setY(180+64+16)
+                .setY(260)
+                .setAppFacade(this.app)
+                .setHeight(this.app.config().textureHeight())
+                .setWidth(this.app.config().textureWidth()*3)
+                .setText("Play!")
+                .setHoverBoxCurve(22)
+                .setState("menu")
+                .setClickEvent(this::play));
+
+        this.app.addInterfaceObject(new InterfaceButton()
+                .setX(64)
+                .setY(340)
                 .setAppFacade(this.app)
                 .setHeight(this.app.config().textureHeight())
                 .setWidth(this.app.config().textureWidth()*3)
@@ -37,7 +42,7 @@ public class MenuState extends State {
 
         this.app.addInterfaceObject(new InterfaceButton()
                 .setX(64)
-                .setY(180+128+32)
+                .setY(420)
                 .setAppFacade(this.app)
                 .setHeight(this.app.config().textureHeight())
                 .setWidth(this.app.config().textureWidth()*3)
@@ -48,7 +53,7 @@ public class MenuState extends State {
 
         this.app.addInterfaceObject(new InterfaceButton()
                 .setX(64)
-                .setY(180+128+64+48)
+                .setY(500)
                 .setAppFacade(this.app)
                 .setHeight(this.app.config().textureHeight())
                 .setWidth(this.app.config().textureWidth()*3)
@@ -68,7 +73,7 @@ public class MenuState extends State {
                 .setText("")
                 .setState("menu")
                 .setHoverBoxCurve(22)
-                );
+        );
     }
     private void play(){
         this.app.playAudioClip("ui-click");
@@ -100,15 +105,17 @@ public class MenuState extends State {
 
     @Override
     public void tick() {
-
     }
 
     @Override
     public void render(Graphics g) {
-            g.setFont(new Font(g.getFont().getName(), Font.BOLD,40));
-            g.drawString("Welcome "+this.app.authUserInfo()[1]+" "+this.app.authUserInfo()[2],450,64);
-            g.setFont(new Font(g.getFont().getName(), Font.ITALIC,10));
-            g.drawString("Code Crunchers Alpha v1",this.app.config().interfaceWidth()/2-50, this.app.config().interfaceHeight()-40);
+        g.setFont(new Font(g.getFont().getName(), Font.BOLD,40));
+        g.drawString("Welcome "+this.app.authUserInfo()[1]+" "+this.app.authUserInfo()[2],450,380);
+        g.setFont(new Font(g.getFont().getName(), Font.ITALIC,10));
+        g.drawString("Code Crunchers Alpha v1",this.app.config().interfaceWidth()/2-50, this.app.config().interfaceHeight()-112);
+
+        Graphics2D g2 = (Graphics2D)g;
+        g2.drawImage(logo, null, 0, 55);
 
     }
 }
