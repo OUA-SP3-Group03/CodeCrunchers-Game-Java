@@ -49,10 +49,10 @@ public class SettingsState extends State {
 
     @Override
     public void render(Graphics g) {
-        g.drawString("Coming Soon!",this.app.config().interfaceWidth()/2-70,256);
+        g.drawString("Coming Soon!",this.app.config().interfaceWidth()/2-70,400);
 
         g.setFont(new Font(g.getFont().getName(), Font.BOLD,60));
-        g.drawString("Settings",this.app.config().interfaceWidth()/2-150,128);
+        g.drawString("Settings",this.app.config().interfaceWidth()/2-150,310);
 
     }
 
