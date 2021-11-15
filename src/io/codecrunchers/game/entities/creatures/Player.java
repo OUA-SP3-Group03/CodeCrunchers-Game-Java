@@ -14,6 +14,7 @@ public class Player extends Creature {
     private boolean attacking = false;
     private int fallSpeed = 0;
     private int jumpSpeed = 30;
+    private boolean movingRight = true;
 
     public Player(float x, float y, App app) {
         super(x, y);
@@ -28,16 +29,24 @@ public class Player extends Creature {
 
     @Override
     public void tick() {
-        this.texture = this.app.texture().animation("playerIdol");
+        if (movingRight)
+            this.texture = this.app.texture().animation("playerIdleRight");
+        else
+            this.texture = this.app.texture().animation("playerIdleLeft");
 
         if((this.app.keyPressed().containsKey((int)'D') || this.app.keyPressed().containsKey(KeyEvent.VK_RIGHT))
                 && !this.app.getTileAtLocation(((int)(this.x+46)/64),(int)(this.y+32)/64).solid() ){
                 this.x += 6;
+                this.texture = this.app.texture().animation("playerRunRight");
+                movingRight = true;
         }
+
         if((this.app.keyPressed().containsKey((int)'A') || this.app.keyPressed().containsKey(KeyEvent.VK_LEFT))
                 && !this.app.getTileAtLocation(((int)(this.x+12)/64),(int)(this.y+32)/64).solid()
                 && this.x >= this.app.getCamera().getxOffset() - 12 ) {
                 this.x -= 6;
+                this.texture = this.app.texture().animation("playerRunLeft");
+                movingRight = false;
         }
 
         if(this.app.keyPressed().containsKey((int)'W') || this.app.keyPressed().containsKey(KeyEvent.VK_UP)) {
