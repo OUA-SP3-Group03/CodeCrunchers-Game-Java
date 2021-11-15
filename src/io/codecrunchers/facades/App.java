@@ -20,16 +20,22 @@ public class App {
     private final Kernel kernel;
     private final Config config;
     private final Level level;
+    private final Debug debug;
 
     public App(Kernel kernel){
         this.kernel = kernel;
         this.config = new Config(this.kernel);
         this.texture = new Texture(this.kernel);
         this.level = new Level(this.kernel);
+        this.debug = new Debug(this.kernel);
     }
 
     public Texture texture (){
         return this.texture;
+    }
+
+    public Debug debug(){
+        return this.debug;
     }
 
     public Level level(){
@@ -76,18 +82,17 @@ public class App {
     }
 
     //**** LOGIN HTTP CALL ****\\
-    public String authLogin(String email, String password){
+    public boolean authLogin(String email, String password){
         return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).login(email, password);
     }
 
     //**** CHECK LOGIN HTTP CALL ****\\
-    public String authCheck(String token){
-        return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).check(token);
+    public boolean authCheck(){
+        return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).check();
     }
 
-    //**** LOGOUT HTTP CALL ****\\
-    public String authLogout(String token){
-        return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).logout(token);
+    public String[] authUserInfo(){
+        return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).getUserInfo();
     }
 
     //**** ADD GUI OBJECT ****\\
@@ -172,7 +177,48 @@ public class App {
         return ((TileServiceProvider)this.kernel.getServiceProvider("tile")).getTile(index);
     }
 
+    public void playAudioClip(String clip){
+        ((AudioServiceProvider)this.kernel.getServiceProvider("audio")).play(clip);
+    }
 
+    public void playAudioClipLooped(String clip){
+        ((AudioServiceProvider)this.kernel.getServiceProvider("audio")).playLoop(clip);
+    }
 
+    public void resetAudioClip(String clip){
+        ((AudioServiceProvider)this.kernel.getServiceProvider("audio")).reset(clip);
+    }
+
+    public void stopAudioClip(String clip){
+        ((AudioServiceProvider)this.kernel.getServiceProvider("audio")).stop(clip);
+    }
+
+    public State getState(String state){
+        return ((StatesServiceProvider)this.kernel.getServiceProvider("states")).getState(state);
+    }
+
+    public boolean checkEntityAtLocation(int x, int y){
+        return ((EntityServiceProvider) this.kernel.getServiceProvider("entity")).checkLocation(x,y);
+    }
+
+    public void resetEntitiesInGame(){
+        ((EntityServiceProvider) this.kernel.getServiceProvider("entity")).reset();
+    }
+
+    public boolean showDebug(){
+        return this.kernel.showDebug();
+    }
+
+    public void setShowDebug(boolean value){
+        this.kernel.setShowDebug(value);
+    }
+
+    public boolean isBooted(){
+        return this.kernel.isBooted();
+    }
+
+    public void resetMouseClick(){
+        ((MouseServiceProvider)this.kernel.getServiceProvider("mouse")).resetMouseClick();
+    }
 
 }

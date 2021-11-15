@@ -7,7 +7,6 @@ import java.awt.*;
 
 public abstract class Enemy extends Creature {
 
-
     protected int facing;
 
     public Enemy(float x, float y, int width, int height, App app) {
@@ -24,12 +23,6 @@ public abstract class Enemy extends Creature {
     public void render(Graphics g) {
         g.drawImage(this.texture, (int) ((int) this.x - this.app.getCamera().getxOffset()), (int) ((int) this.y - this.app.getCamera().getyOffset()), null);
     }
-
-
-
-
-
-
 
 
     public void setFacing(int facing) {

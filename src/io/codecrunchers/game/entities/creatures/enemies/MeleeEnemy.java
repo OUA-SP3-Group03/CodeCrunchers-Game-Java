@@ -1,11 +1,14 @@
 package io.codecrunchers.game.entities.creatures.enemies;
 
+
 import io.codecrunchers.core.ASCII;
 import io.codecrunchers.facades.App;
 import io.codecrunchers.game.entities.Entity;
 import io.codecrunchers.game.entities.creatures.Creature;
 import io.codecrunchers.game.entities.creatures.Player;
 import io.codecrunchers.game.tiles.Tile;
+import io.codecrunchers.facades.App;
+
 
 import java.awt.*;
 import java.util.Random;
@@ -21,6 +24,7 @@ public class MeleeEnemy extends Enemy {
         this.texture = this.app.texture().allImages()[26];
         facing = randFacing();
         this.setHealth(100);
+
     }
 
     @Override
@@ -41,6 +45,11 @@ public class MeleeEnemy extends Enemy {
     @Override
     public void render(Graphics g) {
 
+      if(this.app.showDebug()){
+            g.setColor(Color.red);
+            g.drawRect((int) ((int)this.x- this.app.getCamera().getxOffset()),(int)this.y,this.width,this.height);
+        }
+        g.drawImage(this.texture, (int) ((int)this.x- this.app.getCamera().getxOffset()),(int)this.y,null);
 
         g.drawImage(this.texture, ((int) ((int) this.x - this.app.getCamera().getxOffset())), (int) ((int) this.y - this.app.getCamera().getyOffset()), null);
 
@@ -143,6 +152,19 @@ public class MeleeEnemy extends Enemy {
     @Override
     public Rectangle getBounds() {
         return super.getBounds();
+
+        
+    }
+
+
+    @Override
+    public void die() {
+        this.setAlive(false);
+    }
+
+    @Override
+    public void collisionWithPlayer() {
+
     }
 
 

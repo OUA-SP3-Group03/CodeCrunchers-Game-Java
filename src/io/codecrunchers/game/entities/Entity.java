@@ -10,6 +10,7 @@ public abstract class Entity {
     protected float x,y;
     protected int width, height;
     protected boolean alive = true;
+    protected App app;
 
     protected BufferedImage texture;
     protected App app;
@@ -24,9 +25,9 @@ public abstract class Entity {
 
     public abstract void tick();
     public abstract void render(Graphics g);
-    public abstract boolean isAlive();
     public abstract void die();
-    public abstract Rectangle getBounds();
+    public abstract void collisionWithPlayer();
+
 
 
 
@@ -65,6 +66,12 @@ public abstract class Entity {
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
+    public Rectangle getBounds() {
+        return new Rectangle((int)this.x,(int)this.y,this.width,this.height);
+    }
 
+    public boolean isAlive(){
+        return this.alive;
+    }
 
 }

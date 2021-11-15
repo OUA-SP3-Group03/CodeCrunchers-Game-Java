@@ -69,6 +69,10 @@ public class StatesServiceProvider extends Provider {
         }
     }
 
+    public State getState(String state){
+        return this.states.get(state);
+    }
+
 
 
 

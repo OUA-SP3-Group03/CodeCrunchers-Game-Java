@@ -26,7 +26,7 @@ public class EntityServiceProvider extends Provider {
     @Override
     public void tick() {
 
-        if ( this.app.currentState().matches("game") ) {
+        if ( this.app.currentState().matches("game") && !this.entities.isEmpty()) {
             //Create an if statement to see which state is the game running
             //Ticking all the entity objects
             for (Entity tempEntity : entities) {
@@ -38,7 +38,7 @@ public class EntityServiceProvider extends Provider {
     }
     @Override
     public void render(Graphics g) {
-        if ( this.app.currentState().matches("game") ) {
+        if ( this.app.currentState().matches("game") && !this.entities.isEmpty() ) {
             //addEntity(new Player(400,200,80, 100));
             //Rendering all the entity objects
             for (Entity tempEntity : entities) {
@@ -54,8 +54,21 @@ public class EntityServiceProvider extends Provider {
     public void registerEntity(Entity e){
         entities.add(e);
     }
-    //What if there are more than one entity
-    public void removeEntity(Entity e){
-        this.entities.remove(e);
+
+    public boolean checkLocation(int x, int y){
+        boolean outcome =  false;
+
+        for (Entity e: this.entities) {
+            if (e.getX() == x && e.getY() == y) {
+                outcome = true;
+                break;
+            }
+        }
+
+        return outcome;
+    }
+
+    public void reset(){
+       this.entities.clear();
     }
 }

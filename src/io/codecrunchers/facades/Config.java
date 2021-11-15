@@ -35,14 +35,13 @@ public class Config {
         return this.kernel.getConfig().targetTPS;
     }
 
-    //**** GET SHOW FPS ****\\
-    public boolean showFPS(){
-        return this.kernel.getConfig().showFPS;
-    }
-
     //**** GET API URL ****\\
     public String apiUrl(){
         return this.kernel.getConfig().apiUrl;
+    }
+
+    public String registerUrl(){
+        return this.kernel.getConfig().registerUrl;
     }
 
     //**** GET TEXTURE WIDTH ****\\
@@ -78,4 +77,8 @@ public class Config {
 
     //**** GET MAX ROOMS ****\\
     public int maxRooms() { return this.kernel.getConfig().maxRooms; }
+
+    public String creditsUrl(){
+        return this.kernel.getConfig().creditsUrl;
+    }
 }

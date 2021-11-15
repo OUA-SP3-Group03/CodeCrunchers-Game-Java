@@ -23,12 +23,10 @@ public abstract class Creature extends Entity {
     protected long lastAttackTimer, attackCooldown = 300, attackTimer = attackCooldown;
 
 
-    public Creature(float x, float y, int width, int height, App app) {
-        super(x, y, width, height, app);
+    public Creature(float x, float y, App app) {
+        super(x, y, 64, 64, app);
 
     }
-
-
 
     @Override
     public void tick() {
@@ -69,7 +67,6 @@ public abstract class Creature extends Entity {
     }
 
 
-
     @Override
     public void render(Graphics g) {
 
@@ -99,7 +96,6 @@ public abstract class Creature extends Entity {
             die();
         }
         System.out.println("Remaining Health: " + health);
-    }
 
 
     //Mutators and Accessors

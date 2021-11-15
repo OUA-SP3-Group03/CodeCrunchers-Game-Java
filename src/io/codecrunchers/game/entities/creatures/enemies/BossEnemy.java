@@ -1,5 +1,6 @@
 package io.codecrunchers.game.entities.creatures.enemies;
 
+import io.codecrunchers.facades.App;
 import io.codecrunchers.game.entities.creatures.Creature;
 
 import java.awt.*;
@@ -8,8 +9,8 @@ public class BossEnemy extends Enemy {
 
     Creature creature;
 
-    public BossEnemy(float x, float y, int width, int height, int health) {
-        super(x, y, width, height);
+    public BossEnemy(float x, float y, App app) {
+        super(x, y);
         creature.setHealth(health);
     }
 
@@ -23,10 +24,6 @@ public class BossEnemy extends Enemy {
 
     }
 
-    @Override
-    public boolean isAlive() {
-        return true;
-    }
 
     @Override
     public void die() {
@@ -34,7 +31,7 @@ public class BossEnemy extends Enemy {
     }
 
     @Override
-    public Rectangle getBounds() {
-        return new Rectangle((int) x, (int) y,width,height);
+    public void collisionWithPlayer() {
+
     }
 }

@@ -1,23 +1,33 @@
 package io.codecrunchers.game.entities.creatures;
 import io.codecrunchers.core.ASCII;
 import io.codecrunchers.facades.App;
+
 import io.codecrunchers.game.entities.creatures.enemies.Enemy;
+
+import io.codecrunchers.game.entities.Entity;
+
 import io.codecrunchers.providers.EntityServiceProvider;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class Player extends Creature {
 
-    EntityServiceProvider entityList;
-
 
     protected final int maxHealth = 100;
-    private App app;
 
+    private final App app;
+    private boolean jumping = false;
+    private boolean attacking = false;
+    private int fallSpeed = 0;
+    private int jumpSpeed = 30;
+    private int moveSpeed = 6;
+    private boolean movingRight = true;
+    private boolean showPowerUps = false;
 
+    public Player(float x, float y, App app) {
+        super(x, y);
 
-    public Player(float x, float y, int width, int height, App app) {
-        super(x, y, width, height, app);
         this.app = app;
         setHealth(maxHealth);
         this.texture = this.app.texture().allImages()[26];
@@ -27,6 +37,7 @@ public class Player extends Creature {
 
     @Override
     public void tick() {
+
         this.x += xVel;
         this.y += yVel;
 
@@ -36,62 +47,121 @@ public class Player extends Creature {
                  this.xVel = 10;
             } else {
                 this.xVel = 0;
+
+        if (movingRight)
+            this.texture = this.app.texture().animation("playerIdleRight");
+        else
+            this.texture = this.app.texture().animation("playerIdleLeft");
+
+        if (!showPowerUps) {
+            if ((this.app.keyPressed().containsKey((int) 'D') || this.app.keyPressed().containsKey(KeyEvent.VK_RIGHT))
+                    && !this.app.getTileAtLocation(((int) (this.x + 46) / 64), (int) (this.y + 32) / 64).solid()) {
+                this.x += moveSpeed;
+                this.texture = this.app.texture().animation("playerRunRight");
+                movingRight = true;
+            }
+
+            if ((this.app.keyPressed().containsKey((int) 'A') || this.app.keyPressed().containsKey(KeyEvent.VK_LEFT))
+                    && !this.app.getTileAtLocation(((int) (this.x + 12) / 64), (int) (this.y + 32) / 64).solid()
+                    && this.x >= this.app.getCamera().getxOffset() - 12) {
+                this.x -= moveSpeed;
+                this.texture = this.app.texture().animation("playerRunLeft");
+                movingRight = false;
+
             }
         } else {
             this.xVel = 0;
 
         }
 
-        if(this.app.keyPressed().containsKey((int)'A')){
-            if(!this.app.getTileAtLocation(((int)(this.x - width/6)/64),(int)this.y/64).solid()) {
-                this.xVel = -10;
+
+            if ((this.app.keyPressed().containsKey((int) 'D') && this.app.keyPressed().containsKey(ASCII.space)
+                    || this.app.keyPressed().containsKey(KeyEvent.VK_RIGHT) && this.app.keyPressed().containsKey(ASCII.space))) {
+                showPowerUps = false;
             }
-        }
+
 
         if (this.app.keyPressed().containsKey(ASCII.space)){
             attack();
         }
 
-        jumping = this.app.keyPressed().containsKey((int)'W');
-
         if (xVel > 0) facing = 1;
         if (xVel < 0 ) facing = -1;
 
+            if ((this.app.keyPressed().containsKey((int) 'A') && this.app.keyPressed().containsKey(ASCII.space)
+                    || this.app.keyPressed().containsKey(KeyEvent.VK_LEFT) && this.app.keyPressed().containsKey(ASCII.space))) {
+                this.moveSpeed = this.moveSpeed + 10;
+                showPowerUps = false;
+            }
+        }
+
+        if(this.app.keyPressed().containsKey((int)'W') || this.app.keyPressed().containsKey(KeyEvent.VK_UP)) {
+            jumping = true;
+        }
 
 
-        fall();
+        //Temp attack statement
+        if(this.app.keyPressed().containsKey(ASCII.space)) {
+            attacking = true;
+        }
+        else {
+            attacking = false;
+        }
+
+
+        attack();
         jump();
+        fall();
+        die();
 
+
+        checkCollision();
     }
 
     @Override
     public void render(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g.setColor(Color.yellow);
-        g2d.draw(getBounds());
-        g.setColor(Color.black);
-        g2d.draw(range());
 
+        if(this.app.showDebug()){
+            g.setColor(Color.green);
+            g.drawRect((int) ((int)this.x- this.app.getCamera().getxOffset()),(int)this.y,this.width,this.height);
+        }
 
-        g.setColor(Color.red);
-        //g2d.draw(new Rectangle((int) ((int)this.x - this.app.getCamera().getxOffset()),(int) ((int)this.y - this.app.getCamera().getyOffset()) - 10,getMaxHealth(),10));
-        //g2d.fillRect((int) ((int)this.x - this.app.getCamera().getxOffset()),(int) ((int)this.y - this.app.getCamera().getyOffset()) - 10,getHealth(),10);
         g.drawImage(this.texture, (int) ((int)this.x - this.app.getCamera().getxOffset()), (int) ((int)this.y - this.app.getCamera().getyOffset()),null);
-    }
 
+        if(showPowerUps) {
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Dialog", Font.BOLD, 40));
+            g.drawString("HOLD SPACEBAR AND CHOOSE A POWERUP", 200, 160);
 
+            g.setColor(Color.ORANGE);
+            g.fillRect(300,200,200,400);
 
-    public void jump(){
-        if (!falling && jumping){
-            if (!this.app.getTileAtLocation(((int)(this.x)/64),(int)(this.y - 128)/64).solid()){
-                falling = true;
-                this.yVel = -20;
-            } else {
-                falling = true;
-                jumping = false;
-            }
+            g.setColor(Color.BLACK);
+            g.setFont(new Font("Dialog", Font.BOLD, 30));
+            g.drawString("SPEED", 350, 250);
+
+            g.setFont(new Font("Dialog", Font.BOLD, 20));
+            g.drawString("Increase player's", 310, 370);
+            g.drawString("movement speed!", 325, 395);
+            g.setFont(new Font("Dialog", Font.BOLD, 60));
+            g.drawString("<- A", 340, 500);
+
+            g.setColor(Color.ORANGE);
+            g.fillRect(700,200,200,400);
+
+            g.setColor(Color.BLACK);
+            g.setFont(new Font("Dialog", Font.BOLD, 30));
+            g.drawString("DAMAGE", 740, 250);
+
+            g.setFont(new Font("Dialog", Font.BOLD, 20));
+            g.drawString("Increase player's", 710, 370);
+            g.drawString("attack damage!", 730, 395);
+            g.setFont(new Font("Dialog", Font.BOLD, 60));
+            g.drawString("D ->", 745, 500);
         }
     }
+
+
 
     public void attack() {
         attackTimer += System.currentTimeMillis() - lastAttackTimer;
@@ -116,7 +186,58 @@ public class Player extends Creature {
                     return;
                 }
             }
+
+    public void fall() {
+        if(!(this.app.getTileAtLocation( ((int)(this.x+32)/64),(int)(this.y+64)/64).solid() ||
+                this.app.getTileAtLocation( ((int)(this.x)/64),(int)(this.y+64)/64).solid())
+                && !jumping) {
+            y += fallSpeed;
+            falling = true;
+
+            if (fallSpeed != gravity) {
+                fallSpeed = fallSpeed + 2;
+            }
+
+            //Player doesn't fall through tiles
+            if (this.app.getTileAtLocation( ((int)(this.x+32)/64),(int)(this.y+64)/64).solid() && !jumping) {
+                float tempY = this.y;
+                tempY = tempY / 64;
+
+                this.y = (int)tempY * 64;
+            }
+        } else {
+            falling = false;
+            fallSpeed = 0;
         }
+    }
+
+    public void jump() {
+        if(!this.app.getTileAtLocation( ((int)(this.x+32)/64),(int)(this.y)/64).solid() && jumping && !falling) {
+
+            //Play jump sound
+            this.app.playAudioClip("jump");
+
+            y -= jumpSpeed;
+            jumpSpeed -= 2;
+
+            if (jumpSpeed <= 0) {
+                jumpSpeed = 30;
+                jumping = false;
+                falling = true;
+            }
+        }
+        else {
+            //Reload jump sound for next use
+            if (this.app.getTileAtLocation( ((int)(this.x+32)/64),(int)(this.y+64)/64).solid())
+                this.app.resetAudioClip("jump");
+            jumping = false;
+            falling = true;
+            jumpSpeed = 30;
+        }
+    }
+
+   
+        
     }
 
     @Override
@@ -126,6 +247,7 @@ public class Player extends Creature {
 
     @Override
     public void die() {
+
         setAlive(false);
     }
 
@@ -137,24 +259,37 @@ public class Player extends Creature {
     @Override
     public boolean isAlive() {
         return alive;
+        if(this.y >= this.app.config().interfaceHeight()){
+            this.app.playAudioClip("hurt");
+            this.setAlive(false);
+        }
     }
+
+    @Override
+    public void collisionWithPlayer() {
+        //DISREGARD ON PLAYER
+    }
+
+    public void checkCollision(){
 
 
     public int getMaxHealth() {
         return maxHealth;
     }
 
-    //These bounds are called to specify which side the player is colliding
-    public Rectangle getBottom() {
-        return new Rectangle((int)(x + (width/4)), (int)(y + (height)-(height/3)) - 5, width / 2,  height/3);
-    }
-    public Rectangle getTop(){
-        return new Rectangle((int)(x + (width/4)), (int) y + 5,  width / 2,  height/3);
-    }
-    public Rectangle getLeft(){
-        return new Rectangle((int) x + 5, (int) y + 10,  5,  height - 20);
-    }
-    public Rectangle getRight(){
-        return new Rectangle((int)( x + width - 10), (int) y + 10,  5,  height - 20);
+        Rectangle bounds =  new Rectangle((int)this.x,(int)this.y,this.width,this.height);
+
+        for (Entity entity: ((EntityServiceProvider)this.app.getProvider("entity")).getEntities()) {
+            if(entity != this && entity.isAlive()) {
+                if (bounds.intersects(entity.getBounds())) {
+                    entity.collisionWithPlayer();
+
+                    if(entity.getClass().getName().equals("io.codecrunchers.game.entities.statics.PowerUp")) {
+                        showPowerUps = true;
+                    }
+                }
+            }
+        }
+
     }
 }

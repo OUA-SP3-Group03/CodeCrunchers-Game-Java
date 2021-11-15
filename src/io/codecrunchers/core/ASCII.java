@@ -1,5 +1,6 @@
 package io.codecrunchers.core;
 
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
 public class ASCII {
@@ -8,6 +9,7 @@ public class ASCII {
     public static final int shift = 16;
     public static final int backspace = 8;
     public static final int space = 32;
+    public static final int f3 = KeyEvent.VK_F3;
 
     //Static ASCII key map
     public static HashMap<Integer, Integer> alternativeKeys;
