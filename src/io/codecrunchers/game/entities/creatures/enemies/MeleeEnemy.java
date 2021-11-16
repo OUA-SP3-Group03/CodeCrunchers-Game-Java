@@ -146,7 +146,6 @@ public class MeleeEnemy extends Enemy {
                     Player target = (Player) tempObject;
 
                     if (target.getBounds().intersects(this.range())) {
-                        System.out.println("Enemy attacked Player");
                         tempObject.hurt(10);
                         return;
                     }
