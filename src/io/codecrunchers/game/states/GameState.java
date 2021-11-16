@@ -25,7 +25,7 @@ public class GameState extends State {
         this.app = app;
         this.df = new DecimalFormat("#.#");
         this.enemysKilled = 0;
-        this.bonus = 200;
+        this.bonus = 100;
     }
 
     public void tick() {
@@ -52,7 +52,6 @@ public class GameState extends State {
 
         //increase our timer
         this.timer ++;
-
     }
 
     public void render(Graphics g) {
@@ -104,9 +103,13 @@ public class GameState extends State {
     }
 
     public void endGame(){
-        int score = (int) ((this.enemysKilled *10)+(this.bonus-this.timer));
-        this.app.saveUserScore(score);
-        
+        int score = (int) ((this.enemysKilled * 100) + (this.bonus - (this.timer / 60)));
+
+        if (score > 0) {
+            this.app.saveUserScore(score);
+        }
+
+
         this.enemysKilled = 0;
         this.app.resetAudioClip(this.backgroundTrack);
         this.app.stopAudioClip(this.backgroundTrack);
