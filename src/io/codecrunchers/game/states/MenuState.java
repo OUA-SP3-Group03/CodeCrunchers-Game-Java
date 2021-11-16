@@ -110,7 +110,7 @@ public class MenuState extends State {
     @Override
     public void render(Graphics g) {
         g.setFont(new Font(g.getFont().getName(), Font.BOLD,40));
-        g.drawString("Welcome "+this.app.authUserInfo()[1]+" "+this.app.authUserInfo()[2],450,380);
+        g.drawString("Welcome "+this.app.authUserInfo()[0]+"! ",450,380);
         g.setFont(new Font(g.getFont().getName(), Font.ITALIC,10));
         g.drawString("Code Crunchers Alpha v1",this.app.config().interfaceWidth()/2-50, this.app.config().interfaceHeight()-112);
 

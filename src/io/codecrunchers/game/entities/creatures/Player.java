@@ -18,14 +18,14 @@ public class Player extends Creature {
     private int moveSpeed = 6;
     private boolean movingRight = true;
     private boolean showPowerUps = false;
-
+    private int dmg;
     public Player(float x, float y, App app) {
         super(x, y);
         this.app = app;
         this.texture = this.app.texture().allImages()[26];
-        this.health = 100;
-        this.rangeWidth =30;
+        this.health = maxHealth;
         this.facing = 1;
+        this.dmg = 10;
     }
 
     @Override
@@ -61,6 +61,7 @@ public class Player extends Creature {
         else {
             if ((this.app.keyPressed().containsKey((int) 'D') && this.app.keyPressed().containsKey(ASCII.space)
                     || this.app.keyPressed().containsKey(KeyEvent.VK_RIGHT) && this.app.keyPressed().containsKey(ASCII.space))) {
+                this.dmg += 10;
                 showPowerUps = false;
             }
 
@@ -261,7 +262,7 @@ public class Player extends Creature {
 
                     if (target.getBounds().intersects(this.range())) {
                         System.out.println("Player attacked ENEMY");
-                        tempObject.hurt(10);
+                        tempObject.hurt(dmg);
                         return;
                     }
                 }
