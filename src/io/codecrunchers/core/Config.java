@@ -11,7 +11,7 @@ public class Config {
     public String registerUrl = "https://codecrunchers.io/register";
     public String creditsUrl = "https://codecrunchers.io/credits";
 
-    public String texturePath = "res/Textures/textureMap_v6.3.png";
+    public String texturePath = "res/Textures/textureMap_v6.4.png";
     public String logoPath = "res/Textures/CodeCrunchers-Logo.png";
     public int textureWidth = 32;
     public int textureHeight = 32;
