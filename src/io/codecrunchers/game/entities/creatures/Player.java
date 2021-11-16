@@ -25,6 +25,7 @@ public class Player extends Creature {
         this.texture = this.app.texture().allImages()[26];
         this.health = 100;
         this.rangeWidth =30;
+        this.facing = 1;
     }
 
     @Override
@@ -45,6 +46,7 @@ public class Player extends Creature {
                 this.x += moveSpeed;
                 this.texture = this.app.texture().animation("playerRunRight");
                 movingRight = true;
+                facing = 1;
             }
 
             if ((this.app.keyPressed().containsKey((int) 'A') || this.app.keyPressed().containsKey(KeyEvent.VK_LEFT))
@@ -53,6 +55,7 @@ public class Player extends Creature {
                 this.x -= moveSpeed;
                 this.texture = this.app.texture().animation("playerRunLeft");
                 movingRight = false;
+                facing = -1;
             }
         }
         else {
@@ -95,9 +98,14 @@ public class Player extends Creature {
         }
         g.drawImage(this.texture, (int) ((int)this.x - this.app.getCamera().getxOffset()), (int) ((int)this.y - this.app.getCamera().getyOffset()),null);
 
+        Graphics2D g2d = (Graphics2D) g;
+
         g.setColor(Color.red);
-        ((Graphics2D) g).draw(new Rectangle((int) ((int)this.x - this.app.getCamera().getxOffset()),(int) ((int)this.y - this.app.getCamera().getyOffset()) - 10,getMaxHealth(),10));
-        ((Graphics2D) g).fillRect((int) ((int)this.x - this.app.getCamera().getxOffset()),(int) ((int)this.y - this.app.getCamera().getyOffset()) - 10,getHealth(),10);
+        g2d.draw(new Rectangle((int) ((int)this.x - this.app.getCamera().getxOffset()) - 15,(int) ((int)this.y - this.app.getCamera().getyOffset()) - 15,getMaxHealth(),10));
+        g2d.fillRect((int) ((int)this.x - this.app.getCamera().getxOffset()) - 15,(int) ((int)this.y - this.app.getCamera().getyOffset()) - 15,getHealth(),10);
+
+
+
 
         if(showPowerUps) {
             g.setColor(Color.WHITE);
@@ -210,12 +218,28 @@ public class Player extends Creature {
     }
 
 
+    public Rectangle range() {
+        Rectangle bounds = getBounds();
+        Rectangle range = new Rectangle();
+
+        range.width = 30;
+        range.height = bounds.height;
+
+
+        if (facing == 1) {
+            range.x = bounds.x + bounds.width - bounds.width/4;
+            range.y = bounds.y;
+        }
+        if (facing == -1) {
+            range.x = bounds.x - bounds.width/4;
+            range.y = bounds.y;
+        }
+        return range;
+    }
+
     public void attack() {
-
-        System.out.println("Attacked!");
-
         this.app.playAudioClip("attack");
-        this.app.resetAudioClip("attack");
+
 
         attackTimer += System.currentTimeMillis() - lastAttackTimer;
         lastAttackTimer = System.currentTimeMillis();
@@ -224,6 +248,7 @@ public class Player extends Creature {
         }
 
         attackTimer = 0;
+        this.app.resetAudioClip("attack");
 
         for (int i = 0; i < this.app.getEntity().size(); i++) {
             if (this.app.getEntity().get(i).getClass().getSimpleName().matches("MeleeEnemy")) {
@@ -231,12 +256,12 @@ public class Player extends Creature {
                 if (tempObject.equals(this)) {
                     continue;
                 }
-                if (tempObject.getBounds().intersects(super.range())) {
+                if (tempObject.getBounds().intersects(this  .range())) {
                     Enemy target = (Enemy) tempObject;
 
-                    if (target.getBounds().intersects(super.range())) {
-                        System.out.println("attacked");
-                        tempObject.hurt(20);
+                    if (target.getBounds().intersects(this.range())) {
+                        System.out.println("Player attacked ENEMY");
+                        tempObject.hurt(10);
                         return;
                     }
                 }
@@ -248,5 +273,10 @@ public class Player extends Creature {
     public void hurt(int value) {
         System.out.println("health: "+this.health);
         this.health -=value;
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(((int) ((int) this.x - this.app.getCamera().getxOffset())), (int) ((int) this.y - this.app.getCamera().getyOffset()), 64, 64);
+
     }
 }

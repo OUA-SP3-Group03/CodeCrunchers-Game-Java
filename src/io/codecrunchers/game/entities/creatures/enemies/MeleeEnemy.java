@@ -16,7 +16,8 @@ public class MeleeEnemy extends Enemy {
         this.app = app;
         this.texture = this.app.texture().allImages()[27];
         facing = randFacing();
-        this.health = 50;
+        maxHealth = 50;
+        this.health = maxHealth;
         this.rangeWidth = 0;
     }
 
@@ -38,6 +39,25 @@ public class MeleeEnemy extends Enemy {
         }
     }
 
+    public Rectangle range() {
+        Rectangle bounds = getBounds();
+        Rectangle range = new Rectangle();
+
+        range.width = 10;
+        range.height = bounds.height;
+
+        if (facing == 1) {
+            range.x = bounds.x + bounds.width - bounds.width/4;
+            range.y = bounds.y;
+        }
+        if (facing == -1) {
+            range.x = bounds.x - bounds.width/4;
+            range.y = bounds.y;
+        }
+        return range;
+    }
+
+
     @Override
     public void render(Graphics g) {
         if (this.app.showDebug()) {
@@ -46,9 +66,13 @@ public class MeleeEnemy extends Enemy {
         }
         g.drawImage(this.texture, (int) ((int) this.x - this.app.getCamera().getxOffset()), (int) this.y, null);
 
-        g.setColor(Color.red);
-        ((Graphics2D) g).draw(new Rectangle((int) ((int)this.x - this.app.getCamera().getxOffset()),(int) ((int)this.y - this.app.getCamera().getyOffset()) - 10,getMaxHealth(),10));
-        ((Graphics2D) g).fillRect((int) ((int)this.x - this.app.getCamera().getxOffset()),(int) ((int)this.y - this.app.getCamera().getyOffset()) - 10,getHealth(),10);
+
+        Graphics2D g2d = (Graphics2D) g;
+        g.setColor(Color.green);
+        g2d.draw(new Rectangle((int) ((int)this.x - this.app.getCamera().getxOffset()),(int) ((int)this.y - this.app.getCamera().getyOffset()) - 15,maxHealth,10));
+        g2d.fillRect((int) ((int)this.x - this.app.getCamera().getxOffset()),(int) ((int)this.y - this.app.getCamera().getyOffset()) - 15,health,10);
+
+
     }
 
 
@@ -115,15 +139,13 @@ public class MeleeEnemy extends Enemy {
         for (int i = 0; i < this.app.getEntity().size(); i++) {
             if(this.app.getEntity().get(i).getClass().getSimpleName().matches("Player")) {
                 Creature tempObject = (Creature) this.app.getEntity().get(i);
-                if (tempObject.equals(this)) {
-                    continue;
-                }
+
                 if (tempObject.getBounds().intersects(this.range())) {
                     Player target = (Player) tempObject;
 
                     if (target.getBounds().intersects(this.range())) {
-                        System.out.println("attacked");
-                        tempObject.hurt(20);
+                        System.out.println("Enemy attacked Player");
+                        tempObject.hurt(10);
                         return;
                     }
                 }
@@ -145,5 +167,10 @@ public class MeleeEnemy extends Enemy {
     @Override
     public void hurt(int value) {
         this.health -= value;
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(((int) ((int) this.x - this.app.getCamera().getxOffset())), (int) ((int) this.y - this.app.getCamera().getyOffset()), 64, 64);
+
     }
 }

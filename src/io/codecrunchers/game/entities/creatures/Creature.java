@@ -12,7 +12,7 @@ public abstract class Creature extends Entity {
     protected float gravity = 20.0f;
     protected int facing;
     protected long lastAttackTimer;
-    protected final long attackCooldown = 300;
+    protected final long attackCooldown = 500;
     protected long attackTimer = attackCooldown;
     protected int maxHealth = 100;
     protected int rangeWidth;
@@ -23,25 +23,7 @@ public abstract class Creature extends Entity {
         super(x, y, 64, 64);
     }
 
-    public Rectangle range() {
-        Rectangle bounds = getBounds();
-        Rectangle range = new Rectangle();
 
-        range.width = this.rangeWidth;
-        range.height = bounds.height;
-
-        if (facing == 1) {
-            range.x = bounds.x + bounds.width - bounds.width / 4;
-            range.y = bounds.y;
-        }
-        if (facing == -1) {
-            range.x = bounds.x - bounds.width / 4;
-            range.y = bounds.y;
-        }
-
-
-        return range;
-    }
 
 
     //Mutators and Accessors
