@@ -17,12 +17,15 @@ public class GameState extends State {
     private float timer;
     private DecimalFormat df;
     private String[] music = {"bgm1", "bgm2", "bgm3", "bgm4"};
+    private int enemysKilled;
+    private int bonus;
 
     @Override
     public void boot(App app) {
         this.app = app;
         this.df = new DecimalFormat("#.#");
-
+        this.enemysKilled = 0;
+        this.bonus = 200;
     }
 
     public void tick() {
@@ -101,6 +104,10 @@ public class GameState extends State {
     }
 
     public void endGame(){
+        int score = (int) ((this.enemysKilled *10)+(this.bonus-this.timer));
+        this.app.saveUserScore(score);
+        
+        this.enemysKilled = 0;
         this.app.resetAudioClip(this.backgroundTrack);
         this.app.stopAudioClip(this.backgroundTrack);
         this.timer = 0;
@@ -115,6 +122,10 @@ public class GameState extends State {
         int selection;
         selection = rng.nextInt(music.length);
         return music[selection];
+    }
+
+    public void enemyKilled(){
+        this.enemysKilled++;
     }
 
 
