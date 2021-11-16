@@ -95,6 +95,10 @@ public class App {
         return ((HttpServiceProvider) this.kernel.getServiceProvider("http")).getUserInfo();
     }
 
+    public void saveUserScore(int score){
+        ((HttpServiceProvider)this.kernel.getServiceProvider("http")).saveScore(score);
+    }
+
     //**** ADD GUI OBJECT ****\\
     public void addInterfaceObject(InterfaceObject newObject){
         ((InterfaceServiceProvider) this.kernel.getServiceProvider("interface")).addInterfaceObject(newObject);
