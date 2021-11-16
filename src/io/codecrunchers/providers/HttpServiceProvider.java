@@ -15,6 +15,7 @@ public class HttpServiceProvider extends Provider {
 
     private HttpService httpService;
     private App app;
+    private String[] currentUser;
 
     @Override
     public void boot(App app) {
@@ -64,6 +65,7 @@ public class HttpServiceProvider extends Provider {
 
         if((boolean)result.get("success")){
             this.saveToken(result.getString("token"));
+            this.currentUser = this.getUserInfo();
             outcome = true;
         }
 
@@ -83,6 +85,10 @@ public class HttpServiceProvider extends Provider {
         }
 
         JSONObject result = new JSONObject(response);
+
+        if((boolean) result.get("success")){
+            this.currentUser = this.getUserInfo();
+        }
 
         return (boolean) result.get("success");
     }
@@ -140,14 +146,29 @@ public class HttpServiceProvider extends Provider {
 
 
         if((boolean)result.get("success")){
-            userData  = new String[4];
+            userData  = new String[5];
             userData[0] = result.getString("username");
-            userData[1] = result.getString("first_name");
-            userData[2] = result.getString("last_name");
-            userData[3] = result.getString("email");
+            userData[1] = result.getString("user_id");
+            userData[2] = result.getString("first_name");
+            userData[3] = result.getString("last_name");
+            userData[4] = result.getString("email");
         }
 
         return userData;
+    }
+
+    public void saveScore(int score){
+        int user_id = Integer.parseInt(this.currentUser[1]);
+        String data = "user_id="+user_id+"&score="+score+"&level=random_gen";
+        String response;
+
+        try {
+            response = this.httpService.postRequest(this.app.config().apiUrl() + "/score/add", data);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            response = "no response from http request";
+        }
+
     }
 
 }
