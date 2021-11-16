@@ -16,7 +16,6 @@ public class Player extends Creature {
     private int fallSpeed = 0;
     private int jumpSpeed = 30;
     private int moveSpeed = 6;
-    private boolean movingRight = true;
     private boolean showPowerUps = false;
     private int dmg;
     public Player(float x, float y, App app) {
@@ -35,7 +34,7 @@ public class Player extends Creature {
 
     @Override
     public void tick() {
-        if (movingRight)
+        if (facing == 1)
             this.texture = this.app.texture().animation("playerIdleRight");
         else
             this.texture = this.app.texture().animation("playerIdleLeft");
@@ -45,7 +44,6 @@ public class Player extends Creature {
                     && !this.app.getTileAtLocation(((int) (this.x + 46) / 64), (int) (this.y + 32) / 64).solid()) {
                 this.x += moveSpeed;
                 this.texture = this.app.texture().animation("playerRunRight");
-                movingRight = true;
                 facing = 1;
             }
 
@@ -54,7 +52,6 @@ public class Player extends Creature {
                     && this.x >= this.app.getCamera().getxOffset() - 12) {
                 this.x -= moveSpeed;
                 this.texture = this.app.texture().animation("playerRunLeft");
-                movingRight = false;
                 facing = -1;
             }
         }
@@ -76,7 +73,6 @@ public class Player extends Creature {
             jumping = true;
         }
 
-        //Temp attack statement
         if(this.app.keyPressed().containsKey(ASCII.space)) {
             attack();
         }
@@ -240,6 +236,12 @@ public class Player extends Creature {
 
     public void attack() {
         this.app.playAudioClip("attack");
+        if (facing == 1) {
+            this.texture = this.app.texture().animation("playerAttackRight");
+        }
+        else {
+            this.texture = this.app.texture().animation("playerAttackLeft");
+        }
 
 
         attackTimer += System.currentTimeMillis() - lastAttackTimer;
