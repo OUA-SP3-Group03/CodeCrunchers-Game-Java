@@ -3,6 +3,7 @@ package io.codecrunchers.game.entities.creatures.enemies;
 import io.codecrunchers.facades.App;
 import io.codecrunchers.game.entities.creatures.Creature;
 import io.codecrunchers.game.entities.creatures.Player;
+import io.codecrunchers.game.states.GameState;
 
 import java.awt.*;
 import java.util.Random;
@@ -79,6 +80,7 @@ public class MeleeEnemy extends Enemy {
     @Override
     public void die() {
         this.setAlive(false);
+        ((GameState)this.app.getState("game")).enemyKilled();
     }
 
     @Override
