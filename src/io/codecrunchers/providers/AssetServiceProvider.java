@@ -71,6 +71,8 @@ public class AssetServiceProvider extends Provider {
         this.animations.put("playerIdleLeft", new AnimationService(Arrays.copyOfRange(images,41,46), 256, app));
         this.animations.put("playerRunRight", new AnimationService(Arrays.copyOfRange(images,49,53), 80, app));
         this.animations.put("playerRunLeft", new AnimationService(Arrays.copyOfRange(images,57,61), 80, app));
+        this.animations.put("playerAttackRight", new AnimationService(Arrays.copyOfRange(images,65,69), 115, app));
+        this.animations.put("playerAttackLeft", new AnimationService(Arrays.copyOfRange(images,73,77), 115, app));
 
         this.booted=true;
     }
