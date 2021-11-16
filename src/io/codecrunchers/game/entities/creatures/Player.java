@@ -73,8 +73,10 @@ public class Player extends Creature {
             jumping = true;
         }
 
-        if(this.app.keyPressed().containsKey(ASCII.space)) {
-            attack();
+        if (!showPowerUps) {
+            if (this.app.keyPressed().containsKey(ASCII.space)) {
+                attack();
+            }
         }
 
         jump();
@@ -263,7 +265,6 @@ public class Player extends Creature {
                     Enemy target = (Enemy) tempObject;
 
                     if (target.getBounds().intersects(this.range())) {
-                        System.out.println("Player attacked ENEMY");
                         tempObject.hurt(dmg);
                         return;
                     }
@@ -274,7 +275,6 @@ public class Player extends Creature {
 
     @Override
     public void hurt(int value) {
-        System.out.println("health: "+this.health);
         this.health -=value;
     }
 
