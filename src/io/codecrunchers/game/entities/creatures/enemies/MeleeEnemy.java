@@ -52,7 +52,7 @@ public class MeleeEnemy extends Enemy {
             range.y = bounds.y;
         }
         if (facing == -1) {
-            range.x = bounds.x - bounds.width/4;
+            range.x = bounds.x - bounds.width/4 + 15;
             range.y = bounds.y;
         }
         return range;
@@ -61,14 +61,17 @@ public class MeleeEnemy extends Enemy {
 
     @Override
     public void render(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
         if (this.app.showDebug()) {
-            g.setColor(Color.red);
+            g.setColor(Color.green);
             g.drawRect((int) ((int) this.x - this.app.getCamera().getxOffset()), (int) this.y, this.width, this.height);
+            g.setColor(Color.red);
+            g2d.draw(range());
         }
         g.drawImage(this.texture, (int) ((int) this.x - this.app.getCamera().getxOffset()), (int) this.y, null);
 
 
-        Graphics2D g2d = (Graphics2D) g;
+
         g.setColor(Color.green);
         g2d.draw(new Rectangle((int) ((int)this.x - this.app.getCamera().getxOffset()),(int) ((int)this.y - this.app.getCamera().getyOffset()) - 15,maxHealth,10));
         g2d.fillRect((int) ((int)this.x - this.app.getCamera().getxOffset()),(int) ((int)this.y - this.app.getCamera().getyOffset()) - 15,health,10);
