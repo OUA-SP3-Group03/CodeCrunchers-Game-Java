@@ -20,6 +20,7 @@ public class Application {
         this.app.registerState("menu", new MenuState());
         this.app.registerState("pause", new PauseState());
         this.app.registerState("settings", new SettingsState());
+        this.app.registerState("end", new EndingState());
 
         //initialize the states
         this.app.initializeStates();
