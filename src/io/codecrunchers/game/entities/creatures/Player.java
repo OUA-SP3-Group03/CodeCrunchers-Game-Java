@@ -10,12 +10,15 @@ import java.awt.event.KeyEvent;
 
 public class Player extends Creature {
 
+
+
+
     private final App app;
     private boolean jumping = false;
     private boolean attacking = false;
     private int fallSpeed = 0;
     private int jumpSpeed = 30;
-    private int moveSpeed = 6;
+    private int moveSpeed = 8;
     private boolean showPowerUps = false;
     private int dmg;
     public Player(float x, float y, App app) {
@@ -31,6 +34,14 @@ public class Player extends Creature {
     public boolean isAlive() {
         return alive;
     }
+
+    public void gameEnd(){
+        if (this.x >= 8000){
+            setEnd(true);
+
+        }
+    }
+
 
     @Override
     public void tick() {
@@ -64,7 +75,7 @@ public class Player extends Creature {
 
             if ((this.app.keyPressed().containsKey((int) 'A') && this.app.keyPressed().containsKey(ASCII.space)
                     || this.app.keyPressed().containsKey(KeyEvent.VK_LEFT) && this.app.keyPressed().containsKey(ASCII.space))) {
-                this.moveSpeed = this.moveSpeed + 10;
+                this.moveSpeed = this.moveSpeed + 4;
                 showPowerUps = false;
             }
         }
@@ -91,13 +102,16 @@ public class Player extends Creature {
 
     @Override
     public void render(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
         if(this.app.showDebug()){
             g.setColor(Color.green);
             g.drawRect((int) ((int)this.x- this.app.getCamera().getxOffset()),(int)this.y,this.width,this.height);
+            g.setColor(Color.red);
+            g2d.draw(range());
         }
         g.drawImage(this.texture, (int) ((int)this.x - this.app.getCamera().getxOffset()), (int) ((int)this.y - this.app.getCamera().getyOffset()),null);
 
-        Graphics2D g2d = (Graphics2D) g;
+
 
         g.setColor(Color.red);
         g2d.draw(new Rectangle((int) ((int)this.x - this.app.getCamera().getxOffset()) - 15,(int) ((int)this.y - this.app.getCamera().getyOffset()) - 15,getMaxHealth(),10));
