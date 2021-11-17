@@ -95,6 +95,9 @@ public class Player extends Creature {
 
         checkCollision();
 
+
+        gameEnd();
+
         if(this.health <= 0 || this.y >= this.app.config().interfaceHeight()){
             this.die();
         }
