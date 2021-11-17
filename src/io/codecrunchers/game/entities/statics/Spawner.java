@@ -20,7 +20,7 @@ public class Spawner extends StaticEntity{
         selection = rng.nextInt(2);
 
         if(selection == 1){
-            this.app.registerEntity(new PowerUp(this.x, this.y, this.app));
+            this.app.registerEntity(new PowerUp(this.x,this.y,this.app));
         }else {
             this.app.registerEntity(new MeleeEnemy(this.x,this.y,this.app));
         }
