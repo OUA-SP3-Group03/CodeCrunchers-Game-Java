@@ -47,7 +47,7 @@ public class GameState extends State {
 
         //check for player death
         if(!this.player.isAlive()){
-            this.endGame();
+            this.dieGame();
         }
 
         if(this.player.end){
@@ -120,6 +120,22 @@ public class GameState extends State {
         this.timer = 0;
         this.app.resetEntitiesInGame();
         this.app.setCurrentState("end");
+    }
+
+    public void dieGame(){
+        int score = (int) ((this.enemysKilled * 100) + (this.bonus - (this.timer / 60)));
+
+        if (score > 0) {
+            this.app.saveUserScore(score);
+        }
+
+
+        this.enemysKilled = 0;
+        this.app.resetAudioClip(this.backgroundTrack);
+        this.app.stopAudioClip(this.backgroundTrack);
+        this.timer = 0;
+        this.app.resetEntitiesInGame();
+        this.app.setCurrentState("menu");
     }
 
 
