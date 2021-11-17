@@ -50,6 +50,10 @@ public class GameState extends State {
             this.endGame();
         }
 
+        if(this.player.end){
+            this.endGame();
+        }
+
         //increase our timer
         this.timer ++;
     }
@@ -115,7 +119,7 @@ public class GameState extends State {
         this.app.stopAudioClip(this.backgroundTrack);
         this.timer = 0;
         this.app.resetEntitiesInGame();
-        this.app.setCurrentState("menu");
+        this.app.setCurrentState("end");
     }
 
 
