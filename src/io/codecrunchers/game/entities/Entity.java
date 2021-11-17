@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 
 public abstract class Entity {
 
+
+    public boolean end = false;
     protected float x,y;
     protected int width, height;
     protected boolean alive = true;
@@ -37,6 +39,15 @@ public abstract class Entity {
 
     public float getY() {
         return y;
+    }
+
+    public boolean isEnd() {
+        return end;
+
+    }
+
+    public void setEnd(boolean end) {
+        this.end = end;
     }
 
     public void setY(float y) {
