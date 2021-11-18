@@ -19,6 +19,7 @@ public class GameState extends State {
     private String[] music = {"bgm1", "bgm2", "bgm3", "bgm4"};
     private int enemysKilled;
     private int bonus;
+    private static int score;
 
     @Override
     public void boot(App app) {
@@ -47,9 +48,10 @@ public class GameState extends State {
 
         //check for player death
         if(!this.player.isAlive()){
+
             this.dieGame();
         }
-
+        //the game ending
         if(this.player.end){
             this.endGame();
         }
@@ -107,7 +109,7 @@ public class GameState extends State {
     }
 
     public void endGame(){
-        int score = (int) ((this.enemysKilled * 100) + (this.bonus - (this.timer / 60)));
+        score = (int) ((this.enemysKilled * 100) + (this.bonus - (this.timer / 60)));
 
         if (score > 0) {
             this.app.saveUserScore(score);
@@ -123,7 +125,7 @@ public class GameState extends State {
     }
 
     public void dieGame(){
-        int score = (int) ((this.enemysKilled * 100) + (this.bonus - (this.timer / 60)));
+        score = (int) ((this.enemysKilled * 100) + (this.bonus - (this.timer / 60)));
 
         if (score > 0) {
             this.app.saveUserScore(score);
@@ -135,9 +137,12 @@ public class GameState extends State {
         this.app.stopAudioClip(this.backgroundTrack);
         this.timer = 0;
         this.app.resetEntitiesInGame();
-        this.app.setCurrentState("menu");
+        this.app.setCurrentState("game_over");
     }
 
+    public static int getScore() {
+        return score;
+    }
 
     //Return a random background music track
     public String getRandomMusic() {

@@ -11,8 +11,6 @@ import java.awt.event.KeyEvent;
 public class Player extends Creature {
 
 
-
-
     private final App app;
     private boolean jumping = false;
     private boolean attacking = false;
@@ -21,6 +19,9 @@ public class Player extends Creature {
     private int moveSpeed = 8;
     private boolean showPowerUps = false;
     private int dmg;
+
+
+
     public Player(float x, float y, App app) {
         super(x, y);
         this.app = app;
@@ -38,7 +39,6 @@ public class Player extends Creature {
     public void gameEnd(){
         if (this.x >= 8000){
             setEnd(true);
-
         }
     }
 
@@ -292,7 +292,9 @@ public class Player extends Creature {
 
     @Override
     public void hurt(int value) {
+        this.app.playAudioClip("hurt");
         this.health -=value;
+        this.app.resetAudioClip("hurt");
     }
 
     public Rectangle getBounds() {

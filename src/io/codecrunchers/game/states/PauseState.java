@@ -49,7 +49,7 @@ public class PauseState extends State {
     private void quit(){
         this.app.playAudioClip("ui-click");
         this.app.resetAudioClip("ui-click");
-        ((GameState)this.app.getState("game")).endGame();
+        ((GameState)this.app.getState("game")).dieGame();
     }
 
     private void resume(){

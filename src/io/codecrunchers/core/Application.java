@@ -21,6 +21,7 @@ public class Application {
         this.app.registerState("pause", new PauseState());
         this.app.registerState("settings", new SettingsState());
         this.app.registerState("end", new EndingState());
+        this.app.registerState("game_over", new Game_Over());
 
         //initialize the states
         this.app.initializeStates();
