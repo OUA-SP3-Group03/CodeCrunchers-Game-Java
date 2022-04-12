@@ -36,7 +36,7 @@ For this project we set out a number of programming technical goals that we want
 
 Login Screen:
 
-![LoginScreen](https://user-images.githubusercontent.com/79836947/162910566-29f670e0-9bad-472c-a2b8-8a7203fa9c64.png width=256)
+![LoginScreen](https://user-images.githubusercontent.com/79836947/162910566-29f670e0-9bad-472c-a2b8-8a7203fa9c64.png)
 
 Main Menu:
 
