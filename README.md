@@ -36,7 +36,7 @@ For this project we set out a number of programming technical goals that we want
 
 Login Screen:
 
-![LoginScreen](https://user-images.githubusercontent.com/79836947/162910566-29f670e0-9bad-472c-a2b8-8a7203fa9c64.png)
+![LoginScreen](https://user-images.githubusercontent.com/79836947/162910566-29f670e0-9bad-472c-a2b8-8a7203fa9c64.png width=256)
 
 Main Menu:
 
@@ -46,8 +46,8 @@ Main Menu:
 ## RMIT University | Academic Integrity Warning
 
 
-![image](https://user-images.githubusercontent.com/79836947/160737604-273c62fd-1503-4ce6-a292-a351665cc2e1.png#gh-dark-mode-only =250x250)
-![image](https://user-images.githubusercontent.com/79836947/160738358-eaa88731-2a44-4004-ab9a-3d83a2268742.png#gh-light-mode-only =250x250)
+![image](https://user-images.githubusercontent.com/79836947/160737604-273c62fd-1503-4ce6-a292-a351665cc2e1.png#gh-dark-mode-only)
+![image](https://user-images.githubusercontent.com/79836947/160738358-eaa88731-2a44-4004-ab9a-3d83a2268742.png#gh-light-mode-only)
 
 Cheating is a serious offense:
 
