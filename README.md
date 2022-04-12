@@ -40,8 +40,7 @@ Login Screen:
 
 Main Menu:
 
-![LoginScreen](https://user-images.githubusercontent.com/79836947/162910640-cbfbad39-fee3-43a0-8aba-7b6a1ace1e25.png)
-
+![MainMenu](https://user-images.githubusercontent.com/79836947/162911416-1a13db2c-d5e2-4598-8a31-7ed2688ae02e.png)
 
 
 ## RMIT University | Academic Integrity Warning
