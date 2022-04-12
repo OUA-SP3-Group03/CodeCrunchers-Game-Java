@@ -34,13 +34,87 @@ and allow them to save their scores for sharing.
 
 For this project we set out a number of programming technical goals that we wanted to achive, firstly the game should not use a game engine! we will write as much of the core code our selfs and developit using the Java Grapthics 2D library, Secondly we will generate our levels via procedual level generation, this means each level is always random and different orders, these levels will be loaded from a file that contains each room. Lastly we will have a real high score and user login system where the user authenticates with a API to access the game, then uses this authenticated key to post high scores back to the server at the end of each level attemp.
 
-Login Screen:
+### Login Screen:
 
 ![LoginScreen](https://user-images.githubusercontent.com/79836947/162910566-29f670e0-9bad-472c-a2b8-8a7203fa9c64.png)
 
-Main Menu:
+### Main Menu:
 
 ![MainMenu](https://user-images.githubusercontent.com/79836947/162911416-1a13db2c-d5e2-4598-8a31-7ed2688ae02e.png)
+
+### Procedural Rooms File
+Below is an example of our procedule room file, this stores all the infromation relating to generating the levels, first off we see that we add a number of variables to be loaded into the system, these are used when processing the level segments / rooms. We can see were we are setting the room width and room height as well as the amount of rooms in this file.
+
+```
+//set room variables first
+//set room width must match the width of all the lines below,do not put a space after equals
+{{room_width}} =21
+//set room height must match the height of all the lines below,do not put a space after equals
+{{room_height}} =11
+//sets the amount of rooms in this file, this must match
+{{room_count}} =5
+000000000000000000000
+000000000000000000000
+000000000000000000000
+000000000000000000000
+000000000000000000000
+000000000000000000000
+000000000000000000000
+000000000000000000000
+111100000090000001111
+111101110111011101111
+111100000000000001111
+//always finish a room with the new room flag as shown below on line 13 and 18
+{{new_room}}
+000000000000000000000
+000000000000000000000
+000000000000000000000
+000000000000000000000
+000000000000000000000
+000000000000000000000
+000000000000000000000
+000090000000000000000
+111111111000111111111
+111111111000111111111
+111111111000111111111
+{{new_room}}
+000000000000000000000
+000000000000000000000
+000000000000000000000
+011111111111111111110
+013333333333333333310
+013339333333333333310
+013311111111111113310
+023333333333333333320
+023333333393333333320
+111111111111111111111
+111111111111111111111
+{{new_room}}
+000000000000000000000
+000000000000000000000
+000000000000000000000
+000000000000000000000
+000000000000000000000
+000000000100000000000
+000000001100011110000
+000900011100000000000
+111111111100000000011
+111111111100000000011
+111111111100000000011
+{{new_room}}
+000000000000000000000
+000000000000000000000
+000000000000000000000
+000000000000000000000
+000000000000000000000
+000000000000090000000
+000000000100111100000
+000000100000000000000
+111100000000000001111
+111100000000000001111
+111100000000000001111
+{{new_room}}
+```
 
 
 ## RMIT University | Academic Integrity Warning
