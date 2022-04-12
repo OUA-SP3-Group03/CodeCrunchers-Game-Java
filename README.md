@@ -38,6 +38,38 @@ For this project we set out a number of programming technical goals that we want
 
 ![LoginScreen](https://user-images.githubusercontent.com/79836947/162910566-29f670e0-9bad-472c-a2b8-8a7203fa9c64.png)
 
+Our login function is simply called on button click in the login, this will check for blank values first, then check for a !this.app.authLogin(), this is the facade caller that links to the http post request provider and returns true or false for valid login deatils.
+
+```
+
+    public void login(){
+
+        if(this.emailInput.getInput().isBlank() || this.passwordInput.getInput().isBlank()){
+            this.app.playAudioClip("ui-fail");
+            this.app.resetAudioClip("ui-fail");
+            this.invalidLoginAlert.setText("Please enter your email and password");
+            this.invalidLoginAlert.setState("login");
+
+        }
+
+        if(!this.emailInput.getInput().isBlank() && !this.passwordInput.getInput().isBlank()) {
+
+            if(!this.app.authLogin(this.emailInput.getInput(), this.passwordInput.getInput())){
+                this.app.playAudioClip("ui-fail");
+                this.app.resetAudioClip("ui-fail");
+                this.invalidLoginAlert.setText("Invalid email or password");
+                this.invalidLoginAlert.setState("login");
+
+            }else{
+                this.app.playAudioClip("ui-click");
+                this.app.resetAudioClip("ui-click");
+                this.app.setCurrentState("menu");
+            }
+        }
+
+    }
+  ```
+
 ### Main Menu:
 
 ![MainMenu](https://user-images.githubusercontent.com/79836947/162911416-1a13db2c-d5e2-4598-8a31-7ed2688ae02e.png)
